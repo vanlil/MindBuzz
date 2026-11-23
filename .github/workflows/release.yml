@@ -1,7 +1,8 @@
 # The release: pushing a tag v<Version> tests on Windows and Linux (macOS only when started by
 # hand with the box ticked, see ci.yml), builds all five release files on
 # one Linux machine (build.sh cross-compiles Windows and macOS; the SDK gives the macOS executable its ad-hoc
-# signature there too), packs them and creates a *draft* release, which the owner reads and publishes by hand.
+# signature there too), packs them, sends them to VirusTotal and creates a *draft* release with links to the
+# scans, which the owner reads and publishes by hand.
 # Nothing goes public by accident. Linux rather than a Mac: no wait for a free Mac, and a tenth of the minutes.
 # Apple signing and notarization will need a Mac job for the macOS files.
 # Started by hand ("Run workflow") it does the same without a release: the files are attached to the run.
@@ -88,9 +89,55 @@ jobs:
           name: MindBuzz-${{ steps.version.outputs.version }}
           path: release/
 
+  # Each release file goes to VirusTotal, so the draft's notes can link to the scans and the owner sees a detection
+  # before publishing. A job of its own: the API key never meets the token that can write releases. The free key
+  # allows 4 requests a minute, hence the pause. A failed upload warns but does not stop the release: the scans
+  # are for the owner's eyes, and a file can still be uploaded on the website.
+  scan:
+    name: VirusTotal
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    outputs:
+      uploaded: ${{ steps.upload.outputs.uploaded }}
+    steps:
+      - name: Take the packed files
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: MindBuzz-${{ needs.build.outputs.version }}
+          path: release/
+
+      - name: Upload to VirusTotal
+        id: upload
+        env:
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        run: |
+          if [ -z "$VT_API_KEY" ]; then
+            echo "::warning::No VT_API_KEY secret: the files were not sent to VirusTotal"
+            echo "uploaded=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          first=true
+          for file in release/MindBuzz-*; do
+            [ "$first" = true ] || sleep 16
+            first=false
+            # Up to 32 MB the file goes straight to the API; above, through a one-time upload address (up to 650 MB).
+            url=https://www.virustotal.com/api/v3/files
+            if [ "$(stat -c %s "$file")" -gt 32000000 ]; then
+              url=$(curl -sS --fail -H "x-apikey: $VT_API_KEY" https://www.virustotal.com/api/v3/files/upload_url | jq -r .data)
+              sleep 16
+            fi
+            if curl -sS --fail -o /dev/null -H "x-apikey: $VT_API_KEY" -F "file=@$file" "$url"; then
+              echo "Sent $(basename "$file")"
+            else
+              echo "::warning::$(basename "$file") could not be sent to VirusTotal; its link will find nothing"
+            fi
+          done
+          echo "uploaded=true" >> "$GITHUB_OUTPUT"
+
   publish:
     name: Release
-    needs: build
+    needs: [build, scan]
     if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
     permissions:
@@ -120,6 +167,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.build.outputs.version }}
+          SCANNED: ${{ needs.scan.outputs.uploaded }}
         run: |
           cat > notes.md <<EOF
           ## Downloads
@@ -139,5 +187,14 @@ jobs:
           \`SHA256SUMS.txt\` holds the checksums (\`shasum -a 256 -c SHA256SUMS.txt\`).
 
           EOF
+          # The links are the files' checksums, so they are known before the scans end; the pages fill in within
+          # minutes.
+          if [ "$SCANNED" = true ]; then
+            printf '## VirusTotal\n\n| File | Scan |\n|---|---|\n' >> notes.md
+            while read -r sum name; do
+              echo "| \`$name\` | [results](https://www.virustotal.com/gui/file/$sum) |" >> notes.md
+            done < release/SHA256SUMS.txt
+            echo >> notes.md
+          fi
           gh release create "$GITHUB_REF_NAME" release/* --repo "$GITHUB_REPOSITORY" --draft --verify-tag \
             --title "MindBuzz $VERSION" --notes-file notes.md --generate-notes
