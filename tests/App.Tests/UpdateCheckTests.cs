@@ -15,7 +15,8 @@ namespace MindBuzz.App.Tests;
 /// internal enum.</summary>
 public sealed class UpdateCheckTests
 {
-    private static readonly Version Current = new(0, 9, 1);
+    /// <summary>The tests' own version, not this build's: the check takes it as a parameter.</summary>
+    private static readonly Version Current = new(0, 5, 0);
 
     private static string Release(string tag) =>
         $$"""{"tag_name":"{{tag}}","html_url":"https://example.com/elsewhere","draft":false,"prerelease":false}""";
@@ -39,8 +40,8 @@ public sealed class UpdateCheckTests
     [Theory]
     [InlineData("v1.0.0", "Newer")]
     [InlineData("0.10.0", "Newer")]
-    [InlineData("v0.9.1", "UpToDate")]
-    [InlineData("v0.8.5", "UpToDate")]
+    [InlineData("v0.5.0", "UpToDate")]
+    [InlineData("v0.4.5", "UpToDate")]
     [InlineData("v1.0.0-beta", "Unknown")]
     [InlineData("latest", "Unknown")]
     [InlineData("v1.0", "Unknown")]
@@ -70,7 +71,7 @@ public sealed class UpdateCheckTests
         HttpRequestMessage request = Assert.Single(github.Requests);
         Assert.Equal(HttpMethod.Get, request.Method);
         Assert.Equal("https://api.github.com/repos/vanlil/MindBuzz/releases/latest", request.RequestUri!.ToString());
-        Assert.Equal("MindBuzz/0.9.1", request.Headers.UserAgent.ToString());
+        Assert.Equal("MindBuzz/0.5.0", request.Headers.UserAgent.ToString());
     }
 
     [Fact]

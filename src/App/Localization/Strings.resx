@@ -1217,7 +1217,7 @@ The small page icon on a topic shows that it has a note.</value>
   </data>
   <data name="Title_ProductFormat" xml:space="preserve">
     <value>{0} | {1}</value>
-    <comment>The window title on Windows and Linux. {0} the product and version ("MindBuzz 0.9.1"), {1} the file name</comment>
+    <comment>The window title on Windows and Linux. {0} the product and version ("MindBuzz 1.2.3"), {1} the file name</comment>
   </data>
   <data name="Title_UntitledFile" xml:space="preserve">
     <value>untitled</value>
