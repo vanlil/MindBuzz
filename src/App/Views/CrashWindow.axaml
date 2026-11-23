@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:services="using:MindBuzz.App.Services"
+        xmlns:loc="using:MindBuzz.App.Localization"
+        x:Class="MindBuzz.App.Views.CrashWindow"
+        x:DataType="services:CrashRequest"
+        Title="{Binding Title}"
+        Icon="/Assets/MindBuzz.ico"
+        CanMinimize="False"
+        CanMaximize="False"
+        Width="520"
+        SizeToContent="Height"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+
+  <!-- After a caught error: what happened, where the work is, Continue or Quit. -->
+  <Border Padding="24,20" Background="{DynamicResource AppSurfaceBrush}">
+    <StackPanel Spacing="16">
+      <Grid ColumnDefinitions="Auto,16,*">
+        <Border Grid.Column="0"
+                Width="40" Height="40"
+                CornerRadius="{DynamicResource AppRadiusLarge}"
+                Background="{DynamicResource AppDangerSoftBrush}"
+                VerticalAlignment="Top">
+          <Path Classes="icon" Width="22" Height="22" Stroke="{DynamicResource AppDangerBrush}" Data="{StaticResource IconWarning}" />
+        </Border>
+        <StackPanel Grid.Column="2" Spacing="6">
+          <TextBlock Classes="title" TextWrapping="Wrap" Text="{Binding Message}" />
+          <TextBlock TextWrapping="Wrap" Text="{Binding Detail}" />
+        </StackPanel>
+      </Grid>
+
+      <Expander x:Name="Expander" Header="{x:Static loc:Strings.Crash_Details}" HorizontalAlignment="Stretch">
+        <TextBox x:Name="Details"
+                 Classes="crashDetails"
+                 Text="{Binding TechnicalDetails}"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 Height="180"
+                 AutomationProperties.Name="{x:Static loc:Strings.Crash_Details}" />
+      </Expander>
+
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <Button x:Name="CopyButton" Grid.Column="0" MinWidth="88" Content="{x:Static loc:Strings.Crash_CopyDetails}" />
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+          <Button x:Name="QuitButton" MinWidth="88" Content="{x:Static loc:Strings.Answer_Quit}" />
+          <Button x:Name="ContinueButton" MinWidth="88" IsDefault="True" IsCancel="True" Classes="Primary" Theme="{DynamicResource SolidButton}" Content="{x:Static loc:Strings.Answer_Continue}" />
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </Border>
+
+</Window>

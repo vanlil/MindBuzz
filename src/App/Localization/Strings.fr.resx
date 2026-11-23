@@ -1,0 +1,1630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every user-visible string of MindBuzz. Adding a language costs exactly one Strings.<culture>.resx
+  next to this file. Composite formats use numbered placeholders, with a comment for the translator; strings
+  are never concatenated. Licence texts and URLs are not translatable and live in code (AppInfo), not here.
+-->
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Menu_File" xml:space="preserve">
+    <value>_Fichier</value>
+  </data>
+  <data name="Menu_Edit" xml:space="preserve">
+    <value>É_dition</value>
+  </data>
+  <data name="Menu_Topic" xml:space="preserve">
+    <value>_Sujet</value>
+  </data>
+  <data name="Group_Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="Menu_Move" xml:space="preserve">
+    <value>_Déplacer</value>
+  </data>
+  <data name="Menu_ShowLevels" xml:space="preserve">
+    <value>Afficher les _niveaux</value>
+  </data>
+  <data name="Menu_Map" xml:space="preserve">
+    <value>_Carte</value>
+  </data>
+  <data name="Menu_Relationships" xml:space="preserve">
+    <value>_Relations</value>
+  </data>
+  <data name="Group_Relationship" xml:space="preserve">
+    <value>Relation</value>
+  </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>_Présentation</value>
+  </data>
+  <data name="Menu_Help" xml:space="preserve">
+    <value>_Aide</value>
+  </data>
+  <data name="Command_New" xml:space="preserve">
+    <value>_Nouveau</value>
+  </data>
+  <data name="Command_Open" xml:space="preserve">
+    <value>_Ouvrir…</value>
+  </data>
+  <data name="Command_Save" xml:space="preserve">
+    <value>_Enregistrer</value>
+  </data>
+  <data name="Command_SaveAs" xml:space="preserve">
+    <value>Enregistrer _sous…</value>
+  </data>
+  <data name="Command_CloseDocument" xml:space="preserve">
+    <value>_Fermer</value>
+  </data>
+  <data name="Command_Quit" xml:space="preserve">
+    <value>_Quitter</value>
+  </data>
+  <data name="Command_Undo" xml:space="preserve">
+    <value>_Annuler</value>
+  </data>
+  <data name="Command_Redo" xml:space="preserve">
+    <value>_Rétablir</value>
+  </data>
+  <data name="Command_NewSubtopic" xml:space="preserve">
+    <value>Nouveau _sous-sujet</value>
+  </data>
+  <data name="Command_NewSiblingAfter" xml:space="preserve">
+    <value>Nouveau _sujet</value>
+  </data>
+  <data name="Command_NewSiblingBefore" xml:space="preserve">
+    <value>Nouveau sujet _avant</value>
+  </data>
+  <data name="Command_NewParent" xml:space="preserve">
+    <value>Nouveau sujet _parent</value>
+  </data>
+  <data name="Command_EditText" xml:space="preserve">
+    <value>_Modifier le texte</value>
+  </data>
+  <data name="Command_DeleteTopic" xml:space="preserve">
+    <value>Supprimer le su_jet</value>
+  </data>
+  <data name="Command_Cut" xml:space="preserve">
+    <value>_Couper</value>
+  </data>
+  <data name="Command_Copy" xml:space="preserve">
+    <value>C_opier</value>
+  </data>
+  <data name="Command_Paste" xml:space="preserve">
+    <value>Co_ller</value>
+  </data>
+  <data name="Command_MoveUp" xml:space="preserve">
+    <value>_Monter</value>
+  </data>
+  <data name="Command_MoveDown" xml:space="preserve">
+    <value>_Descendre</value>
+  </data>
+  <data name="Command_MoveToFirst" xml:space="preserve">
+    <value>Placer en _premier</value>
+  </data>
+  <data name="Command_MoveToLast" xml:space="preserve">
+    <value>Placer en _dernier</value>
+  </data>
+  <data name="Command_Promote" xml:space="preserve">
+    <value>_Remonter d'un niveau</value>
+  </data>
+  <data name="Command_Demote" xml:space="preserve">
+    <value>_Abaisser d'un niveau</value>
+  </data>
+  <data name="Command_Collapse" xml:space="preserve">
+    <value>_Réduire</value>
+  </data>
+  <data name="Command_Expand" xml:space="preserve">
+    <value>_Développer</value>
+  </data>
+  <data name="Command_ShowNextLevel" xml:space="preserve">
+    <value>Afficher le niveau _suivant</value>
+  </data>
+  <data name="Command_ShowLevelFormat" xml:space="preserve">
+    <value>Niveau _{0}</value>
+  </data>
+  <data name="Command_ShowAllLevels" xml:space="preserve">
+    <value>_Tous les niveaux</value>
+  </data>
+  <data name="Command_SelectUp" xml:space="preserve">
+    <value>Sélectionner le sujet au-dessus</value>
+  </data>
+  <data name="Command_SelectDown" xml:space="preserve">
+    <value>Sélectionner le sujet en dessous</value>
+  </data>
+  <data name="Command_SelectLeft" xml:space="preserve">
+    <value>Sélectionner le sujet à gauche</value>
+  </data>
+  <data name="Command_SelectRight" xml:space="preserve">
+    <value>Sélectionner le sujet à droite</value>
+  </data>
+  <data name="Command_SelectFirstSibling" xml:space="preserve">
+    <value>Sélectionner le premier sujet du niveau</value>
+  </data>
+  <data name="Command_SelectLastSibling" xml:space="preserve">
+    <value>Sélectionner le dernier sujet du niveau</value>
+  </data>
+  <data name="Command_SelectCentral" xml:space="preserve">
+    <value>Sélectionner le sujet central</value>
+  </data>
+  <data name="Command_SelectParent" xml:space="preserve">
+    <value>Sélectionner le sujet parent</value>
+  </data>
+  <data name="Command_SelectNext" xml:space="preserve">
+    <value>Sélectionner le sujet suivant</value>
+  </data>
+  <data name="Command_SelectPrevious" xml:space="preserve">
+    <value>Sélectionner le sujet précédent</value>
+  </data>
+  <data name="Command_NewMap" xml:space="preserve">
+    <value>_Nouvelle carte</value>
+  </data>
+  <data name="Command_RenameMap" xml:space="preserve">
+    <value>_Renommer la carte</value>
+  </data>
+  <data name="Command_DeleteMap" xml:space="preserve">
+    <value>_Supprimer la carte…</value>
+  </data>
+  <data name="Command_MoveMapLeft" xml:space="preserve">
+    <value>Déplacer la carte à _gauche</value>
+  </data>
+  <data name="Command_MoveMapRight" xml:space="preserve">
+    <value>Déplacer la carte à _droite</value>
+  </data>
+  <data name="Command_NextMap" xml:space="preserve">
+    <value>Carte s_uivante</value>
+  </data>
+  <data name="Command_PreviousMap" xml:space="preserve">
+    <value>Carte _précédente</value>
+  </data>
+  <data name="Menu_Priority" xml:space="preserve">
+    <value>_Priorité</value>
+  </data>
+  <data name="Menu_Progress" xml:space="preserve">
+    <value>Pro_gression</value>
+  </data>
+  <data name="Command_PriorityFormat" xml:space="preserve">
+    <value>Priorité _{0}</value>
+  </data>
+  <data name="Command_RemovePriority" xml:space="preserve">
+    <value>_Retirer la priorité</value>
+  </data>
+  <data name="Command_Progress0" xml:space="preserve">
+    <value>_0 % (pas commencé)</value>
+  </data>
+  <data name="Command_Progress25" xml:space="preserve">
+    <value>_25 %</value>
+  </data>
+  <data name="Command_Progress50" xml:space="preserve">
+    <value>_50 %</value>
+  </data>
+  <data name="Command_Progress75" xml:space="preserve">
+    <value>_75 %</value>
+  </data>
+  <data name="Command_ProgressDone" xml:space="preserve">
+    <value>_Terminé</value>
+  </data>
+  <data name="Command_RemoveProgress" xml:space="preserve">
+    <value>_Retirer la progression</value>
+  </data>
+  <data name="Command_ProgressForward" xml:space="preserve">
+    <value>Étape de progression _suivante</value>
+  </data>
+  <data name="Command_ProgressBackward" xml:space="preserve">
+    <value>Étape de progression _précédente</value>
+  </data>
+  <data name="Command_AddLink" xml:space="preserve">
+    <value>Ajouter un _lien Internet…</value>
+  </data>
+  <data name="Command_ShowLinks" xml:space="preserve">
+    <value>Afficher les lien_s Internet…</value>
+  </data>
+  <data name="Kind_Marker" xml:space="preserve">
+    <value>Marqueur</value>
+  </data>
+  <data name="Kind_Link" xml:space="preserve">
+    <value>Lien Internet</value>
+  </data>
+  <data name="Refusal_NoteTooLong" xml:space="preserve">
+    <value>Une note peut contenir au plus {0:N0} caractères.</value>
+  </data>
+  <data name="Refusal_TooDeep" xml:space="preserve">
+    <value>Non effectué : les sujets seraient imbriqués trop profondément (200 niveaux au plus).</value>
+  </data>
+  <data name="Refusal_UrlNotAllowed" xml:space="preserve">
+    <value>Seules les adresses web (http, https) et e-mail (mailto) peuvent être liées.</value>
+  </data>
+  <data name="Status_LinkNotOpened" xml:space="preserve">
+    <value>Le lien n'a pas pu être ouvert.</value>
+  </data>
+  <data name="LinkEdit_AddTitle" xml:space="preserve">
+    <value>Ajouter un lien Internet</value>
+  </data>
+  <data name="LinkEdit_EditTitle" xml:space="preserve">
+    <value>Modifier le lien Internet</value>
+  </data>
+  <data name="LinkEdit_Url" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="LinkEdit_Title" xml:space="preserve">
+    <value>Titre (facultatif)</value>
+  </data>
+  <data name="LinkEdit_Hint" xml:space="preserve">
+    <value>Utilisez une adresse web (http:// ou https://) ou une adresse e-mail (mailto:).</value>
+  </data>
+  <data name="LinkEdit_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="LinkEdit_Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="LinkList_MoveUp" xml:space="preserve">
+    <value>Monter</value>
+  </data>
+  <data name="LinkList_MoveDown" xml:space="preserve">
+    <value>Descendre</value>
+  </data>
+  <data name="Command_StartLinkMode" xml:space="preserve">
+    <value>_Relier à un sujet…</value>
+  </data>
+  <data name="Command_FollowRelationship" xml:space="preserve">
+    <value>_Suivre la relation</value>
+  </data>
+  <data name="Command_SelectNextRelationship" xml:space="preserve">
+    <value>Sélectionner une _relation</value>
+  </data>
+  <data name="Command_ToggleTwoWay" xml:space="preserve">
+    <value>Basculer sens unique / double sens</value>
+  </data>
+  <data name="Command_MakeOneWay" xml:space="preserve">
+    <value>Sens _unique</value>
+  </data>
+  <data name="Command_MakeTwoWay" xml:space="preserve">
+    <value>_Double sens</value>
+  </data>
+  <data name="Command_ResetCurve" xml:space="preserve">
+    <value>Réinitialiser la _courbe</value>
+  </data>
+  <data name="Command_ReverseRelationship" xml:space="preserve">
+    <value>_Inverser le sens</value>
+  </data>
+  <data name="Command_DeleteRelationship" xml:space="preserve">
+    <value>_Supprimer la relation</value>
+  </data>
+  <data name="Command_ZoomIn" xml:space="preserve">
+    <value>Zoom _avant</value>
+  </data>
+  <data name="Command_ZoomOut" xml:space="preserve">
+    <value>Zoom a_rrière</value>
+  </data>
+  <data name="Command_ZoomActualSize" xml:space="preserve">
+    <value>_Taille réelle</value>
+  </data>
+  <data name="Command_ZoomFit" xml:space="preserve">
+    <value>_Ajuster la carte à la fenêtre</value>
+  </data>
+  <data name="Command_KeyboardShortcuts" xml:space="preserve">
+    <value>_Raccourcis clavier</value>
+  </data>
+  <data name="Command_CheckForUpdate" xml:space="preserve">
+    <value>_Rechercher des mises à jour…</value>
+  </data>
+  <data name="Status_CheckingForUpdate" xml:space="preserve">
+    <value>Recherche de mises à jour…</value>
+  </data>
+  <data name="Update_NewerFormat" xml:space="preserve">
+    <value>MindBuzz {0} est disponible.</value>
+  </data>
+  <data name="Update_NewerDetailFormat" xml:space="preserve">
+    <value>Vous avez la version {0}. La page de téléchargement s'ouvre dans votre navigateur.</value>
+  </data>
+  <data name="Answer_OpenDownloadPage" xml:space="preserve">
+    <value>Ouvrir la page de téléchargement</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>Vous utilisez la dernière version de MindBuzz.</value>
+  </data>
+  <data name="Update_Unknown" xml:space="preserve">
+    <value>MindBuzz n'a pas pu savoir s'il existe une version plus récente. Vérifiez la connexion Internet et réessayez plus tard.</value>
+  </data>
+  <data name="Command_About" xml:space="preserve">
+    <value>À _propos de MindBuzz</value>
+  </data>
+  <data name="Dialog_Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="About_Text" xml:space="preserve">
+    <value>Des cartes mentales pour Windows, macOS et Linux, pensées pour le clavier. MindBuzz n'écrit rien sur votre ordinateur, à part les documents que vous enregistrez.</value>
+  </data>
+  <data name="About_VersionFormat" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="About_Notices" xml:space="preserve">
+    <value>Composants inclus</value>
+  </data>
+  <data name="About_RepositoryTooltip" xml:space="preserve">
+    <value>Ouvrir le dépôt dans votre navigateur</value>
+  </data>
+  <data name="Shortcuts_Title" xml:space="preserve">
+    <value>Raccourcis clavier</value>
+  </data>
+  <data name="Shortcuts_AlternativeSeparator" xml:space="preserve">
+    <value>  ou  </value>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Prêt</value>
+  </data>
+  <data name="Refusal_CentralTopic" xml:space="preserve">
+    <value>Le sujet central ne peut être ni déplacé ni supprimé, et n'a pas de sujets voisins.</value>
+  </data>
+  <data name="Refusal_EmptyText" xml:space="preserve">
+    <value>Un sujet a besoin d'un texte. Le texte précédent a été conservé.</value>
+  </data>
+  <data name="Kind_Change" xml:space="preserve">
+    <value>Modification</value>
+  </data>
+  <data name="Kind_Move" xml:space="preserve">
+    <value>Déplacement</value>
+  </data>
+  <data name="Kind_Collapse" xml:space="preserve">
+    <value>Réduire ou développer</value>
+  </data>
+  <data name="Kind_Map" xml:space="preserve">
+    <value>Modification de carte</value>
+  </data>
+  <data name="Refusal_EmptyName" xml:space="preserve">
+    <value>Une carte a besoin d'un nom. Le nom précédent a été conservé.</value>
+  </data>
+  <data name="DeleteMap_Title" xml:space="preserve">
+    <value>Supprimer la carte</value>
+  </data>
+  <data name="DeleteMap_MessageFormat" xml:space="preserve">
+    <value>Supprimer la carte « {0} » ?</value>
+  </data>
+  <data name="DeleteMap_Detail" xml:space="preserve">
+    <value>Tous ses sujets seront supprimés avec elle. Vous pourrez l'annuler.</value>
+  </data>
+  <data name="Answer_Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Tabs_AddTooltip" xml:space="preserve">
+    <value>Nouvelle carte</value>
+  </data>
+  <data name="Tabs_ScrollLeft" xml:space="preserve">
+    <value>Faire défiler les onglets vers la gauche</value>
+  </data>
+  <data name="Tabs_ScrollRight" xml:space="preserve">
+    <value>Faire défiler les onglets vers la droite</value>
+  </data>
+  <data name="Kind_Relationship" xml:space="preserve">
+    <value>Relation</value>
+  </data>
+  <data name="Status_LinkModeFormat" xml:space="preserve">
+    <value>Choisissez le sujet cible… flèches ou tapez pour chercher, Entrée relie, Maj+Entrée relie dans les deux sens, Échap annule{0}</value>
+  </data>
+  <data name="Status_LinkFindFormat" xml:space="preserve">
+    <value> · Recherche : {0}</value>
+  </data>
+  <data name="Status_RelationshipSelected" xml:space="preserve">
+    <value>Relation sélectionnée : faites glisser la poignée pour la courber · B sens unique/double sens, R inverser, Suppr supprime, Échap revient au sujet</value>
+  </data>
+  <data name="Refusal_SelfRelationship" xml:space="preserve">
+    <value>Un sujet ne peut pas être relié à lui-même. Choisissez une autre cible.</value>
+  </data>
+  <data name="Refusal_DuplicateRelationship" xml:space="preserve">
+    <value>Ces sujets sont déjà reliés. Choisissez une autre cible.</value>
+  </data>
+  <data name="Status_NoRelationships" xml:space="preserve">
+    <value>Ce sujet n'a aucune relation.</value>
+  </data>
+  <data name="Status_UndoneFormat" xml:space="preserve">
+    <value>Annulé : {0}</value>
+  </data>
+  <data name="Status_RedoneFormat" xml:space="preserve">
+    <value>Rétabli : {0}</value>
+  </data>
+  <data name="Status_ZoomFormat" xml:space="preserve">
+    <value>{0:0} %</value>
+  </data>
+  <data name="Status_ZoomTooltip" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="Topic_DefaultCentral" xml:space="preserve">
+    <value>Sujet central</value>
+  </data>
+  <data name="Document_Untitled" xml:space="preserve">
+    <value>Sans titre</value>
+  </data>
+  <data name="Title_EditedFormat" xml:space="preserve">
+    <value>{0}*</value>
+  </data>
+  <data name="FileType_MindBuzz" xml:space="preserve">
+    <value>Carte MindBuzz</value>
+  </data>
+  <data name="Dialog_OpenTitle" xml:space="preserve">
+    <value>Ouvrir une carte</value>
+  </data>
+  <data name="Dialog_SaveTitle" xml:space="preserve">
+    <value>Enregistrer la carte</value>
+  </data>
+  <data name="Status_Saved" xml:space="preserve">
+    <value>Enregistré</value>
+  </data>
+  <data name="SavePrompt_Title" xml:space="preserve">
+    <value>Enregistrer les modifications</value>
+  </data>
+  <data name="SavePrompt_MessageFormat" xml:space="preserve">
+    <value>Enregistrer les modifications de « {0} » ?</value>
+  </data>
+  <data name="SavePrompt_Detail" xml:space="preserve">
+    <value>Vos modifications seront perdues si vous ne les enregistrez pas.</value>
+  </data>
+  <data name="Answer_Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="Answer_DontSave" xml:space="preserve">
+    <value>Ne pas enregistrer</value>
+  </data>
+  <data name="Answer_Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>Récupérer les modifications</value>
+  </data>
+  <data name="Recovery_MessageFormat" xml:space="preserve">
+    <value>« {0} » contient des modifications non enregistrées du {1:g}.</value>
+  </data>
+  <data name="Recovery_Detail" xml:space="preserve">
+    <value>MindBuzz les a conservées dans un fichier de récupération, car il ne s'est pas fermé normalement. Restaurez-les, gardez le document tel qu'il a été enregistré ou ouvrez-les comme copie sans titre.</value>
+  </data>
+  <data name="Answer_Restore" xml:space="preserve">
+    <value>Restaurer</value>
+  </data>
+  <data name="Answer_KeepDocument" xml:space="preserve">
+    <value>Garder le document</value>
+  </data>
+  <data name="Answer_OpenCopy" xml:space="preserve">
+    <value>Ouvrir une copie</value>
+  </data>
+  <data name="OpenError_Title" xml:space="preserve">
+    <value>Ouverture impossible</value>
+  </data>
+  <data name="OpenError_NotAMap" xml:space="preserve">
+    <value>« {0} » n'est pas une carte MindBuzz, ou le fichier est endommagé.</value>
+  </data>
+  <data name="OpenError_NewerFormat" xml:space="preserve">
+    <value>« {0} » a été créé avec une version plus récente de MindBuzz (format de fichier {1}). Cette version lit jusqu'au format {2}. Mettez MindBuzz à jour pour l'ouvrir.</value>
+  </data>
+  <data name="OpenError_Unsafe" xml:space="preserve">
+    <value>« {0} » n'a pas été ouvert, car il enfreint une règle de sécurité des fichiers de carte (trop grand, trop de parties ou noms dangereux à l'intérieur).</value>
+  </data>
+  <data name="OpenError_Damaged" xml:space="preserve">
+    <value>« {0} » est endommagé : son contenu n'a pas pu être lu.</value>
+  </data>
+  <data name="OpenError_IoFormat" xml:space="preserve">
+    <value>« {0} » n'a pas pu être lu : {1}</value>
+  </data>
+  <data name="RecoveryLeftover_Title" xml:space="preserve">
+    <value>Supprimer le fichier de récupération</value>
+  </data>
+  <data name="RecoveryLeftover_MessageFormat" xml:space="preserve">
+    <value>Le fichier est chiffré, mais son ancien fichier de récupération, qui n'est pas protégé par le nouveau mot de passe, n'a pas pu être supprimé. Supprimez-le vous-même : {0}
+
+{1}</value>
+  </data>
+  <data name="SaveError_Title" xml:space="preserve">
+    <value>Enregistrement impossible</value>
+  </data>
+  <data name="SaveError_MessageFormat" xml:space="preserve">
+    <value>« {0} » n'a pas pu être enregistré : {1}</value>
+  </data>
+  <data name="SaveError_Detail" xml:space="preserve">
+    <value>Le fichier sur le disque n'a pas été modifié.</value>
+  </data>
+  <data name="LoadProblems_Title" xml:space="preserve">
+    <value>Ouvert avec des problèmes</value>
+  </data>
+  <data name="LoadProblems_MessageFormat" xml:space="preserve">
+    <value>Certaines parties de « {0} » n'ont pas pu être chargées telles quelles. Tout le reste est là.</value>
+  </data>
+  <data name="Problem_MapSkipped" xml:space="preserve">
+    <value>Cartes omises : {0}</value>
+  </data>
+  <data name="Problem_TopicSkipped" xml:space="preserve">
+    <value>Sujets omis : {0}</value>
+  </data>
+  <data name="Problem_BendIgnored" xml:space="preserve">
+    <value>Courbes de relation remises à leur forme automatique : {0}</value>
+  </data>
+  <data name="Problem_TextMissing" xml:space="preserve">
+    <value>Sujets sans texte : {0}</value>
+  </data>
+  <data name="Problem_IdReplaced" xml:space="preserve">
+    <value>Identifiants réparés : {0}</value>
+  </data>
+  <data name="Problem_LinkSkipped" xml:space="preserve">
+    <value>Liens omis (ni http, ni https, ni mailto) : {0}</value>
+  </data>
+  <data name="Problem_MarkerSkipped" xml:space="preserve">
+    <value>Marqueurs omis : {0}</value>
+  </data>
+  <data name="Problem_RelationshipSkipped" xml:space="preserve">
+    <value>Relations omises : {0}</value>
+  </data>
+  <data name="Problem_TooDeep" xml:space="preserve">
+    <value>Branches coupées car imbriquées trop profondément : {0}</value>
+  </data>
+  <data name="Problem_UnknownEntry" xml:space="preserve">
+    <value>Parties inconnues ignorées (elles ne seront pas enregistrées) : {0}</value>
+  </data>
+  <data name="Command_OpenNotes" xml:space="preserve">
+    <value>Ouvrir la vue _détaillée</value>
+  </data>
+  <data name="Command_ToggleTopicPanel" xml:space="preserve">
+    <value>Vue _détaillée</value>
+  </data>
+  <data name="Command_NextPane" xml:space="preserve">
+    <value>_Volet suivant</value>
+  </data>
+  <data name="Command_PreviousPane" xml:space="preserve">
+    <value>V_olet précédent</value>
+  </data>
+  <data name="Command_ToggleNotesMode" xml:space="preserve">
+    <value>Notes : basculer entre Modifier et Aperçu</value>
+  </data>
+  <data name="Command_Bold" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="Command_Italic" xml:space="preserve">
+    <value>Italique</value>
+  </data>
+  <data name="Command_Underline" xml:space="preserve">
+    <value>Souligné</value>
+  </data>
+  <data name="Format_BoldLetter" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="Format_ItalicLetter" xml:space="preserve">
+    <value>I</value>
+  </data>
+  <data name="Format_UnderlineLetter" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="Group_Formatting" xml:space="preserve">
+    <value>Mise en forme</value>
+  </data>
+  <data name="Group_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Kind_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Notes_ImageFormat" xml:space="preserve">
+    <value>[Image : {0}]</value>
+  </data>
+  <data name="Panel_Topic" xml:space="preserve">
+    <value>SUJET</value>
+  </data>
+  <data name="Panel_Links" xml:space="preserve">
+    <value>LIENS</value>
+  </data>
+  <data name="Panel_Notes" xml:space="preserve">
+    <value>NOTES</value>
+  </data>
+  <data name="Panel_NoTopic" xml:space="preserve">
+    <value>Sélectionnez un sujet pour voir ses notes et ses liens.</value>
+  </data>
+  <data name="Panel_NoLinks" xml:space="preserve">
+    <value>Pas encore de liens.</value>
+  </data>
+  <data name="Panel_AddLink" xml:space="preserve">
+    <value>Ajouter un lien…</value>
+  </data>
+  <data name="Panel_EditLink" xml:space="preserve">
+    <value>Modifier le lien…</value>
+  </data>
+  <data name="Panel_RemoveLink" xml:space="preserve">
+    <value>Retirer le lien</value>
+  </data>
+  <data name="Panel_Edit" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="Panel_Preview" xml:space="preserve">
+    <value>Aperçu</value>
+  </data>
+  <data name="Panel_NothingToPreview" xml:space="preserve">
+    <value>Pas encore de note. Passez à Modifier pour en écrire une en Markdown.</value>
+  </data>
+  <data name="Panel_Priority" xml:space="preserve">
+    <value>Priorité</value>
+  </data>
+  <data name="Panel_Progress" xml:space="preserve">
+    <value>Progression</value>
+  </data>
+  <data name="Panel_ProgressFormat" xml:space="preserve">
+    <value>{0} %</value>
+  </data>
+  <data name="Panel_ProgressDone" xml:space="preserve">
+    <value>Terminé</value>
+  </data>
+  <data name="Command_ToggleMaximizePanel" xml:space="preserve">
+    <value>_Agrandir la vue détaillée</value>
+  </data>
+  <data name="Panel_RestoreSize" xml:space="preserve">
+    <value>Taille normale</value>
+  </data>
+  <data name="Panel_TitleName" xml:space="preserve">
+    <value>Texte du sujet</value>
+  </data>
+  <data name="Topic_DefaultCentralNumberedFormat" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Command_Find" xml:space="preserve">
+    <value>_Rechercher…</value>
+  </data>
+  <data name="Command_FindNext" xml:space="preserve">
+    <value>Rechercher le _suivant</value>
+  </data>
+  <data name="Command_FindPrevious" xml:space="preserve">
+    <value>Rechercher le _précédent</value>
+  </data>
+  <data name="Search_Title" xml:space="preserve">
+    <value>RECHERCHE</value>
+  </data>
+  <data name="Search_Close" xml:space="preserve">
+    <value>Fermer la recherche  (Échap)</value>
+  </data>
+  <data name="Search_Watermark" xml:space="preserve">
+    <value>Sujets, notes et liens</value>
+  </data>
+  <data name="Search_CurrentMap" xml:space="preserve">
+    <value>Cette carte</value>
+  </data>
+  <data name="Search_AllMaps" xml:space="preserve">
+    <value>Toutes les cartes</value>
+  </data>
+  <data name="Search_NoHits" xml:space="preserve">
+    <value>Aucun résultat</value>
+  </data>
+  <data name="Search_OneHit" xml:space="preserve">
+    <value>1 résultat</value>
+  </data>
+  <data name="Search_CountFormat" xml:space="preserve">
+    <value>{0:N0} résultats</value>
+  </data>
+  <data name="Search_CountCappedFormat" xml:space="preserve">
+    <value>{0:N0} résultats, les {1:N0} premiers affichés</value>
+  </data>
+  <data name="Search_InTopic" xml:space="preserve">
+    <value>Sujet</value>
+  </data>
+  <data name="Search_InNote" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Search_InLink" xml:space="preserve">
+    <value>Lien</value>
+  </data>
+  <data name="Search_OpenLink" xml:space="preserve">
+    <value>Ouvrir le lien</value>
+  </data>
+  <data name="Search_Keys" xml:space="preserve">
+    <value>Entrée : résultat suivant · Maj+Entrée : précédent · ↓ : liste · Échap : fermer</value>
+  </data>
+  <data name="Command_EncryptFile" xml:space="preserve">
+    <value>_Chiffrer le fichier…</value>
+  </data>
+  <data name="Command_ChangePassword" xml:space="preserve">
+    <value>Changer le _mot de passe…</value>
+  </data>
+  <data name="Command_RemoveEncryption" xml:space="preserve">
+    <value>Retirer le c_hiffrement…</value>
+  </data>
+  <data name="Password_Label" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="Password_Repeat" xml:space="preserve">
+    <value>Répéter le mot de passe</value>
+  </data>
+  <data name="Password_TooShortFormat" xml:space="preserve">
+    <value>Au moins {0} caractères.</value>
+  </data>
+  <data name="Password_Mismatch" xml:space="preserve">
+    <value>Les deux mots de passe ne sont pas identiques.</value>
+  </data>
+  <data name="Password_Warning" xml:space="preserve">
+    <value>Gardez le mot de passe en lieu sûr : sans lui, le fichier ne peut pas être ouvert, et personne ne peut le récupérer.</value>
+  </data>
+  <data name="Password_Wrong" xml:space="preserve">
+    <value>Ce mot de passe n'ouvre pas le fichier. Réessayez.</value>
+  </data>
+  <data name="Password_OpenTitle" xml:space="preserve">
+    <value>Ouvrir un fichier chiffré</value>
+  </data>
+  <data name="Password_OpenMessageFormat" xml:space="preserve">
+    <value>« {0} » est chiffré. Saisissez son mot de passe pour l'ouvrir.</value>
+  </data>
+  <data name="Password_Open" xml:space="preserve">
+    <value>Ouvrir</value>
+  </data>
+  <data name="Password_EncryptTitle" xml:space="preserve">
+    <value>Chiffrer le fichier</value>
+  </data>
+  <data name="Password_EncryptMessageFormat" xml:space="preserve">
+    <value>Choisissez un mot de passe pour « {0} ». Le fichier est aussitôt enregistré sous forme chiffrée.</value>
+  </data>
+  <data name="Password_Encrypt" xml:space="preserve">
+    <value>Chiffrer</value>
+  </data>
+  <data name="Password_ChangeTitle" xml:space="preserve">
+    <value>Changer le mot de passe</value>
+  </data>
+  <data name="Password_NewMessageFormat" xml:space="preserve">
+    <value>Choisissez un nouveau mot de passe pour « {0} ». Le fichier est enregistré avec lui tout de suite.</value>
+  </data>
+  <data name="Password_Change" xml:space="preserve">
+    <value>Changer</value>
+  </data>
+  <data name="Password_RemoveTitle" xml:space="preserve">
+    <value>Retirer le chiffrement</value>
+  </data>
+  <data name="Password_CurrentMessageFormat" xml:space="preserve">
+    <value>Saisissez le mot de passe actuel de « {0} ».</value>
+  </data>
+  <data name="Password_Continue" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="Status_Encrypted" xml:space="preserve">
+    <value>Enregistré et chiffré.</value>
+  </data>
+  <data name="Status_PasswordChanged" xml:space="preserve">
+    <value>Mot de passe changé et enregistré.</value>
+  </data>
+  <data name="Status_EncryptionRemoved" xml:space="preserve">
+    <value>Chiffrement retiré et enregistré.</value>
+  </data>
+  <data name="Status_EncryptedTooltip" xml:space="preserve">
+    <value>Ce fichier est chiffré</value>
+  </data>
+  <data name="Status_UpdateAvailable" xml:space="preserve">
+    <value>Version {0} disponible</value>
+  </data>
+  <data name="Status_UpdateTooltip" xml:space="preserve">
+    <value>Ouvrir la page de téléchargement de MindBuzz {0}</value>
+  </data>
+  <data name="Command_ToggleSearch" xml:space="preserve">
+    <value>Volet de _recherche</value>
+  </data>
+  <data name="Menu_RelationshipColor" xml:space="preserve">
+    <value>_Couleur</value>
+  </data>
+  <data name="Menu_RelationshipLine" xml:space="preserve">
+    <value>_Trait</value>
+  </data>
+  <data name="Color_Default" xml:space="preserve">
+    <value>_Par défaut</value>
+  </data>
+  <data name="Color_Red" xml:space="preserve">
+    <value>_Rouge</value>
+  </data>
+  <data name="Color_Orange" xml:space="preserve">
+    <value>_Orange</value>
+  </data>
+  <data name="Color_Yellow" xml:space="preserve">
+    <value>_Jaune</value>
+  </data>
+  <data name="Color_Green" xml:space="preserve">
+    <value>_Vert</value>
+  </data>
+  <data name="Color_Teal" xml:space="preserve">
+    <value>_Turquoise</value>
+  </data>
+  <data name="Color_Blue" xml:space="preserve">
+    <value>_Bleu</value>
+  </data>
+  <data name="Color_Purple" xml:space="preserve">
+    <value>V_iolet</value>
+  </data>
+  <data name="Line_Solid" xml:space="preserve">
+    <value>_Continu</value>
+  </data>
+  <data name="Line_Dashed" xml:space="preserve">
+    <value>_Tirets</value>
+  </data>
+  <data name="Line_Dotted" xml:space="preserve">
+    <value>_Pointillés</value>
+  </data>
+  <data name="Command_MoveToOtherSide" xml:space="preserve">
+    <value>Passer de l'_autre côté</value>
+  </data>
+  <data name="Command_BalanceMap" xml:space="preserve">
+    <value>É_quilibrer la carte</value>
+  </data>
+  <data name="Command_ExportPng" xml:space="preserve">
+    <value>_Exporter en PNG…</value>
+  </data>
+  <data name="FileType_Png" xml:space="preserve">
+    <value>Image PNG</value>
+  </data>
+  <data name="Export_SaveTitle" xml:space="preserve">
+    <value>Exporter en PNG</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>Exporter en PNG</value>
+  </data>
+  <data name="Export_MessageFormat" xml:space="preserve">
+    <value>Exporter la carte « {0} » en image.</value>
+  </data>
+  <data name="Export_Detail" xml:space="preserve">
+    <value>Toute la carte telle qu'elle est développée, dans les couleurs claires, à deux fois la résolution de l'écran. Quel arrière-plan ?</value>
+  </data>
+  <data name="Export_Transparent" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="Export_White" xml:space="preserve">
+    <value>Blanc</value>
+  </data>
+  <data name="Export_ErrorTitle" xml:space="preserve">
+    <value>L'image n'a pas pu être enregistrée</value>
+  </data>
+  <data name="Status_ExportedFormat" xml:space="preserve">
+    <value>{0} exporté.</value>
+  </data>
+  <data name="Command_NewSample" xml:space="preserve">
+    <value>Nouvelles cartes mentales d'e_xemple</value>
+  </data>
+  <data name="Sample_IntroCentral" xml:space="preserve">
+    <value>Qu'est-ce qu'une carte mentale ?
+
+Et qu'est-ce que MindBuzz ?</value>
+  </data>
+  <data name="Sample_IntroNote" xml:space="preserve">
+    <value>## Bienvenue !
+
+Une carte mentale place **une idée au centre** et fait rayonner autour d'elle tout ce qui s'y rattache. Vous voyez l'ensemble d'un coup d'œil, et chaque détail a sa place.
+
+Lisez cette carte dans le sens des aiguilles d'une montre, en commençant en haut à droite. Regardez ensuite le deuxième onglet, **Week-end à Lisbonne**, pour un exemple concret.</value>
+  </data>
+  <data name="Sample_StartMiddle" xml:space="preserve">
+    <value>Commencer au centre</value>
+  </data>
+  <data name="Sample_OneIdea" xml:space="preserve">
+    <value>Une idée principale</value>
+  </data>
+  <data name="Sample_ShortWords" xml:space="preserve">
+    <value>Faites court : quelques mots par sujet</value>
+  </data>
+  <data name="Sample_BranchOut" xml:space="preserve">
+    <value>Ramifier</value>
+  </data>
+  <data name="Sample_MainTopics" xml:space="preserve">
+    <value>Les sujets principaux autour du centre</value>
+  </data>
+  <data name="Sample_Subtopics" xml:space="preserve">
+    <value>Les détails en sous-sujets</value>
+  </data>
+  <data name="Sample_AddDetails" xml:space="preserve">
+    <value>Ajouter des détails</value>
+  </data>
+  <data name="Sample_Notes" xml:space="preserve">
+    <value>Des notes pour les textes longs</value>
+  </data>
+  <data name="Sample_NotesNote" xml:space="preserve">
+    <value>Les notes contiennent tout ce qui est trop long pour un sujet : idées, comptes rendus, *listes de contrôle*.
+
+- [x] Écrire une note
+- [ ] Passer de **Modifier** à **Aperçu**
+
+La petite icône de page sur un sujet indique qu'il a une note.</value>
+  </data>
+  <data name="Sample_Links" xml:space="preserve">
+    <value>Des liens vers des sites web</value>
+  </data>
+  <data name="Sample_LinksTitle" xml:space="preserve">
+    <value>La carte heuristique sur Wikipédia</value>
+  </data>
+  <data name="Sample_Markers" xml:space="preserve">
+    <value>Les marqueurs montrent ce qui compte</value>
+  </data>
+  <data name="Sample_Connect" xml:space="preserve">
+    <value>Relier les idées</value>
+  </data>
+  <data name="Sample_Lines" xml:space="preserve">
+    <value>Des lignes relient des sujets d'une branche à l'autre</value>
+  </data>
+  <data name="Sample_TryIt" xml:space="preserve">
+    <value>Essayez vous-même</value>
+  </data>
+  <data name="Sample_KeyNewTopic" xml:space="preserve">
+    <value>{0} : un nouveau sujet en dessous</value>
+  </data>
+  <data name="Sample_KeySubtopic" xml:space="preserve">
+    <value>{0} : un nouveau sous-sujet</value>
+  </data>
+  <data name="Sample_KeyEdit" xml:space="preserve">
+    <value>{0} : modifier le texte…
+… ou double-cliquez simplement</value>
+  </data>
+  <data name="Sample_Drag" xml:space="preserve">
+    <value>Faites glisser un sujet pour le déplacer</value>
+  </data>
+  <data name="Sample_TripCentral" xml:space="preserve">
+    <value>Week-end à Lisbonne</value>
+  </data>
+  <data name="Sample_TripNote" xml:space="preserve">
+    <value>Préparer un voyage est une première carte mentale idéale : tout ce à quoi il faut penser, d'un seul coup d'œil.
+
+- Le **1** dans un cercle marque ce qu'il faut faire en premier.
+- La **barre** montre la progression : les vols sont réservés, la valise est à peine commencée.
+- Les **lignes** relient des choses d'une branche à l'autre : les vols font partie du budget, et l'excursion demande de bonnes chaussures.</value>
+  </data>
+  <data name="Sample_GettingThere" xml:space="preserve">
+    <value>Y aller</value>
+  </data>
+  <data name="Sample_BookFlights" xml:space="preserve">
+    <value>Réserver les vols</value>
+  </data>
+  <data name="Sample_Metro" xml:space="preserve">
+    <value>De l'aéroport au centre : métro, 25 min</value>
+  </data>
+  <data name="Sample_Stay" xml:space="preserve">
+    <value>Hébergement</value>
+  </data>
+  <data name="Sample_Hotel" xml:space="preserve">
+    <value>Petit hôtel dans l'Alfama</value>
+  </data>
+  <data name="Sample_CheckIn" xml:space="preserve">
+    <value>Arrivée à partir de 15 h</value>
+  </data>
+  <data name="Sample_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="Sample_FlightCost" xml:space="preserve">
+    <value>Vols : 250 €</value>
+  </data>
+  <data name="Sample_HotelCost" xml:space="preserve">
+    <value>Hôtel : 300 €</value>
+  </data>
+  <data name="Sample_FoodCost" xml:space="preserve">
+    <value>Repas et loisirs : 200 €</value>
+  </data>
+  <data name="Sample_ThingsToDo" xml:space="preserve">
+    <value>À faire</value>
+  </data>
+  <data name="Sample_Tram" xml:space="preserve">
+    <value>Prendre le tram 28</value>
+  </data>
+  <data name="Sample_Belem" xml:space="preserve">
+    <value>Tour de Belém</value>
+  </data>
+  <data name="Sample_BelemLink" xml:space="preserve">
+    <value>La tour de Belém sur Wikipédia</value>
+  </data>
+  <data name="Sample_Sintra" xml:space="preserve">
+    <value>Excursion à Sintra</value>
+  </data>
+  <data name="Sample_Fado" xml:space="preserve">
+    <value>Soirée fado</value>
+  </data>
+  <data name="Sample_Packing" xml:space="preserve">
+    <value>Liste de bagages</value>
+  </data>
+  <data name="Sample_Passport" xml:space="preserve">
+    <value>Passeport</value>
+  </data>
+  <data name="Sample_Shoes" xml:space="preserve">
+    <value>Chaussures confortables</value>
+  </data>
+  <data name="Sample_Sunscreen" xml:space="preserve">
+    <value>Crème solaire</value>
+  </data>
+  <data name="Sample_LisbonLink" xml:space="preserve">
+    <value>Visit Lisboa, le site officiel du tourisme</value>
+  </data>
+  <data name="Crash_Title" xml:space="preserve">
+    <value>Un problème est survenu</value>
+  </data>
+  <data name="Crash_Message" xml:space="preserve">
+    <value>MindBuzz a rencontré une erreur inattendue.</value>
+  </data>
+  <data name="Crash_RecoveryWritten" xml:space="preserve">
+    <value>Vos modifications non enregistrées ont été écrites dans le fichier de récupération à côté du document. Vous pouvez continuer à travailler, mais il vaut mieux enregistrer bientôt.</value>
+  </data>
+  <data name="Crash_RecoveryFailed" xml:space="preserve">
+    <value>Le fichier de récupération n'a pas pu être écrit. Enregistrez le document dès que possible.</value>
+  </data>
+  <data name="Crash_Untitled" xml:space="preserve">
+    <value>Ce document n'a jamais été enregistré, il n'y a donc pas de fichier de récupération. Enregistrez-le maintenant pour plus de sûreté.</value>
+  </data>
+  <data name="Crash_NothingUnsaved" xml:space="preserve">
+    <value>Il n'y a aucune modification non enregistrée. Vous pouvez continuer à travailler.</value>
+  </data>
+  <data name="Crash_Details" xml:space="preserve">
+    <value>Détails techniques</value>
+  </data>
+  <data name="Crash_CopyDetails" xml:space="preserve">
+    <value>Copier les détails</value>
+  </data>
+  <data name="Answer_Continue" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="Answer_Quit" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+  <data name="A11y_Map" xml:space="preserve">
+    <value>Carte mentale</value>
+  </data>
+  <data name="A11y_MapType" xml:space="preserve">
+    <value>carte mentale</value>
+  </data>
+  <data name="A11y_MapNothingSelected" xml:space="preserve">
+    <value>Carte mentale, rien de sélectionné</value>
+  </data>
+  <data name="A11y_LevelCentral" xml:space="preserve">
+    <value>sujet central</value>
+  </data>
+  <data name="A11y_LevelMain" xml:space="preserve">
+    <value>sujet principal</value>
+  </data>
+  <data name="A11y_LevelSubFormat" xml:space="preserve">
+    <value>sous-sujet, niveau {0}</value>
+  </data>
+  <data name="A11y_PositionFormat" xml:space="preserve">
+    <value>{0} sur {1}</value>
+  </data>
+  <data name="A11y_SubtopicsFormat" xml:space="preserve">
+    <value>{0} sous-sujets</value>
+  </data>
+  <data name="A11y_CollapsedFormat" xml:space="preserve">
+    <value>réduit, {0} sous-sujets masqués</value>
+  </data>
+  <data name="A11y_PriorityFormat" xml:space="preserve">
+    <value>priorité {0}</value>
+  </data>
+  <data name="A11y_ProgressFormat" xml:space="preserve">
+    <value>{0} % fait</value>
+  </data>
+  <data name="A11y_Done" xml:space="preserve">
+    <value>terminé</value>
+  </data>
+  <data name="A11y_HasNote" xml:space="preserve">
+    <value>a une note</value>
+  </data>
+  <data name="A11y_LinksFormat" xml:space="preserve">
+    <value>{0} liens</value>
+  </data>
+  <data name="A11y_RelationshipOneWay" xml:space="preserve">
+    <value>Relation de {0} vers {1}</value>
+  </data>
+  <data name="A11y_RelationshipTwoWay" xml:space="preserve">
+    <value>Relation entre {0} et {1}</value>
+  </data>
+  <data name="A11y_Separator" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="Status_PastePartlyRead" xml:space="preserve">
+    <value>Collé. Certaines parties n'ont pas pu être lues et ont été omises.</value>
+  </data>
+  <data name="Title_ProductFormat" xml:space="preserve">
+    <value>{0} | {1}</value>
+  </data>
+  <data name="Title_UntitledFile" xml:space="preserve">
+    <value>sans titre</value>
+  </data>
+  <data name="Icon_alert" xml:space="preserve">
+    <value>Alerte</value>
+  </data>
+  <data name="Icon_exclamation" xml:space="preserve">
+    <value>Point d'exclamation</value>
+  </data>
+  <data name="Icon_question" xml:space="preserve">
+    <value>Point d'interrogation</value>
+  </data>
+  <data name="Icon_money" xml:space="preserve">
+    <value>Argent</value>
+  </data>
+  <data name="Icon_idea" xml:space="preserve">
+    <value>Idée</value>
+  </data>
+  <data name="Icon_star" xml:space="preserve">
+    <value>Étoile</value>
+  </data>
+  <data name="Icon_flag" xml:space="preserve">
+    <value>Drapeau</value>
+  </data>
+  <data name="Icon_heart" xml:space="preserve">
+    <value>Cœur</value>
+  </data>
+  <data name="Icon_clock" xml:space="preserve">
+    <value>Horloge</value>
+  </data>
+  <data name="Icon_pin" xml:space="preserve">
+    <value>Lieu</value>
+  </data>
+  <data name="Command_RemoveTopicIcon" xml:space="preserve">
+    <value>_Aucune</value>
+  </data>
+  <data name="Menu_TopicIcon" xml:space="preserve">
+    <value>_Icône</value>
+  </data>
+  <data name="A11y_IconFormat" xml:space="preserve">
+    <value>icône : {0}</value>
+  </data>
+  <data name="Tip_ProgressFormat" xml:space="preserve">
+    <value>Progression : {0} %</value>
+  </data>
+  <data name="Tip_ProgressDone" xml:space="preserve">
+    <value>Progression : terminé</value>
+  </data>
+  <data name="Tip_PriorityFormat" xml:space="preserve">
+    <value>Priorité : {0}</value>
+  </data>
+  <data name="Tip_PriorityHighest" xml:space="preserve">
+    <value>Priorité : 1 (la plus haute)</value>
+  </data>
+  <data name="Tip_PriorityLowest" xml:space="preserve">
+    <value>Priorité : 5 (la plus basse)</value>
+  </data>
+  <data name="Tip_OneLink" xml:space="preserve">
+    <value>1 lien</value>
+  </data>
+  <data name="Tip_LinksFormat" xml:space="preserve">
+    <value>{0} liens</value>
+  </data>
+  <data name="Tip_NoteFormat" xml:space="preserve">
+    <value>Note : {0}</value>
+  </data>
+  <data name="Tip_IconFormat" xml:space="preserve">
+    <value>Icône : {0}</value>
+  </data>
+  <data name="Sample_Progress" xml:space="preserve">
+    <value>Les sujets peuvent avoir une progression</value>
+  </data>
+  <data name="Sample_RightClick" xml:space="preserve">
+    <value>Clic droit sur un sujet pour essayer le menu contextuel</value>
+  </data>
+  <data name="Sample_KeyboardHelp" xml:space="preserve">
+    <value>Tout au clavier
+Appuyez sur {0} pour l'aide</value>
+  </data>
+  <data name="Sample_KeyDetailView" xml:space="preserve">
+    <value>{0} : ouvrir la vue détaillée</value>
+  </data>
+  <data name="Sample_MoreToTry" xml:space="preserve">
+    <value>Encore à essayer</value>
+  </data>
+  <data name="Sample_Formatting" xml:space="preserve">
+    <value>En tapant, {0}, {1}, {2} : **gras**, *italique*, ++souligné++</value>
+  </data>
+  <data name="Sample_MultiSelect" xml:space="preserve">
+    <value>{0}-clic sur plusieurs sujets, puis copiez, coupez ou faites-les glisser ensemble</value>
+  </data>
+  <data name="Sample_FullScreen" xml:space="preserve">
+    <value>{0} : rien que la carte, en plein écran</value>
+  </data>
+  <data name="Sample_CopyImage" xml:space="preserve">
+    <value>{0} › {1} : collez la carte dans des diapositives ou un e-mail</value>
+  </data>
+  <data name="Sample_KeySearch" xml:space="preserve">
+    <value>{0} : essayez la recherche globale</value>
+  </data>
+  <data name="Command_PrintShortcuts" xml:space="preserve">
+    <value>Im_primer les raccourcis clavier</value>
+  </data>
+  <data name="Status_PrintShortcutsFailed" xml:space="preserve">
+    <value>Les raccourcis clavier n'ont pas pu être ouverts : aucune app pour les fichiers PDF n'a été trouvée.</value>
+  </data>
+  <data name="Sheet_Title" xml:space="preserve">
+    <value>Raccourcis clavier</value>
+  </data>
+  <data name="Sheet_FileName" xml:space="preserve">
+    <value>Raccourcis clavier.pdf</value>
+  </data>
+  <data name="Sheet_Moving" xml:space="preserve">
+    <value>Se déplacer</value>
+  </data>
+  <data name="Sheet_ContextMenu" xml:space="preserve">
+    <value>Ouvrir le menu du sujet sélectionné</value>
+  </data>
+  <data name="Sheet_Typing" xml:space="preserve">
+    <value>Saisie</value>
+  </data>
+  <data name="Sheet_TypingDone" xml:space="preserve">
+    <value>Terminer la saisie</value>
+  </data>
+  <data name="Sheet_TypingNewLine" xml:space="preserve">
+    <value>Nouvelle ligne pendant la saisie</value>
+  </data>
+  <data name="Sheet_TypingCancel" xml:space="preserve">
+    <value>Annuler la saisie</value>
+  </data>
+  <data name="Sheet_Topics" xml:space="preserve">
+    <value>Sujets</value>
+  </data>
+  <data name="Sheet_Arranging" xml:space="preserve">
+    <value>Organiser</value>
+  </data>
+  <data name="Sheet_ShowHide" xml:space="preserve">
+    <value>Afficher et masquer</value>
+  </data>
+  <data name="Sheet_Levels" xml:space="preserve">
+    <value>Afficher les niveaux 1 à 9</value>
+  </data>
+  <data name="Sheet_Markers" xml:space="preserve">
+    <value>Priorité et progression</value>
+  </data>
+  <data name="Sheet_Priorities" xml:space="preserve">
+    <value>Priorité 1 à 5</value>
+  </data>
+  <data name="Sheet_Details" xml:space="preserve">
+    <value>Vue détaillée, liens et notes</value>
+  </data>
+  <data name="Sheet_Relationships" xml:space="preserve">
+    <value>Relations</value>
+  </data>
+  <data name="Sheet_LinkFinish" xml:space="preserve">
+    <value>Choisir la cible : sens unique ou double sens</value>
+  </data>
+  <data name="Sheet_Search" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="Sheet_View" xml:space="preserve">
+    <value>Présentation</value>
+  </data>
+  <data name="Sheet_Maps" xml:space="preserve">
+    <value>Cartes</value>
+  </data>
+  <data name="Sheet_Files" xml:space="preserve">
+    <value>Fichiers et aide</value>
+  </data>
+  <data name="Sheet_Or" xml:space="preserve">
+    <value> ou </value>
+  </data>
+  <data name="Sheet_RangeFormat" xml:space="preserve">
+    <value>{0} … {1}</value>
+  </data>
+  <data name="Sheet_KeyCommand" xml:space="preserve">
+    <value>Commande</value>
+  </data>
+  <data name="Sheet_KeyOption" xml:space="preserve">
+    <value>Option</value>
+  </data>
+  <data name="Sheet_KeyShift" xml:space="preserve">
+    <value>Maj</value>
+  </data>
+  <data name="Sheet_KeyControl" xml:space="preserve">
+    <value>Contrôle</value>
+  </data>
+  <data name="Sheet_KeyReturn" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="Sheet_KeyEscape" xml:space="preserve">
+    <value>Échap</value>
+  </data>
+  <data name="Sheet_KeyTab" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="Sheet_KeyDelete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Sheet_KeyForwardDelete" xml:space="preserve">
+    <value>Supprimer à droite (fn ⌫)</value>
+  </data>
+  <data name="Sheet_KeyHome" xml:space="preserve">
+    <value>Début (fn ←)</value>
+  </data>
+  <data name="Sheet_KeyEnd" xml:space="preserve">
+    <value>Fin (fn →)</value>
+  </data>
+  <data name="Sheet_KeyPageUp" xml:space="preserve">
+    <value>Page précédente (fn ↑)</value>
+  </data>
+  <data name="Sheet_KeyPageDown" xml:space="preserve">
+    <value>Page suivante (fn ↓)</value>
+  </data>
+  <data name="Command_LightTheme" xml:space="preserve">
+    <value>Thème _clair</value>
+  </data>
+  <data name="Command_DarkTheme" xml:space="preserve">
+    <value>Thème _sombre</value>
+  </data>
+  <data name="Command_PrintMarkdownHelp" xml:space="preserve">
+    <value>Imprimer l'aide _Markdown</value>
+  </data>
+  <data name="Panel_MarkdownHelp" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="Notes_ToolStrikethrough" xml:space="preserve">
+    <value>Barré</value>
+  </data>
+  <data name="Notes_ToolCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Notes_ToolHeading" xml:space="preserve">
+    <value>Titre : 1, 2, 3, puis normal</value>
+  </data>
+  <data name="Notes_ToolBulletList" xml:space="preserve">
+    <value>Liste à puces</value>
+  </data>
+  <data name="Notes_ToolNumberedList" xml:space="preserve">
+    <value>Liste numérotée</value>
+  </data>
+  <data name="Notes_ToolQuote" xml:space="preserve">
+    <value>Citation</value>
+  </data>
+  <data name="Notes_ToolLink" xml:space="preserve">
+    <value>Lien</value>
+  </data>
+  <data name="Notes_ToolTable" xml:space="preserve">
+    <value>Tableau</value>
+  </data>
+  <data name="Notes_LinkPlaceholder" xml:space="preserve">
+    <value>texte du lien</value>
+  </data>
+  <data name="Notes_TableColumnFormat" xml:space="preserve">
+    <value>Colonne {0}</value>
+  </data>
+  <data name="Format_StrikeLetter" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Format_HeadingLetter" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <data name="Panel_MarkdownHelpTooltip" xml:space="preserve">
+    <value>Aide Markdown : une page PDF à imprimer</value>
+  </data>
+  <data name="Command_CopyMapImage" xml:space="preserve">
+    <value>Copier la carte en _image</value>
+  </data>
+  <data name="Command_ToggleFullScreen" xml:space="preserve">
+    <value>_Plein écran sans distraction</value>
+  </data>
+  <data name="Command_ExtendUp" xml:space="preserve">
+    <value>Ajouter le sujet au-dessus à la sélection</value>
+  </data>
+  <data name="Command_ExtendDown" xml:space="preserve">
+    <value>Ajouter le sujet en dessous à la sélection</value>
+  </data>
+  <data name="Command_ExtendLeft" xml:space="preserve">
+    <value>Ajouter le sujet à gauche à la sélection</value>
+  </data>
+  <data name="Command_ExtendRight" xml:space="preserve">
+    <value>Ajouter le sujet à droite à la sélection</value>
+  </data>
+  <data name="Status_MapImageCopied" xml:space="preserve">
+    <value>La carte est dans le presse-papiers sous forme d'image.</value>
+  </data>
+  <data name="Panel_SelectionFormat" xml:space="preserve">
+    <value>{0} sélectionnés, le dernier est affiché</value>
+  </data>
+  <data name="Status_NoClipboard" xml:space="preserve">
+    <value>Il n'y a pas de presse-papiers ici : rien n'a été copié ni coupé.</value>
+  </data>
+  <data name="Status_PrintMarkdownHelpFailed" xml:space="preserve">
+    <value>L'aide Markdown n'a pas pu être ouverte : aucune app pour les fichiers PDF n'a été trouvée.</value>
+  </data>
+  <data name="MarkdownSheet_Title" xml:space="preserve">
+    <value>Markdown dans les notes</value>
+  </data>
+  <data name="MarkdownSheet_FileName" xml:space="preserve">
+    <value>Aide Markdown.pdf</value>
+  </data>
+  <data name="MarkdownSheet_Text" xml:space="preserve">
+    <value>Texte</value>
+  </data>
+  <data name="MarkdownSheet_BoldSyntax" xml:space="preserve">
+    <value>**gras**</value>
+  </data>
+  <data name="MarkdownSheet_Bold" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="MarkdownSheet_ItalicSyntax" xml:space="preserve">
+    <value>*italique*</value>
+  </data>
+  <data name="MarkdownSheet_Italic" xml:space="preserve">
+    <value>Italique</value>
+  </data>
+  <data name="MarkdownSheet_BoldItalicSyntax" xml:space="preserve">
+    <value>***les deux***</value>
+  </data>
+  <data name="MarkdownSheet_BoldItalic" xml:space="preserve">
+    <value>Gras et italique</value>
+  </data>
+  <data name="MarkdownSheet_StrikeSyntax" xml:space="preserve">
+    <value>~~ancien~~</value>
+  </data>
+  <data name="MarkdownSheet_Strike" xml:space="preserve">
+    <value>Barré</value>
+  </data>
+  <data name="MarkdownSheet_Code" xml:space="preserve">
+    <value>Du code dans une ligne</value>
+  </data>
+  <data name="MarkdownSheet_Escape" xml:space="preserve">
+    <value>Une barre oblique inverse affiche le caractère suivant tel quel, sans mise en forme</value>
+  </data>
+  <data name="MarkdownSheet_Headings" xml:space="preserve">
+    <value>Titres</value>
+  </data>
+  <data name="MarkdownSheet_Heading1Syntax" xml:space="preserve">
+    <value># Titre</value>
+  </data>
+  <data name="MarkdownSheet_Heading1" xml:space="preserve">
+    <value>Le plus grand titre</value>
+  </data>
+  <data name="MarkdownSheet_Heading2Syntax" xml:space="preserve">
+    <value>## Titre</value>
+  </data>
+  <data name="MarkdownSheet_Heading2" xml:space="preserve">
+    <value>Un titre plus petit</value>
+  </data>
+  <data name="MarkdownSheet_Heading3Syntax" xml:space="preserve">
+    <value>### Titre</value>
+  </data>
+  <data name="MarkdownSheet_Heading3" xml:space="preserve">
+    <value>Plus petit encore, jusqu'à six #</value>
+  </data>
+  <data name="MarkdownSheet_Paragraphs" xml:space="preserve">
+    <value>Paragraphes</value>
+  </data>
+  <data name="MarkdownSheet_ParagraphSyntax" xml:space="preserve">
+    <value>Ligne vide</value>
+  </data>
+  <data name="MarkdownSheet_Paragraph" xml:space="preserve">
+    <value>Commence un nouveau paragraphe ; un simple saut de ligne, non</value>
+  </data>
+  <data name="MarkdownSheet_LineBreakSyntax" xml:space="preserve">
+    <value>ligne\</value>
+  </data>
+  <data name="MarkdownSheet_LineBreak" xml:space="preserve">
+    <value>Une barre oblique inverse en fin de ligne passe à la ligne dans un paragraphe</value>
+  </data>
+  <data name="MarkdownSheet_QuoteSyntax" xml:space="preserve">
+    <value>&gt; citation</value>
+  </data>
+  <data name="MarkdownSheet_Quote" xml:space="preserve">
+    <value>Une citation</value>
+  </data>
+  <data name="MarkdownSheet_Rule" xml:space="preserve">
+    <value>Un trait horizontal, sur une ligne à part</value>
+  </data>
+  <data name="MarkdownSheet_CodeBlock" xml:space="preserve">
+    <value>Un bloc de code : une ligne de trois accents graves avant et après</value>
+  </data>
+  <data name="MarkdownSheet_Lists" xml:space="preserve">
+    <value>Listes</value>
+  </data>
+  <data name="MarkdownSheet_BulletSyntax" xml:space="preserve">
+    <value>- élément</value>
+  </data>
+  <data name="MarkdownSheet_Bullet" xml:space="preserve">
+    <value>Une liste à puces ; * ou + fonctionnent aussi</value>
+  </data>
+  <data name="MarkdownSheet_NumberedSyntax" xml:space="preserve">
+    <value>1. élément</value>
+  </data>
+  <data name="MarkdownSheet_Numbered" xml:space="preserve">
+    <value>Une liste numérotée</value>
+  </data>
+  <data name="MarkdownSheet_NestedSyntax" xml:space="preserve">
+    <value>  - élément</value>
+  </data>
+  <data name="MarkdownSheet_Nested" xml:space="preserve">
+    <value>Une liste dans une liste : indentez-la de deux espaces</value>
+  </data>
+  <data name="MarkdownSheet_TaskSyntax" xml:space="preserve">
+    <value>- [ ] tâche</value>
+  </data>
+  <data name="MarkdownSheet_Task" xml:space="preserve">
+    <value>Une tâche ouverte</value>
+  </data>
+  <data name="MarkdownSheet_TaskDoneSyntax" xml:space="preserve">
+    <value>- [x] tâche</value>
+  </data>
+  <data name="MarkdownSheet_TaskDone" xml:space="preserve">
+    <value>Une tâche terminée</value>
+  </data>
+  <data name="MarkdownSheet_Links" xml:space="preserve">
+    <value>Liens</value>
+  </data>
+  <data name="MarkdownSheet_LinkSyntax" xml:space="preserve">
+    <value>[texte](https://…)</value>
+  </data>
+  <data name="MarkdownSheet_Link" xml:space="preserve">
+    <value>Un lien avec son propre texte ; http, https et mailto uniquement</value>
+  </data>
+  <data name="MarkdownSheet_AutoLink" xml:space="preserve">
+    <value>Un lien qui affiche son adresse</value>
+  </data>
+  <data name="MarkdownSheet_ImageSyntax" xml:space="preserve">
+    <value>![texte](…)</value>
+  </data>
+  <data name="MarkdownSheet_Image" xml:space="preserve">
+    <value>Les images ne sont jamais chargées ; le texte s'affiche à la place</value>
+  </data>
+  <data name="MarkdownSheet_Tables" xml:space="preserve">
+    <value>Tableaux</value>
+  </data>
+  <data name="MarkdownSheet_TableRow" xml:space="preserve">
+    <value>Une ligne de tableau, les cellules entre des barres</value>
+  </data>
+  <data name="MarkdownSheet_TableRule" xml:space="preserve">
+    <value>Le trait sous la ligne d'en-tête, nécessaire pour un tableau</value>
+  </data>
+  <data name="MarkdownSheet_Editor" xml:space="preserve">
+    <value>Dans l'éditeur</value>
+  </data>
+  <data name="MarkdownSheet_EditorBold" xml:space="preserve">
+    <value>Gras : la sélection, sinon le mot au curseur ; encore une fois pour normal</value>
+  </data>
+  <data name="MarkdownSheet_EditorItalic" xml:space="preserve">
+    <value>Italique : la sélection, sinon le mot au curseur ; encore une fois pour normal</value>
+  </data>
+  <data name="MarkdownSheet_EditorMode" xml:space="preserve">
+    <value>Bascule entre Modifier et Aperçu</value>
+  </data>
+  <data name="Key_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="Key_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="Key_Shift" xml:space="preserve">
+    <value>Maj</value>
+  </data>
+  <data name="Key_Win" xml:space="preserve">
+    <value>Win</value>
+  </data>
+  <data name="Key_Enter" xml:space="preserve">
+    <value>Entrée</value>
+  </data>
+  <data name="Key_Esc" xml:space="preserve">
+    <value>Échap</value>
+  </data>
+  <data name="Key_Tab" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="Key_Backspace" xml:space="preserve">
+    <value>Retour arrière</value>
+  </data>
+  <data name="Key_Delete" xml:space="preserve">
+    <value>Suppr</value>
+  </data>
+  <data name="Key_Insert" xml:space="preserve">
+    <value>Inser</value>
+  </data>
+  <data name="Key_Space" xml:space="preserve">
+    <value>Espace</value>
+  </data>
+  <data name="Key_Up" xml:space="preserve">
+    <value>Haut</value>
+  </data>
+  <data name="Key_Down" xml:space="preserve">
+    <value>Bas</value>
+  </data>
+  <data name="Key_Left" xml:space="preserve">
+    <value>Gauche</value>
+  </data>
+  <data name="Key_Right" xml:space="preserve">
+    <value>Droite</value>
+  </data>
+  <data name="Key_Home" xml:space="preserve">
+    <value>Origine</value>
+  </data>
+  <data name="Key_End" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="Key_PageUp" xml:space="preserve">
+    <value>Pg.Préc</value>
+  </data>
+  <data name="Key_PageDown" xml:space="preserve">
+    <value>Pg.Suiv</value>
+  </data>
+</root>

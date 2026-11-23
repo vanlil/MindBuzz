@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The seeded map generator. Every measurement and most tests use what it generates, never
+       real user files. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MindBuzz.SyntheticMap</RootNamespace>
+    <AssemblyName>MindBuzz.SyntheticMap</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Core\MindBuzz.Core.csproj" />
+  </ItemGroup>
+
+</Project>

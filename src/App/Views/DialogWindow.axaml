@@ -1,0 +1,100 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:services="using:MindBuzz.App.Services"
+        xmlns:loc="using:MindBuzz.App.Localization"
+        x:Class="MindBuzz.App.Views.DialogWindow"
+        x:DataType="services:MessageRequest"
+        Title="{Binding Title}"
+        Icon="/Assets/MindBuzz.ico"
+        CanMinimize="False"
+        CanMaximize="False"
+        SizeToContent="WidthAndHeight"
+        MinWidth="380"
+        MaxWidth="560"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+
+  <Border Padding="24,20" Background="{DynamicResource AppSurfaceBrush}">
+    <StackPanel Spacing="16">
+
+      <!-- The app mark beside the message: the same drawn geometry as the toolbar icons, at a larger size. -->
+      <Grid ColumnDefinitions="Auto,16,*">
+        <Border Grid.Column="0"
+                Width="44" Height="44"
+                CornerRadius="{DynamicResource AppRadiusLarge}"
+                Background="{DynamicResource TopicCentralFillBrush}"
+                BorderBrush="{DynamicResource TopicCentralStrokeBrush}"
+                BorderThickness="1.5"
+                VerticalAlignment="Top">
+          <Path Classes="icon"
+                Width="26" Height="26"
+                Stroke="{DynamicResource TopicCentralStrokeBrush}"
+                StrokeThickness="1.4"
+                Data="{StaticResource IconMindMap}" />
+        </Border>
+
+        <!-- Message, then the optional lines: version, link, licence. Each collapses when the request leaves
+             it out, so a plain message dialog is still a message and a button. -->
+        <StackPanel Grid.Column="2" Spacing="6">
+          <TextBlock Classes="title" TextWrapping="Wrap" Text="{Binding Title}" />
+          <TextBlock TextWrapping="Wrap" Text="{Binding Message}" />
+
+          <TextBlock Classes="caption num"
+                     Text="{Binding Version}"
+                     IsVisible="{Binding Version, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+          <Button Classes="link"
+                  Click="OnOpenLink"
+                  ToolTip.Tip="{x:Static loc:Strings.About_RepositoryTooltip}"
+                  IsVisible="{Binding LinkText, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <TextBlock Text="{Binding LinkText}" />
+          </Button>
+
+          <TextBlock Classes="caption"
+                     TextWrapping="Wrap"
+                     Margin="0,6,0,0"
+                     Text="{Binding Legal}"
+                     IsVisible="{Binding Legal, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </StackPanel>
+      </Grid>
+
+      <!-- The bundled components' notices: a few rows tall and scrolling, because the text is long, verbatim
+           and legally required to be here, but it is not what someone opens About to read. Selectable so it
+           can be copied out. -->
+      <StackPanel Spacing="4"
+                  IsVisible="{Binding Notices, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <TextBlock Classes="sectionHeader" Text="{Binding NoticesLabel}" />
+        <Border Padding="8,6"
+                CornerRadius="{DynamicResource AppRadiusSmall}"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource AppBorderBrush}"
+                Background="{DynamicResource AppBackgroundBrush}">
+          <!-- The notices are hard-wrapped at 80 columns, verbatim. Wrapping them again at the box's width
+               breaks every line in two, so they are shown unwrapped, small, and scroll sideways if needed. -->
+          <ScrollViewer MaxHeight="112"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+            <SelectableTextBlock x:Name="NoticesText"
+                                 Classes="caption"
+                                 FontSize="{DynamicResource AppFontSizeMicro}"
+                                 TextWrapping="NoWrap"
+                                 Margin="0,0,14,14"
+                                 Text="{Binding Notices}" />
+          </ScrollViewer>
+        </Border>
+      </StackPanel>
+
+      <Button x:Name="CloseButton"
+              HorizontalAlignment="Right"
+              Classes="Primary"
+              Theme="{DynamicResource SolidButton}"
+              Content="{Binding CloseLabel}"
+              IsDefault="True"
+              IsCancel="True"
+              Click="OnClose" />
+
+    </StackPanel>
+  </Border>
+
+</Window>

@@ -1,0 +1,29 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!--
+      One version for every assembly in the solution, and the one the About dialog shows. Set here rather
+      than per project so the number cannot drift between the head, the app and Core. Every other place
+      that needs it (Info.plist, the bundle script) reads it from here. A release is a deliberate edit of
+      this line.
+    -->
+    <Version>0.9.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- The code stays clean because the build forces it, not because anyone remembers to. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <!-- Numbers and dates on screen follow the user's culture, which needs real ICU data. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <NeutralLanguage>en</NeutralLanguage>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <IsPackable>false</IsPackable>
+    <!-- Portability: never emit anything platform-pinned. net10.0-windows breaks the macOS build. -->
+    <EnableWindowsTargeting>false</EnableWindowsTargeting>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,276 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MindBuzz.App.ViewModels"
+             xmlns:loc="using:MindBuzz.App.Localization"
+             xmlns:ae="using:AvaloniaEdit"
+             x:Class="MindBuzz.App.Views.TopicPanel"
+             x:DataType="vm:TopicPanelViewModel">
+
+  <!--
+    The topic panel: the selected topic's title, markers, links and Markdown note. The note editor
+    and preview are filled in code-behind, which keeps the editor and the view model's text in step.
+  -->
+  <Border Classes="topicPanel">
+    <DockPanel>
+
+      <!-- Header: what this is, and a way to close it. -->
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="16,10,8,0">
+        <!-- With several topics selected, the panel shows the last one and says so. -->
+        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <TextBlock Classes="sectionHeader" VerticalAlignment="Center" Text="{x:Static loc:Strings.Panel_Topic}" />
+          <TextBlock x:Name="SelectionNote" Classes="caption" VerticalAlignment="Center"
+                     Text="{Binding SelectionNote}" IsVisible="{Binding SelectionNote, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+          <Button Classes="zoomStep"
+                  Command="{Binding MaximizeCommand}"
+                  IsVisible="{Binding !IsMaximized}"
+                  ToolTip.Tip="{Binding MaximizeTooltip}"
+                  AutomationProperties.Name="{Binding MaximizeTooltip}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconMaximize}" />
+          </Button>
+          <Button Classes="zoomStep"
+                  Command="{Binding MaximizeCommand}"
+                  IsVisible="{Binding IsMaximized}"
+                  ToolTip.Tip="{Binding RestoreTooltip}"
+                  AutomationProperties.Name="{Binding RestoreTooltip}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconRestore}" />
+          </Button>
+          <Button Classes="zoomStep"
+                  Command="{Binding CloseCommand}"
+                  ToolTip.Tip="{Binding CloseTooltip}"
+                  AutomationProperties.Name="{Binding CloseTooltip}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconClose}" />
+          </Button>
+        </StackPanel>
+      </Grid>
+
+      <TextBlock DockPanel.Dock="Top"
+                 Classes="caption"
+                 Margin="16,12"
+                 TextWrapping="Wrap"
+                 IsVisible="{Binding !HasTopic}"
+                 Text="{x:Static loc:Strings.Panel_NoTopic}" />
+
+      <DockPanel IsVisible="{Binding HasTopic}">
+
+        <!-- The topic's text, editable: Enter or leaving the box commits, Shift+Enter breaks the line, Esc reverts. -->
+        <TextBox x:Name="TitleBox"
+                 DockPanel.Dock="Top"
+                 Classes="panelTitle"
+                 Margin="10,2,10,8"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="False"
+                 AutomationProperties.Name="{x:Static loc:Strings.Panel_TitleName}" />
+
+        <!-- Markers: the same toggles as the menus. The digit and the label carry the meaning. -->
+        <StackPanel DockPanel.Dock="Top" Margin="16,0,16,12" Spacing="6" Grid.IsSharedSizeScope="True">
+          <Grid>
+            <!-- The label column grows with its words ("Fortschritt", "Progression"), the same for both rows. -->
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" MinWidth="64" SharedSizeGroup="MarkerLabel" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Classes="caption" VerticalAlignment="Center" Margin="0,0,8,0" Text="{x:Static loc:Strings.Panel_Priority}" />
+            <ItemsControl Grid.Column="1" ItemsSource="{Binding Priorities}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="4" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:MarkerChoice">
+                  <Button Classes="markerChoice square"
+                          Classes.active="{Binding IsActive}"
+                          Content="{Binding Label}"
+                          Command="{Binding Command}"
+                          ToolTip.Tip="{Binding Tooltip}"
+                          AutomationProperties.Name="{Binding Tooltip}" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Grid>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" MinWidth="64" SharedSizeGroup="MarkerLabel" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Classes="caption" VerticalAlignment="Top" Margin="0,4,8,0" Text="{x:Static loc:Strings.Panel_Progress}" />
+            <ItemsControl Grid.Column="1" ItemsSource="{Binding Progress}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><WrapPanel Orientation="Horizontal" ItemSpacing="4" LineSpacing="4" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:MarkerChoice">
+                  <Button Classes="markerChoice"
+                          Classes.active="{Binding IsActive}"
+                          Content="{Binding Label}"
+                          Command="{Binding Command}"
+                          ToolTip.Tip="{Binding Tooltip}"
+                          AutomationProperties.Name="{Binding Tooltip}" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Grid>
+        </StackPanel>
+
+        <Border DockPanel.Dock="Top" Classes="panelRule" />
+
+        <!-- Links: the same operations and keys as the link list popup. -->
+        <Border DockPanel.Dock="Top" DataContext="{Binding Links}">
+        <StackPanel Margin="16,10,16,12" Spacing="6" x:DataType="vm:LinkListViewModel">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Classes="sectionHeader" VerticalAlignment="Center" Text="{x:Static loc:Strings.Panel_Links}" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+              <Button Classes="zoomStep" Command="{Binding AddCommand}"
+                      ToolTip.Tip="{x:Static loc:Strings.Panel_AddLink}" AutomationProperties.Name="{x:Static loc:Strings.Panel_AddLink}">
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconPlus}" />
+              </Button>
+              <Button Classes="zoomStep" Command="{Binding EditCommand}" IsVisible="{Binding !IsEmpty}"
+                      ToolTip.Tip="{x:Static loc:Strings.Panel_EditLink}" AutomationProperties.Name="{x:Static loc:Strings.Panel_EditLink}">
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconEdit}" />
+              </Button>
+              <Button Classes="zoomStep" Command="{Binding RemoveCommand}" IsVisible="{Binding !IsEmpty}"
+                      ToolTip.Tip="{x:Static loc:Strings.Panel_RemoveLink}" AutomationProperties.Name="{x:Static loc:Strings.Panel_RemoveLink}">
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconDelete}" />
+              </Button>
+              <Button Classes="zoomStep" Command="{Binding MoveUpCommand}" IsVisible="{Binding !IsEmpty}"
+                      ToolTip.Tip="{x:Static loc:Strings.LinkList_MoveUp}" AutomationProperties.Name="{x:Static loc:Strings.LinkList_MoveUp}">
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconChevronUp}" />
+              </Button>
+              <Button Classes="zoomStep" Command="{Binding MoveDownCommand}" IsVisible="{Binding !IsEmpty}"
+                      ToolTip.Tip="{x:Static loc:Strings.LinkList_MoveDown}" AutomationProperties.Name="{x:Static loc:Strings.LinkList_MoveDown}">
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconChevronDown}" />
+              </Button>
+            </StackPanel>
+          </Grid>
+
+          <TextBlock Classes="caption" Text="{x:Static loc:Strings.Panel_NoLinks}" IsVisible="{Binding IsEmpty}" />
+
+          <ListBox x:Name="LinkList"
+                   Classes="links panelLinks"
+                   MaxHeight="{StaticResource PanelLinksHeight}"
+                   IsVisible="{Binding !IsEmpty}"
+                   ItemsSource="{Binding Links}"
+                   SelectedIndex="{Binding SelectedIndex}">
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="vm:LinkRow">
+                <!-- One line per link: "Title (address)", the title bold, the address muted. -->
+                <TextBlock Classes="panelLink" Margin="0,1" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Url}">
+                  <Run Classes="panelLinkTitle" Text="{Binding Heading}" />
+                  <Run Classes="panelLinkUrl" Text="{Binding UrlSuffix}" />
+                </TextBlock>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Top" Classes="panelRule" />
+
+        <!-- Notes: the Markdown toolbar, left; Edit and Preview, Preview by default when there is a
+             note; Help apart from them, because it is no mode but opens the Markdown sheet. The toolbar works in Edit
+             only. The panel is never narrower than this row (MainWindow.MinPanelWidth, measured per language). -->
+        <Grid x:Name="NotesHeader" DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto" Margin="16,10,16,8">
+          <StackPanel x:Name="NotesToolbar" Orientation="Horizontal" Spacing="6" IsEnabled="{Binding IsEditMode}">
+            <Border Classes="segmented">
+              <StackPanel Orientation="Horizontal">
+                <Button x:Name="NoteBoldButton" Classes="segment tool" Click="OnNoteBold" ToolTip.Tip="{Binding BoldTooltip}"
+                        AutomationProperties.Name="{Binding BoldTooltip}">
+                  <TextBlock Text="{x:Static loc:Strings.Format_BoldLetter}" FontWeight="Bold" />
+                </Button>
+                <Button x:Name="NoteItalicButton" Classes="segment tool" Click="OnNoteItalic" ToolTip.Tip="{Binding ItalicTooltip}"
+                        AutomationProperties.Name="{Binding ItalicTooltip}">
+                  <TextBlock Text="{x:Static loc:Strings.Format_ItalicLetter}" FontStyle="Italic" FontFeatures="cv08" />
+                </Button>
+                <Button Classes="segment tool" Click="OnNoteStrike" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolStrikethrough}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolStrikethrough}">
+                  <!-- The font's strikethrough runs along the S's own middle stroke and vanishes; a wider line shows. -->
+                  <Panel>
+                    <TextBlock Text="{x:Static loc:Strings.Format_StrikeLetter}" HorizontalAlignment="Center" />
+                    <Rectangle Width="13" Height="1.3" Fill="{DynamicResource AppTextBrush}" VerticalAlignment="Center" Margin="0,1,0,0" />
+                  </Panel>
+                </Button>
+                <Button Classes="segment tool" Click="OnNoteCode" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolCode}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolCode}">
+                  <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconCode}" />
+                </Button>
+              </StackPanel>
+            </Border>
+            <Border Classes="segmented">
+              <Button x:Name="NoteHeadingButton" Classes="segment tool" Click="OnNoteHeading" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolHeading}"
+                      AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolHeading}">
+                <TextBlock Text="{x:Static loc:Strings.Format_HeadingLetter}" FontWeight="SemiBold" />
+              </Button>
+            </Border>
+            <Border Classes="segmented">
+              <StackPanel Orientation="Horizontal">
+                <Button x:Name="NoteBulletButton" Classes="segment tool" Click="OnNoteBullet" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolBulletList}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolBulletList}">
+                  <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconListBullet}" />
+                </Button>
+                <Button Classes="segment tool" Click="OnNoteNumbered" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolNumberedList}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolNumberedList}">
+                  <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconListNumbered}" />
+                </Button>
+                <Button Classes="segment tool" Click="OnNoteQuote" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolQuote}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolQuote}">
+                  <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconQuote}" />
+                </Button>
+              </StackPanel>
+            </Border>
+            <Border Classes="segmented">
+              <StackPanel Orientation="Horizontal">
+                <Button x:Name="NoteLinkButton" Classes="segment tool" Click="OnNoteLink" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolLink}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolLink}">
+                  <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconLink}" RenderTransform="scale(0.85)" />
+                </Button>
+                <Button x:Name="NoteTableButton" Classes="segment tool" Click="OnNoteTable" ToolTip.Tip="{x:Static loc:Strings.Notes_ToolTable}"
+                        AutomationProperties.Name="{x:Static loc:Strings.Notes_ToolTable}">
+                  <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconTable}" />
+                </Button>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+          <Border Grid.Column="1" Classes="segmented" Margin="12,0,0,0" ToolTip.Tip="{Binding ModeTooltip}">
+            <StackPanel Orientation="Horizontal">
+              <Button x:Name="EditModeButton" Classes="segment" Classes.active="{Binding IsEditMode}"
+                      Content="{x:Static loc:Strings.Panel_Edit}" Command="{Binding ShowEditCommand}" />
+              <Button x:Name="PreviewModeButton" Classes="segment" Classes.active="{Binding IsPreview}"
+                      Content="{x:Static loc:Strings.Panel_Preview}" Command="{Binding ShowPreviewCommand}" />
+            </StackPanel>
+          </Border>
+          <Border Grid.Column="2" Classes="segmented" Margin="8,0,0,0" ToolTip.Tip="{x:Static loc:Strings.Panel_MarkdownHelpTooltip}">
+            <Button x:Name="MarkdownHelpButton" Classes="segment"
+                    Content="{x:Static loc:Strings.Panel_MarkdownHelp}" Command="{Binding MarkdownHelpCommand}" />
+          </Border>
+        </Grid>
+
+        <Panel Margin="16,0,16,16">
+          <Border x:Name="EditorFrame" Classes="noteEditorFrame" IsVisible="{Binding IsEditMode}">
+            <ae:TextEditor x:Name="Editor"
+                           Classes="noteEditor"
+                           WordWrap="True"
+                           ShowLineNumbers="False"
+                           HorizontalScrollBarVisibility="Disabled"
+                           VerticalScrollBarVisibility="Auto"
+                           AutomationProperties.Name="{x:Static loc:Strings.Panel_Notes}" />
+          </Border>
+          <Border Classes="notePreviewFrame" IsVisible="{Binding IsPreview}">
+          <ScrollViewer x:Name="PreviewScroll"
+                        Classes="notePreview"
+                        Focusable="True"
+                        FocusAdorner="{x:Null}"
+                        HorizontalScrollBarVisibility="Disabled"
+                        AutomationProperties.Name="{x:Static loc:Strings.Panel_Preview}">
+            <Panel Margin="0,0,14,0">
+              <TextBlock Classes="caption" Text="{x:Static loc:Strings.Panel_NothingToPreview}" IsVisible="{Binding IsNoteEmpty}" TextWrapping="Wrap" />
+              <ContentControl x:Name="PreviewHost" />
+            </Panel>
+          </ScrollViewer>
+          </Border>
+        </Panel>
+
+      </DockPanel>
+    </DockPanel>
+  </Border>
+
+</UserControl>

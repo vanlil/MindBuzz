@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:services="using:MindBuzz.App.Services"
+        xmlns:loc="using:MindBuzz.App.Localization"
+        x:Class="MindBuzz.App.Views.LinkEditWindow"
+        x:DataType="services:LinkEditRequest"
+        Title="{Binding WindowTitle}"
+        Icon="/Assets/MindBuzz.ico"
+        CanMinimize="False"
+        CanMaximize="False"
+        Width="460"
+        SizeToContent="Height"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+
+  <!-- Add or edit one internet link. Only allowed addresses can be confirmed. -->
+  <Border Padding="24,20" Background="{DynamicResource AppSurfaceBrush}">
+    <StackPanel Spacing="14">
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <Path Classes="icon" VerticalAlignment="Center" Width="18" Height="18" Data="{StaticResource IconLink}" />
+        <TextBlock Classes="title" VerticalAlignment="Center" Text="{Binding WindowTitle}" />
+      </StackPanel>
+
+      <StackPanel Spacing="6">
+        <Label Target="UrlBox" Content="{x:Static loc:Strings.LinkEdit_Url}" />
+        <Border Classes="fieldShadow">
+          <TextBox x:Name="UrlBox" PlaceholderText="{x:Static loc:Strings.LinkEdit_UrlWatermark}" />
+        </Border>
+        <TextBlock x:Name="Hint" Classes="caption" TextWrapping="Wrap" Text="{x:Static loc:Strings.LinkEdit_Hint}" />
+      </StackPanel>
+
+      <StackPanel Spacing="6">
+        <Label Target="TitleBox" Content="{x:Static loc:Strings.LinkEdit_Title}" />
+        <Border Classes="fieldShadow">
+          <TextBox x:Name="TitleBox" />
+        </Border>
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" Margin="0,4,0,0">
+        <Button x:Name="CancelButton" MinWidth="88" IsCancel="True" Content="{x:Static loc:Strings.Answer_Cancel}" />
+        <Button x:Name="OkButton" MinWidth="88" IsDefault="True" Classes="Primary" Theme="{DynamicResource SolidButton}" Content="{Binding OkLabel}" />
+      </StackPanel>
+    </StackPanel>
+  </Border>
+
+</Window>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>MindBuzz.Core.Tests</RootNamespace>
+    <AssemblyName>MindBuzz.Core.Tests</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+    <!-- Test names read as sentences; the analyzer's naming rules get in the way. CA1849 and CA2007 are
+         about async patterns that matter in libraries, not in test bodies. -->
+    <NoWarn>$(NoWarn);CA1707;CA1849;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Core\MindBuzz.Core.csproj" />
+    <!-- Tests run against generated maps, never against real user files. -->
+    <ProjectReference Include="..\SyntheticMap\MindBuzz.SyntheticMap.csproj" />
+  </ItemGroup>
+
+</Project>

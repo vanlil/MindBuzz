@@ -1,0 +1,6 @@
+# GitHub Pages: the product page is docs/index.html (plain HTML, passed through unchanged).
+# The keyboard list and the full-size screenshots in docs/ are for the repository, not the website.
+exclude:
+  - keyboard.md
+  - screenshot-light.png
+  - screenshot-dark.png

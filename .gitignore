@@ -1,0 +1,45 @@
+# Build output. Every project builds into its own bin/ and obj/; publish and bundle output goes to
+# artifacts/, which build.sh and build.cmd create.
+bin/
+obj/
+artifacts/
+publish/
+*.binlog
+
+# Test output: rendered PNGs, TestResults, coverage. The PNGs are for review, not for history.
+TestResults/
+*.trx
+*.coverage
+coverage*.xml
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# IDEs and editors. Per-user state only; shared settings (.editorconfig) live at the root.
+.vs/
+.vscode/
+.idea/
+.openidea/
+*.user
+*.suo
+*.DotSettings.user
+*.swp
+*~
+
+# OS clutter
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
+
+# The specification and the icon generator stay with the owner, outside the repository, in specs/ (its own
+# git repository). CLAUDE.local.md imports specs/CLAUDE.md for Claude Code; .claude/ holds its settings.
+specs/
+CLAUDE.local.md
+.claude/
+
+# MindBuzz documents created while trying the app out in the working tree, and their recovery files. Test fixtures, if any are ever committed, go under tests/ and are force-added.
+/*.mbz
+.*.mbz~

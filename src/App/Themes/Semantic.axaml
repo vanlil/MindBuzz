@@ -1,0 +1,315 @@
+<!--
+  The semantic layer. Nothing in this app references the control theme's internal resource keys:
+  every colour, shadow and metric the views and the canvas use is named here, once per variant. Swapping or
+  upgrading Semi touches this file and nothing else.
+
+  The topic roles: central topic soft blue,
+  main topics rose, subtopics mint, tree connectors muted blue, relationships orange. Hue is never the only
+  cue: the levels also differ in size, weight and corner radius. In dark mode the fills become deep,
+  desaturated tints of the same hues and the outlines carry the hue.
+
+  The canvas resolves these at draw time, never caches them. No test pins any of these values: they
+  are design decisions tuned by eye.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <ResourceDictionary.ThemeDictionaries>
+
+    <ResourceDictionary x:Key="Light">
+      <!-- Chrome -->
+      <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F4F5F8" />
+      <SolidColorBrush x:Key="AppSurfaceBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="AppSurfaceAltBrush" Color="#F8F9FB" />
+      <SolidColorBrush x:Key="AppSurfaceHoverBrush" Color="#EFF1F5" />
+      <SolidColorBrush x:Key="AppSurfacePressedBrush" Color="#E5E8EE" />
+      <SolidColorBrush x:Key="AppBorderBrush" Color="#E3E6EC" />
+      <SolidColorBrush x:Key="AppBorderStrongBrush" Color="#CBD1DA" />
+      <SolidColorBrush x:Key="AppTextBrush" Color="#141A26" />
+      <SolidColorBrush x:Key="AppTextMutedBrush" Color="#5F6878" />
+      <SolidColorBrush x:Key="AppTextInvertedBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="AppAccentBrush" Color="#2F6FED" />
+      <SolidColorBrush x:Key="AppAccentPressedBrush" Color="#1F4FB8" />
+      <SolidColorBrush x:Key="AppAccentSoftBrush" Color="#E8F0FE" />
+      <!-- Halfway between the accent and the muted text: noticed, never loud (the update notice). -->
+      <SolidColorBrush x:Key="AppAccentMutedBrush" Color="#476CB2" />
+      <SolidColorBrush x:Key="AppDangerBrush" Color="#D92D20" />
+      <SolidColorBrush x:Key="AppDangerSoftBrush" Color="#FDECEA" />
+      <SolidColorBrush x:Key="AppFocusBrush" Color="#2F6FED" />
+
+      <!-- Shadows in light mode are wider and softer than in dark mode, never the same values. -->
+      <BoxShadows x:Key="AppPanelShadow">0 1 3 0 #12101828</BoxShadows>
+      <BoxShadows x:Key="AppDialogShadow">0 18 44 -8 #33101828</BoxShadows>
+      <!-- A subtle drop shadow on every control. -->
+      <BoxShadows x:Key="AppControlShadow">0 1 2 0 #1F101828</BoxShadows>
+      <!-- Title strip, toolbar and status bar: about 10 % darker than the surface, with a stronger edge, so they
+           stand apart from the light canvas. -->
+      <SolidColorBrush x:Key="ChromeBarBrush" Color="#E6E9EE" />
+      <SolidColorBrush x:Key="ChromeBarBorderBrush" Color="#C3CAD4" />
+
+      <!-- The topic panel and its notes: code on a light grey, quiet syntax colours. -->
+      <SolidColorBrush x:Key="TopicPanelBackgroundBrush" Color="#FFFFFF" />
+      <!-- Search: a highlighter yellow, behind hit topics on the map and behind the match in the list. -->
+      <SolidColorBrush x:Key="CanvasSearchHitBrush" Color="#B3FFD84D" />
+      <SolidColorBrush x:Key="SearchMatchBrush" Color="#FFE58A" />
+      <SolidColorBrush x:Key="SearchMatchTextBrush" Color="#141A26" />
+      <SolidColorBrush x:Key="NoteCodeBackgroundBrush" Color="#EEF1F5" />
+      <SolidColorBrush x:Key="NoteQuoteBarBrush" Color="#CBD1DA" />
+      <SolidColorBrush x:Key="NoteSelectionBrush" Color="#4D2F6FED" />
+      <SolidColorBrush x:Key="NoteSyntaxHeadingBrush" Color="#2F6FED" />
+      <SolidColorBrush x:Key="NoteSyntaxCodeBrush" Color="#8A3FA0" />
+      <SolidColorBrush x:Key="NoteSyntaxQuoteBrush" Color="#5F6878" />
+      <SolidColorBrush x:Key="NoteSyntaxMarkerBrush" Color="#C2541B" />
+      <SolidColorBrush x:Key="NoteSyntaxLinkBrush" Color="#2F6FED" />
+
+      <!-- Canvas: a subtle blue at the top left and bottom right, white in between. Fixed to
+           the window, like the dark gradient. -->
+      <LinearGradientBrush x:Key="CanvasBackgroundBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Offset="0" Color="#C6D9F3" />
+        <GradientStop Offset="0.5" Color="#FFFFFF" />
+        <GradientStop Offset="1" Color="#C6D9F3" />
+      </LinearGradientBrush>
+      <!-- The diagonal is white where it meets the sheet tabs at the bottom left. -->
+      <SolidColorBrush x:Key="SheetTabActiveBrush" Color="#FBFCFE" />
+      <!-- The soft shadow under connectors and relationships: drawn 1.5 px lower, 1 px wider. -->
+      <SolidColorBrush x:Key="CanvasLineShadowBrush" Color="#1A101828" />
+      <SolidColorBrush x:Key="CanvasGridDotBrush" Color="#ECE9F0" />
+
+      <!-- Topics, per level -->
+      <SolidColorBrush x:Key="TopicCentralFillBrush" Color="#DCEAFD" />
+      <SolidColorBrush x:Key="TopicCentralStrokeBrush" Color="#4C8DE0" />
+      <SolidColorBrush x:Key="TopicCentralTextBrush" Color="#0F2747" />
+      <BoxShadows x:Key="TopicCentralShadow">0 2 4 0 #144C8DE0, 0 10 24 -8 #2E4C8DE0</BoxShadows>
+
+      <SolidColorBrush x:Key="TopicMainFillBrush" Color="#FCE6EC" />
+      <SolidColorBrush x:Key="TopicMainStrokeBrush" Color="#DC7C96" />
+      <SolidColorBrush x:Key="TopicMainTextBrush" Color="#4A1626" />
+      <BoxShadows x:Key="TopicMainShadow">0 1 3 0 #1C4A1626</BoxShadows>
+
+      <SolidColorBrush x:Key="TopicSubFillBrush" Color="#E5F6EC" />
+      <SolidColorBrush x:Key="TopicSubStrokeBrush" Color="#5CB383" />
+      <SolidColorBrush x:Key="TopicSubTextBrush" Color="#14361F" />
+      <BoxShadows x:Key="TopicSubShadow">0 1 2 0 #1814361F</BoxShadows>
+
+      <SolidColorBrush x:Key="TopicHoverOverlayBrush" Color="#0A141A26" />
+      <SolidColorBrush x:Key="TopicConnectorBrush" Color="#7FA3D4" />
+      <!-- Muted and light, so relationships sit behind the tree. -->
+      <SolidColorBrush x:Key="TopicRelationshipBrush" Color="#DB9560" />
+      <!-- The relationship colours a user can pick: soft tones, so a coloured line still stays behind
+           the topics, but a notch stronger than at first ("a bit too transparent, barely visible sometimes"); each has
+           a twin in the dark theme. -->
+      <SolidColorBrush x:Key="RelationshipRedBrush" Color="#DC6A70" />
+      <SolidColorBrush x:Key="RelationshipOrangeBrush" Color="#E58A2E" />
+      <SolidColorBrush x:Key="RelationshipYellowBrush" Color="#C9A21E" />
+      <SolidColorBrush x:Key="RelationshipGreenBrush" Color="#4FA971" />
+      <SolidColorBrush x:Key="RelationshipTealBrush" Color="#2F9E92" />
+      <SolidColorBrush x:Key="RelationshipBlueBrush" Color="#4F86E3" />
+      <SolidColorBrush x:Key="RelationshipPurpleBrush" Color="#8F6CDB" />
+      <SolidColorBrush x:Key="TopicSelectionBrush" Color="#2F6FED" />
+      <BoxShadows x:Key="TopicSelectionGlow">0 0 0 5 #472F6FED</BoxShadows>
+      <SolidColorBrush x:Key="TopicLinkTargetBrush" Color="#2F6FED" />
+
+      <!-- Markers. Priority colours only reinforce the digit: each is dark enough for white text
+           and differs in lightness, so a greyscale print still reads. -->
+      <SolidColorBrush x:Key="MarkerPriority1Brush" Color="#D92D20" />
+      <SolidColorBrush x:Key="MarkerPriority2Brush" Color="#C4500E" />
+      <SolidColorBrush x:Key="MarkerPriority3Brush" Color="#2563EB" />
+      <SolidColorBrush x:Key="MarkerPriority4Brush" Color="#157F3D" />
+      <SolidColorBrush x:Key="MarkerPriority5Brush" Color="#6D4AC9" />
+      <SolidColorBrush x:Key="MarkerOnFillBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="MarkerProgressBrush" Color="#178A4E" />
+      <SolidColorBrush x:Key="MarkerProgressTrackBrush" Color="#FFFFFF" />
+      <!-- Topic icons on the left border: badge colours, the symbol on them, and the ring that sets them off. -->
+      <SolidColorBrush x:Key="TopicIconAlertBrush" Color="#F59E0B" />
+      <SolidColorBrush x:Key="TopicIconExclamationBrush" Color="#E5484D" />
+      <SolidColorBrush x:Key="TopicIconQuestionBrush" Color="#2F6FE4" />
+      <SolidColorBrush x:Key="TopicIconMoneyBrush" Color="#16A34A" />
+      <SolidColorBrush x:Key="TopicIconIdeaBrush" Color="#EAB308" />
+      <SolidColorBrush x:Key="TopicIconStarBrush" Color="#F97316" />
+      <SolidColorBrush x:Key="TopicIconFlagBrush" Color="#0D9488" />
+      <SolidColorBrush x:Key="TopicIconHeartBrush" Color="#DB2777" />
+      <SolidColorBrush x:Key="TopicIconClockBrush" Color="#64748B" />
+      <SolidColorBrush x:Key="TopicIconPinBrush" Color="#7C3AED" />
+      <SolidColorBrush x:Key="TopicIconGlyphBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="TopicIconGlyphDarkBrush" Color="#2A1C02" />
+      <SolidColorBrush x:Key="TopicIconRingBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="TopicIndicatorBrush" Color="#536175" />
+    </ResourceDictionary>
+
+    <ResourceDictionary x:Key="Dark">
+      <!-- Chrome -->
+      <SolidColorBrush x:Key="AppBackgroundBrush" Color="#141619" />
+      <SolidColorBrush x:Key="AppSurfaceBrush" Color="#1B1E23" />
+      <SolidColorBrush x:Key="AppSurfaceAltBrush" Color="#21252B" />
+      <SolidColorBrush x:Key="AppSurfaceHoverBrush" Color="#282D34" />
+      <SolidColorBrush x:Key="AppSurfacePressedBrush" Color="#30363E" />
+      <SolidColorBrush x:Key="AppBorderBrush" Color="#2B3037" />
+      <SolidColorBrush x:Key="AppBorderStrongBrush" Color="#3A414A" />
+      <SolidColorBrush x:Key="AppTextBrush" Color="#ECEEF2" />
+      <SolidColorBrush x:Key="AppTextMutedBrush" Color="#9AA2AE" />
+      <SolidColorBrush x:Key="AppTextInvertedBrush" Color="#12151A" />
+      <SolidColorBrush x:Key="AppAccentBrush" Color="#6F9CFF" />
+      <SolidColorBrush x:Key="AppAccentPressedBrush" Color="#A8C4FF" />
+      <SolidColorBrush x:Key="AppAccentSoftBrush" Color="#1E2A44" />
+      <!-- The muted text with a quarter of the accent: noticed, never loud (the update notice). Less
+           blue than in light, because the dark accent is brighter. -->
+      <SolidColorBrush x:Key="AppAccentMutedBrush" Color="#8FA0C2" />
+      <SolidColorBrush x:Key="AppDangerBrush" Color="#F97066" />
+      <SolidColorBrush x:Key="AppDangerSoftBrush" Color="#3A2023" />
+      <SolidColorBrush x:Key="AppFocusBrush" Color="#8AB1FF" />
+
+      <!-- Tighter and lower opacity than light mode: a dark surface shows a soft halo as grime. -->
+      <BoxShadows x:Key="AppPanelShadow">0 1 2 0 #33000000</BoxShadows>
+      <SolidColorBrush x:Key="ChromeBarBrush" Color="#1B1E23" />
+      <SolidColorBrush x:Key="ChromeBarBorderBrush" Color="#2B3037" />
+
+      <SolidColorBrush x:Key="TopicPanelBackgroundBrush" Color="#171B21" />
+      <SolidColorBrush x:Key="CanvasSearchHitBrush" Color="#8CC9A227" />
+      <SolidColorBrush x:Key="SearchMatchBrush" Color="#6B5A1E" />
+      <SolidColorBrush x:Key="SearchMatchTextBrush" Color="#FFF4CC" />
+      <SolidColorBrush x:Key="NoteCodeBackgroundBrush" Color="#252A31" />
+      <SolidColorBrush x:Key="NoteQuoteBarBrush" Color="#3A414B" />
+      <SolidColorBrush x:Key="NoteSelectionBrush" Color="#596F9CFF" />
+      <SolidColorBrush x:Key="NoteSyntaxHeadingBrush" Color="#8AB1FF" />
+      <SolidColorBrush x:Key="NoteSyntaxCodeBrush" Color="#D7A6F0" />
+      <SolidColorBrush x:Key="NoteSyntaxQuoteBrush" Color="#9AA2AE" />
+      <SolidColorBrush x:Key="NoteSyntaxMarkerBrush" Color="#F0A070" />
+      <SolidColorBrush x:Key="NoteSyntaxLinkBrush" Color="#8AB1FF" />
+      <BoxShadows x:Key="AppDialogShadow">0 10 26 -6 #66000000</BoxShadows>
+      <BoxShadows x:Key="AppControlShadow">0 1 3 0 #59000000</BoxShadows>
+
+      <!-- A slight dark blue at the top left to a very dark blue at the bottom right. Fixed to
+           the window, not the map, so it does not move while panning. -->
+      <LinearGradientBrush x:Key="CanvasBackgroundBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Offset="0" Color="#152239" />
+        <GradientStop Offset="1" Color="#070D19" />
+      </LinearGradientBrush>
+      <!-- The active sheet tab continues the canvas, which is darkest at the bottom. -->
+      <SolidColorBrush x:Key="SheetTabActiveBrush" Color="#0C1526" />
+      <SolidColorBrush x:Key="CanvasLineShadowBrush" Color="#80000000" />
+      <SolidColorBrush x:Key="CanvasGridDotBrush" Color="#23262C" />
+
+      <SolidColorBrush x:Key="TopicCentralFillBrush" Color="#1B2C45" />
+      <SolidColorBrush x:Key="TopicCentralStrokeBrush" Color="#6EA6F2" />
+      <SolidColorBrush x:Key="TopicCentralTextBrush" Color="#E3EEFF" />
+      <BoxShadows x:Key="TopicCentralShadow">0 2 8 -2 #59000000</BoxShadows>
+
+      <SolidColorBrush x:Key="TopicMainFillBrush" Color="#3A2029" />
+      <SolidColorBrush x:Key="TopicMainStrokeBrush" Color="#E68BA4" />
+      <SolidColorBrush x:Key="TopicMainTextBrush" Color="#FBE4EA" />
+      <BoxShadows x:Key="TopicMainShadow">0 1 3 0 #66000000</BoxShadows>
+
+      <SolidColorBrush x:Key="TopicSubFillBrush" Color="#1A3326" />
+      <SolidColorBrush x:Key="TopicSubStrokeBrush" Color="#6BC795" />
+      <SolidColorBrush x:Key="TopicSubTextBrush" Color="#E2F6EA" />
+      <BoxShadows x:Key="TopicSubShadow">0 1 2 0 #59000000</BoxShadows>
+
+      <SolidColorBrush x:Key="TopicHoverOverlayBrush" Color="#14FFFFFF" />
+      <SolidColorBrush x:Key="TopicConnectorBrush" Color="#5F82B3" />
+      <SolidColorBrush x:Key="TopicRelationshipBrush" Color="#C08A63" />
+      <SolidColorBrush x:Key="RelationshipRedBrush" Color="#D47A7F" />
+      <SolidColorBrush x:Key="RelationshipOrangeBrush" Color="#DA9550" />
+      <SolidColorBrush x:Key="RelationshipYellowBrush" Color="#CDB04A" />
+      <SolidColorBrush x:Key="RelationshipGreenBrush" Color="#6DB886" />
+      <SolidColorBrush x:Key="RelationshipTealBrush" Color="#56B0A5" />
+      <SolidColorBrush x:Key="RelationshipBlueBrush" Color="#7499DC" />
+      <SolidColorBrush x:Key="RelationshipPurpleBrush" Color="#A086D6" />
+      <SolidColorBrush x:Key="TopicSelectionBrush" Color="#8AB1FF" />
+      <BoxShadows x:Key="TopicSelectionGlow">0 0 0 5 #5C8AB1FF</BoxShadows>
+      <SolidColorBrush x:Key="TopicLinkTargetBrush" Color="#8AB1FF" />
+
+      <SolidColorBrush x:Key="MarkerPriority1Brush" Color="#E5484D" />
+      <SolidColorBrush x:Key="MarkerPriority2Brush" Color="#D9662B" />
+      <SolidColorBrush x:Key="MarkerPriority3Brush" Color="#3E7BFA" />
+      <SolidColorBrush x:Key="MarkerPriority4Brush" Color="#2A9D5C" />
+      <SolidColorBrush x:Key="MarkerPriority5Brush" Color="#8E5CF0" />
+      <SolidColorBrush x:Key="MarkerOnFillBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="MarkerProgressBrush" Color="#4CC38A" />
+      <SolidColorBrush x:Key="MarkerProgressTrackBrush" Color="#141619" />
+      <!-- Topic icons on the left border: badge colours, the symbol on them, and the ring that sets them off. -->
+      <SolidColorBrush x:Key="TopicIconAlertBrush" Color="#FBBF24" />
+      <SolidColorBrush x:Key="TopicIconExclamationBrush" Color="#F2555A" />
+      <SolidColorBrush x:Key="TopicIconQuestionBrush" Color="#5B8DEF" />
+      <SolidColorBrush x:Key="TopicIconMoneyBrush" Color="#22C55E" />
+      <SolidColorBrush x:Key="TopicIconIdeaBrush" Color="#FACC15" />
+      <SolidColorBrush x:Key="TopicIconStarBrush" Color="#FB923C" />
+      <SolidColorBrush x:Key="TopicIconFlagBrush" Color="#2DD4BF" />
+      <SolidColorBrush x:Key="TopicIconHeartBrush" Color="#F472B6" />
+      <SolidColorBrush x:Key="TopicIconClockBrush" Color="#94A3B8" />
+      <SolidColorBrush x:Key="TopicIconPinBrush" Color="#A78BFA" />
+      <SolidColorBrush x:Key="TopicIconGlyphBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="TopicIconGlyphDarkBrush" Color="#2A1C02" />
+      <SolidColorBrush x:Key="TopicIconRingBrush" Color="#0E1525" />
+      <SolidColorBrush x:Key="TopicIndicatorBrush" Color="#A9B4C3" />
+    </ResourceDictionary>
+
+  </ResourceDictionary.ThemeDictionaries>
+
+  <!-- Metrics: one 4 px grid, used everywhere. -->
+  <Thickness x:Key="AppPad1">4</Thickness>
+  <Thickness x:Key="AppPad2">8</Thickness>
+  <Thickness x:Key="AppPad3">12</Thickness>
+  <Thickness x:Key="AppPad4">16</Thickness>
+  <Thickness x:Key="AppPad6">24</Thickness>
+  <x:Double x:Key="AppRowHeight">24</x:Double>
+  <!-- Avalonia's overlay scrollbar paints over content within ~14 px of a scrolling edge. -->
+  <x:Double x:Key="AppScrollGutter">14</x:Double>
+  <CornerRadius x:Key="AppRadiusSmall">4</CornerRadius>
+  <CornerRadius x:Key="AppRadiusMedium">8</CornerRadius>
+  <CornerRadius x:Key="AppRadiusLarge">12</CornerRadius>
+
+  <!-- Typography is a hierarchy, not one size. -->
+  <x:Double x:Key="AppFontSizeDisplay">24</x:Double>
+  <x:Double x:Key="AppFontSizeTitle">17</x:Double>
+  <x:Double x:Key="AppFontSizeSubtitle">14</x:Double>
+  <x:Double x:Key="AppFontSizeBody">13</x:Double>
+  <x:Double x:Key="AppFontSizeCaption">12</x:Double>
+  <x:Double x:Key="AppFontSizeMicro">11</x:Double>
+
+  <!-- The notes editor and code in the preview: the platform's monospace font, because Inter has
+       none. The first installed family wins: Menlo on macOS, Cascadia Mono or Consolas on Windows. -->
+  <FontFamily x:Key="NoteMonoFontFamily">Menlo, Cascadia Mono, Consolas, DejaVu Sans Mono, Liberation Mono</FontFamily>
+  <x:Double x:Key="NoteMonoFontSize">12.5</x:Double>
+  <!-- Three link rows of 30 px in the detail view (Controls.axaml, ListBox.panelLinks). -->
+  <x:Double x:Key="PanelLinksHeight">90</x:Double>
+
+  <!-- AvaloniaEdit's Simple theme (the notes editor) looks these up as static resources that only Avalonia's Simple
+       theme defines; Semi does not. Values that match our body text. Its search panel and completion window, which
+       use the brushes, are not used. -->
+  <x:Double x:Key="FontSizeNormal">13</x:Double>
+  <FontFamily x:Key="ContentControlThemeFontFamily">Menlo, Cascadia Mono, Consolas, DejaVu Sans Mono, Liberation Mono</FontFamily>
+  <Thickness x:Key="ThemeBorderThickness">1</Thickness>
+  <Color x:Key="ThemeForegroundColor">#141A26</Color>
+  <Color x:Key="ThemeBackgroundColor">#FFFFFF</Color>
+  <Color x:Key="ThemeBorderLowColor">#E3E6EC</Color>
+  <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#FFFFFF" />
+  <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="#CBD1DA" />
+
+  <!-- Topic metrics per level. Sizes are device-independent pixels. The paddings must match
+       Core's LayoutMetrics.Default, which the layout engine uses. -->
+  <CornerRadius x:Key="TopicCentralRadius">10</CornerRadius>
+  <CornerRadius x:Key="TopicMainRadius">8</CornerRadius>
+  <CornerRadius x:Key="TopicSubRadius">6</CornerRadius>
+  <x:Double x:Key="TopicCentralFontSize">18</x:Double>
+  <x:Double x:Key="TopicMainFontSize">14</x:Double>
+  <x:Double x:Key="TopicSubFontSize">12.5</x:Double>
+  <Thickness x:Key="TopicCentralPadding">24,14</Thickness>
+  <Thickness x:Key="TopicMainPadding">16,8</Thickness>
+  <Thickness x:Key="TopicSubPadding">12,6</Thickness>
+  <x:Double x:Key="TopicStrokeThickness">1.5</x:Double>
+  <!-- 3 px, so the selected topic is obvious at a glance. -->
+  <x:Double x:Key="TopicSelectionThickness">3</x:Double>
+  <x:Double x:Key="TopicConnectorThickness">1.5</x:Double>
+  <x:Double x:Key="TopicRelationshipThickness">1.25</x:Double>
+  <!-- The same strokes as Border thicknesses, for controls that draw a topic outline with a Border. -->
+  <Thickness x:Key="TopicStrokeBorder">1.5</Thickness>
+  <Thickness x:Key="TopicSelectionBorder">3</Thickness>
+
+  <!--
+    Menu items, in-window and context menus: Semi's 16,8 padding made each item about 36 px high, loose for a desktop
+    app (seen on Windows). Semi reads these as dynamic resources, so the app's values win.
+  -->
+  <Thickness x:Key="MenuItemPadding">12,6</Thickness>
+  <Thickness x:Key="TopLevelMenuItemPadding">10,0</Thickness>
+
+</ResourceDictionary>

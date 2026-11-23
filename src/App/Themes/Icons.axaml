@@ -1,0 +1,95 @@
+<!--
+  The app's icons, drawn rather than taken from an icon font: on macOS an icon font rendered one
+  glyph not at all and three near-black in dark mode in DiskAnalyzer. Geometry takes the brush it is given
+  everywhere.
+
+  All are outlines on a 16x16 grid, stroked by the view at 1.2-1.4 px with a theme brush. Keep them
+  stroke-only: a filled icon next to these reads as a different weight. Every icon is rendered to PNG by
+  IconRenderingTests and looked at.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Keyboard: body, three rows of keys, a space bar. The shortcuts dialog. -->
+  <StreamGeometry x:Key="IconKeyboard">M 1.5,4.5 A 1.5,1.5 0 0 1 3,3 L 13,3 A 1.5,1.5 0 0 1 14.5,4.5 L 14.5,11.5 A 1.5,1.5 0 0 1 13,13 L 3,13 A 1.5,1.5 0 0 1 1.5,11.5 Z M 4,6 L 4.2,6 M 6.4,6 L 6.6,6 M 8.8,6 L 9,6 M 11.2,6 L 11.4,6 M 5.2,8.2 L 5.4,8.2 M 7.6,8.2 L 7.8,8.2 M 10,8.2 L 10.2,8.2 M 5,10.6 L 11,10.6</StreamGeometry>
+
+  <!-- Info: a circle with a dot and a stem. About. -->
+  <StreamGeometry x:Key="IconInfo">M 1.8,8 A 6.2,6.2 0 1 1 14.2,8 A 6.2,6.2 0 1 1 1.8,8 Z M 8,7.2 L 8,11.4 M 8,4.6 L 8,4.8</StreamGeometry>
+
+  <!-- Mind map: a central node with three branches. The app mark, at icon scale. -->
+  <StreamGeometry x:Key="IconMindMap">M 5.6,8 A 2.4,2.4 0 1 1 10.4,8 A 2.4,2.4 0 1 1 5.6,8 Z M 10.3,7.2 C 11.5,6.4 12,4.6 13,4.4 M 10.3,8.8 C 11.5,9.6 12,11.4 13,11.6 M 5.6,8 L 2.8,8 M 13,4.4 A 1.1,1.1 0 1 1 13.01,4.4 M 13,11.6 A 1.1,1.1 0 1 1 13.01,11.6 M 2.8,8 A 1.1,1.1 0 1 1 2.81,8</StreamGeometry>
+
+  <!-- Plus and minus: the zoom buttons beside the status bar slider. Drawn with Stretch="None": a lone horizontal
+       line has no height, so Uniform stretching would collapse the minus to nothing. -->
+  <StreamGeometry x:Key="IconPlus">M 3,8 L 13,8 M 8,3 L 8,13</StreamGeometry>
+  <StreamGeometry x:Key="IconMinus">M 3,8 L 13,8</StreamGeometry>
+
+  <!-- Undo and redo: a hooked arrow; the head follows the line's direction at its end. -->
+  <StreamGeometry x:Key="IconUndo">M 6,3.5 L 3,6.5 L 6,9.5 M 3.3,6.5 L 10,6.5 A 3.5,3.5 0 0 1 10,13.5 L 7,13.5</StreamGeometry>
+  <StreamGeometry x:Key="IconRedo">M 10,3.5 L 13,6.5 L 10,9.5 M 12.7,6.5 L 6,6.5 A 3.5,3.5 0 0 0 6,13.5 L 9,13.5</StreamGeometry>
+
+  <!-- New subtopic: a topic with a branch to a new one to its right. -->
+  <StreamGeometry x:Key="IconSubtopic">M 1.5,5.5 A 1,1 0 0 1 2.5,4.5 L 6.5,4.5 A 1,1 0 0 1 7.5,5.5 L 7.5,7.5 A 1,1 0 0 1 6.5,8.5 L 2.5,8.5 A 1,1 0 0 1 1.5,7.5 Z M 7.5,6.5 C 9.5,6.5 8.5,11 10.5,11 M 12.5,9 L 12.5,13 M 10.5,11 L 14.5,11</StreamGeometry>
+
+  <!-- New topic (sibling): a topic with a new one below it. -->
+  <StreamGeometry x:Key="IconSibling">M 2.5,3.5 A 1,1 0 0 1 3.5,2.5 L 11.5,2.5 A 1,1 0 0 1 12.5,3.5 L 12.5,5.5 A 1,1 0 0 1 11.5,6.5 L 3.5,6.5 A 1,1 0 0 1 2.5,5.5 Z M 7.5,9 L 7.5,14 M 5,11.5 L 10,11.5</StreamGeometry>
+
+  <!-- Delete: a bin with a lid. -->
+  <StreamGeometry x:Key="IconDelete">M 2.5,4.5 L 13.5,4.5 M 6,4.5 L 6,2.5 L 10,2.5 L 10,4.5 M 4,4.5 L 4.8,13.5 L 11.2,13.5 L 12,4.5 M 6.6,7 L 6.6,11.5 M 9.4,7 L 9.4,11.5</StreamGeometry>
+
+  <!-- Fit map to window: four corners around a small map. -->
+  <StreamGeometry x:Key="IconFit">M 2,5.5 L 2,2 L 5.5,2 M 10.5,2 L 14,2 L 14,5.5 M 14,10.5 L 14,14 L 10.5,14 M 5.5,14 L 2,14 L 2,10.5 M 6,6.5 L 10,6.5 L 10,9.5 L 6,9.5 Z</StreamGeometry>
+
+  <!-- Open: a folder with its front flap. -->
+  <StreamGeometry x:Key="IconOpen">M 1.5,12.5 L 1.5,3.5 L 5.5,3.5 L 7,5 L 12.5,5 L 12.5,7 M 1.5,12.5 L 3.5,7 L 14.5,7 L 12.5,12.5 Z</StreamGeometry>
+
+  <!-- Save: a disk with a label and a shutter. -->
+  <StreamGeometry x:Key="IconSave">M 2.5,3.5 A 1,1 0 0 1 3.5,2.5 L 11,2.5 L 13.5,5 L 13.5,12.5 A 1,1 0 0 1 12.5,13.5 L 3.5,13.5 A 1,1 0 0 1 2.5,12.5 Z M 5,2.5 L 5,6 L 10.5,6 L 10.5,2.5 M 5,13.5 L 5,9.5 L 11,9.5 L 11,13.5</StreamGeometry>
+
+  <!-- Internet link: two interlocking chain links at 45 degrees. The topic's link indicator. -->
+  <StreamGeometry x:Key="IconLink">M 4.63,14.63 L 10.23,9.03 A 2.3,2.3 0 0 0 6.97,5.77 L 1.37,11.37 A 2.3,2.3 0 0 0 4.63,14.63 Z M 9.03,10.23 L 14.63,4.63 A 2.3,2.3 0 0 0 11.37,1.37 L 5.77,6.97 A 2.3,2.3 0 0 0 9.03,10.23 Z</StreamGeometry>
+
+  <!-- Note: a page with a folded corner and two lines of text. The topic's note indicator. -->
+  <StreamGeometry x:Key="IconNote">M 3.5,2.5 L 9.5,2.5 L 12.5,5.5 L 12.5,13.5 L 3.5,13.5 Z M 9.5,2.5 L 9.5,5.5 L 12.5,5.5 M 5.5,8.5 L 10.5,8.5 M 5.5,11 L 10.5,11</StreamGeometry>
+
+  <!-- Chevrons: the tab bar's scroll buttons. -->
+  <StreamGeometry x:Key="IconChevronLeft">M 10,3.5 L 5.5,8 L 10,12.5</StreamGeometry>
+  <StreamGeometry x:Key="IconChevronRight">M 6,3.5 L 10.5,8 L 6,12.5</StreamGeometry>
+  <!-- Up and down: reordering links in the link list. -->
+  <StreamGeometry x:Key="IconChevronUp">M 3.5,10 L 8,5.5 L 12.5,10</StreamGeometry>
+  <StreamGeometry x:Key="IconChevronDown">M 3.5,6 L 8,10.5 L 12.5,6</StreamGeometry>
+
+  <!-- The topic panel: a window with a column on the right. Its close button, and editing a link. -->
+  <StreamGeometry x:Key="IconPanel">M 1.5,3.5 A 1,1 0 0 1 2.5,2.5 L 13.5,2.5 A 1,1 0 0 1 14.5,3.5 L 14.5,12.5 A 1,1 0 0 1 13.5,13.5 L 2.5,13.5 A 1,1 0 0 1 1.5,12.5 Z M 10,2.5 L 10,13.5 M 11.6,5.5 L 12.9,5.5 M 11.6,7.5 L 12.9,7.5</StreamGeometry>
+  <!-- Maximize: two arrows pointing out to the corners; normal size: the same arrows pointing in. -->
+  <StreamGeometry x:Key="IconMaximize">M 9.5,2.5 L 13.5,2.5 L 13.5,6.5 M 13.5,2.5 L 9.2,6.8 M 6.5,13.5 L 2.5,13.5 L 2.5,9.5 M 2.5,13.5 L 6.8,9.2</StreamGeometry>
+  <StreamGeometry x:Key="IconRestore">M 13.5,2.5 L 9.2,6.8 M 9.2,3.6 L 9.2,6.8 L 12.4,6.8 M 2.5,13.5 L 6.8,9.2 M 3.6,9.2 L 6.8,9.2 L 6.8,12.4</StreamGeometry>
+  <!-- Search: a magnifying glass. -->
+  <StreamGeometry x:Key="IconSearch">M 2.5,7 A 4.5,4.5 0 1 1 11.5,7 A 4.5,4.5 0 1 1 2.5,7 Z M 10.3,10.3 L 13.8,13.8</StreamGeometry>
+  <!-- A padlock: the status bar's sign of an encrypted file, and the password dialog's icon. -->
+  <StreamGeometry x:Key="IconLock">M 3.5,8 A 1,1 0 0 1 4.5,7 L 11.5,7 A 1,1 0 0 1 12.5,8 L 12.5,13 A 1,1 0 0 1 11.5,14 L 4.5,14 A 1,1 0 0 1 3.5,13 Z M 5.5,7 L 5.5,5 A 2.5,2.5 0 0 1 10.5,5 L 10.5,7 M 8,9.8 L 8,11.2</StreamGeometry>
+  <!-- The window's own caption buttons on Windows (Themes/WindowDecorations.axaml): maximise, a square; restore, two. -->
+  <StreamGeometry x:Key="IconWindowMaximize">M 4,4 L 12,4 L 12,12 L 4,12 Z</StreamGeometry>
+  <StreamGeometry x:Key="IconWindowRestore">M 4,6 L 10,6 L 10,12 L 4,12 Z M 6,6 L 6,4 L 12,4 L 12,10 L 10,10</StreamGeometry>
+  <!-- Warning: a rounded triangle with a stem and a dot. The crash dialog. -->
+  <StreamGeometry x:Key="IconWarning">M 7.1,2.6 A 1,1 0 0 1 8.9,2.6 L 14.3,12.3 A 1,1 0 0 1 13.4,13.8 L 2.6,13.8 A 1,1 0 0 1 1.7,12.3 Z M 8,6 L 8,9.4 M 8,11.6 L 8,11.8</StreamGeometry>
+  <StreamGeometry x:Key="IconClose">M 4.5,4.5 L 11.5,11.5 M 11.5,4.5 L 4.5,11.5</StreamGeometry>
+  <StreamGeometry x:Key="IconEdit">M 2.5,13.5 L 3.2,10.6 L 10.6,3.2 A 1.4,1.4 0 0 1 12.6,3.2 L 12.8,3.4 A 1.4,1.4 0 0 1 12.8,5.4 L 5.4,12.8 Z M 9.4,4.4 L 11.6,6.6</StreamGeometry>
+
+  <!-- The notes toolbar. Code: angle brackets and a slash. -->
+  <StreamGeometry x:Key="IconCode">M 5.2,4.5 L 1.8,8 L 5.2,11.5 M 10.8,4.5 L 14.2,8 L 10.8,11.5 M 9.2,3.2 L 6.8,12.8</StreamGeometry>
+  <!-- Bulleted list: three dots, three lines. -->
+  <StreamGeometry x:Key="IconListBullet">M 2.6,4 L 2.8,4 M 2.6,8 L 2.8,8 M 2.6,12 L 2.8,12 M 5.6,4 L 14,4 M 5.6,8 L 14,8 M 5.6,12 L 14,12</StreamGeometry>
+  <!-- Numbered list: a 1 and a 2 before two lines. -->
+  <StreamGeometry x:Key="IconListNumbered">M 2,3.4 L 3.2,2.6 L 3.2,6.6 M 1.9,9.6 C 2.1,8.6 4.3,8.5 4.3,9.8 C 4.3,10.9 1.9,11.8 1.9,13.2 L 4.5,13.2 M 6.6,4.6 L 14,4.6 M 6.6,11.2 L 14,11.2</StreamGeometry>
+  <!-- Quote: a bar before three lines, the last one shorter. -->
+  <StreamGeometry x:Key="IconQuote">M 2.6,3 L 2.6,13 M 5.6,4 L 13.6,4 M 5.6,8 L 13.6,8 M 5.6,12 L 10.6,12</StreamGeometry>
+  <!-- Table: a frame with a header rule, a row rule and a column rule. -->
+  <StreamGeometry x:Key="IconTable">M 3,2.6 L 13,2.6 A 1,1 0 0 1 14,3.6 L 14,12.4 A 1,1 0 0 1 13,13.4 L 3,13.4 A 1,1 0 0 1 2,12.4 L 2,3.6 A 1,1 0 0 1 3,2.6 Z M 2,6.2 L 14,6.2 M 2,9.8 L 14,9.8 M 8,6.2 L 8,13.4</StreamGeometry>
+
+  <!-- Distraction-free full screen: four corners, each with an arrow pointing out. -->
+  <StreamGeometry x:Key="IconFullScreen">M 2,6 L 2,2 L 6,2 M 2.3,2.3 L 5.6,5.6 M 10,2 L 14,2 L 14,6 M 13.7,2.3 L 10.4,5.6 M 14,10 L 14,14 L 10,14 M 13.7,13.7 L 10.4,10.4 M 6,14 L 2,14 L 2,10 M 2.3,13.7 L 5.6,10.4</StreamGeometry>
+  <!-- Copy map as image: a picture (hill and sun) in front of a second sheet. -->
+  <StreamGeometry x:Key="IconCopyImage">M 5,4.5 L 5,2.5 L 14,2.5 L 14,10.5 L 12,10.5 M 2,4.5 L 12,4.5 L 12,13.5 L 2,13.5 Z M 2.2,12 L 5.5,8.6 L 8,11.2 L 9.4,9.8 L 11.8,12.2 M 9,7 L 9.2,7</StreamGeometry>
+
+</ResourceDictionary>

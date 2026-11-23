@@ -1,0 +1,14 @@
+# LF everywhere, on every OS: the repo is developed on macOS and Windows.
+* text=auto eol=lf
+
+# Except Windows batch files: cmd misreads labels and goto in a file with LF line endings.
+*.cmd text eol=crlf
+
+# Binary assets: never touch their bytes.
+*.png binary
+*.ico binary
+*.icns binary
+*.ttf binary
+*.otf binary
+*.mbz binary
+*.zip binary

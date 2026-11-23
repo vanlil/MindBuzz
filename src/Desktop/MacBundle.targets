@@ -1,0 +1,30 @@
+<Project>
+
+  <!--
+    Publishing for osx-* also writes MindBuzz.app next to the published files: the executable
+    in Contents/MacOS, the icon in Contents/Resources, and Info.plist with the .mbz document type, so Finder's
+    "Open With" and a drop on the Dock icon reach the app. Plain MSBuild, so it works from any OS; the executable bit
+    survives only when the bundle is built on macOS or Linux.
+    LSMinimumSystemVersion 14.0: the oldest macOS .NET 10 supports (learn.microsoft.com, "Install .NET on macOS").
+  -->
+  <Target Name="MindBuzzMacBundle" AfterTargets="Publish" Condition="$(RuntimeIdentifier.StartsWith('osx'))">
+    <PropertyGroup>
+      <_BundleDir>$(PublishDir)MindBuzz.app/Contents/</_BundleDir>
+      <!-- Info.plist must not carry a BOM; WriteLinesToFile writes UTF-8 without one. -->
+      <_InfoPlist>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory)Info.plist').Replace('@VERSION@', '$(Version)'))</_InfoPlist>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <!-- Top-level files only: never the bundle itself, and no debug symbols. -->
+      <_BundleExecutable Include="$(PublishDir)*" Exclude="$(PublishDir)*.pdb;$(PublishDir)*.dbg" />
+    </ItemGroup>
+
+    <RemoveDir Directories="$(PublishDir)MindBuzz.app" />
+    <Copy SourceFiles="@(_BundleExecutable)" DestinationFolder="$(_BundleDir)MacOS" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)MindBuzz.icns" DestinationFolder="$(_BundleDir)Resources" />
+    <WriteLinesToFile File="$(_BundleDir)Info.plist" Lines="$(_InfoPlist)" Overwrite="true" WriteOnlyWhenDifferent="false" />
+    <WriteLinesToFile File="$(_BundleDir)PkgInfo" Lines="APPL????" Overwrite="true" />
+    <Message Importance="high" Text="MindBuzz -> $(PublishDir)MindBuzz.app" />
+  </Target>
+
+</Project>

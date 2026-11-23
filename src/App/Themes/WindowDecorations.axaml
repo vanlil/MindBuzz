@@ -1,0 +1,154 @@
+<!--
+  The window decorations Avalonia 12 draws itself where the app extends its client area (Windows): only the caption
+  buttons, drawn with the app's own icons. Replaces Semi's template, which on Windows showed its icon geometries as
+  the text "Av…" and painted the window title a second time, over the File menu (seen on Windows).
+  The title strip (MainWindow, TitleStripLayout) paints the title, the menu and the background itself.
+  Template parts and pseudo-classes follow Semi.Avalonia 12.1.0.1's Controls/WindowDrawnDecorations.axaml.
+-->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- 46 px wide like Windows' own caption buttons, so TitleStripLayout's reserve of 138 px fits three. -->
+  <ControlTheme x:Key="MindBuzzCaptionButton" TargetType="Button">
+    <Setter Property="Width" Value="46" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="WindowDecorationProperties.ElementRole" Value="DecorationsElement" />
+    <Setter Property="Template">
+      <ControlTemplate TargetType="Button">
+        <Border Background="{TemplateBinding Background}">
+          <ContentPresenter Content="{TemplateBinding Content}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Background" Value="{DynamicResource AppSurfacePressedBrush}" />
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type WindowDrawnDecorations}" TargetType="WindowDrawnDecorations">
+    <Setter Property="DefaultTitleBarHeight" Value="34" />
+    <Setter Property="DefaultFrameThickness" Value="4" />
+    <Setter Property="Template">
+      <WindowDrawnDecorationsTemplate>
+        <WindowDrawnDecorationsContent>
+          <WindowDrawnDecorationsContent.Underlay>
+            <Panel Name="PART_UnderlayWrapper">
+              <Border Name="PART_WindowBorder"
+                      Background="{DynamicResource AppBackgroundBrush}"
+                      BorderBrush="{DynamicResource ChromeBarBorderBrush}"
+                      BorderThickness="{TemplateBinding FrameThickness}"
+                      IsHitTestVisible="False" />
+              <!-- The drag area; the title strip paints over it. -->
+              <Panel Name="PART_TitleBar"
+                     VerticalAlignment="Top"
+                     Height="{TemplateBinding TitleBarHeight}"
+                     Background="Transparent"
+                     IsVisible="{TemplateBinding HasTitleBar}"
+                     WindowDecorationProperties.ElementRole="TitleBar" />
+            </Panel>
+          </WindowDrawnDecorationsContent.Underlay>
+
+          <WindowDrawnDecorationsContent.Overlay>
+            <Panel Name="PART_OverlayWrapper">
+              <StackPanel Name="PART_OverlayPanel"
+                          Height="{TemplateBinding TitleBarHeight}"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          IsVisible="{TemplateBinding HasTitleBar}"
+                          Orientation="Horizontal">
+                <Button Name="PART_MinimizeButton"
+                        Theme="{StaticResource MindBuzzCaptionButton}"
+                        WindowDecorationProperties.ElementRole="MinimizeButton">
+                  <Path Classes="icon caption" Data="{StaticResource IconMinus}" />
+                </Button>
+                <Button Name="PART_MaximizeButton"
+                        Theme="{StaticResource MindBuzzCaptionButton}"
+                        WindowDecorationProperties.ElementRole="MaximizeButton">
+                  <Panel>
+                    <Path Name="MaximizeIcon" Classes="icon caption" Data="{StaticResource IconWindowMaximize}" />
+                    <Path Name="RestoreIcon" Classes="icon caption" Data="{StaticResource IconWindowRestore}" IsVisible="False" />
+                  </Panel>
+                </Button>
+                <Button Name="PART_CloseButton"
+                        Theme="{StaticResource MindBuzzCaptionButton}"
+                        WindowDecorationProperties.ElementRole="CloseButton">
+                  <Path Classes="icon caption" Data="{StaticResource IconClose}" />
+                </Button>
+              </StackPanel>
+            </Panel>
+          </WindowDrawnDecorationsContent.Overlay>
+
+          <!-- Full screen (not offered by the app, but the platform may enter it): the close button only. -->
+          <WindowDrawnDecorationsContent.FullscreenPopover>
+            <DockPanel Height="{TemplateBinding DefaultTitleBarHeight}"
+                       Background="{DynamicResource ChromeBarBrush}"
+                       VerticalAlignment="Top"
+                       WindowDecorationProperties.ElementRole="TitleBar">
+              <Button Name="PART_PopoverCloseButton"
+                      DockPanel.Dock="Right"
+                      Theme="{StaticResource MindBuzzCaptionButton}"
+                      WindowDecorationProperties.ElementRole="CloseButton">
+                <Path Classes="icon caption" Data="{StaticResource IconClose}" />
+              </Button>
+            </DockPanel>
+          </WindowDrawnDecorationsContent.FullscreenPopover>
+        </WindowDrawnDecorationsContent>
+      </WindowDrawnDecorationsTemplate>
+    </Setter>
+
+    <!-- Close turns red on hover, the Windows convention. -->
+    <Style Selector="^ /template/ Button#PART_CloseButton:pointerover, ^ /template/ Button#PART_PopoverCloseButton:pointerover">
+      <Setter Property="Background" Value="#C42B1C" />
+    </Style>
+    <Style Selector="^ /template/ Button#PART_CloseButton:pressed, ^ /template/ Button#PART_PopoverCloseButton:pressed">
+      <Setter Property="Background" Value="#B22A1B" />
+    </Style>
+    <Style Selector="^ /template/ Button#PART_CloseButton:pointerover Path, ^ /template/ Button#PART_PopoverCloseButton:pointerover Path">
+      <Setter Property="Stroke" Value="White" />
+    </Style>
+
+    <Style Selector="^:maximized /template/ Path#MaximizeIcon">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:maximized /template/ Path#RestoreIcon">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+    <Style Selector="^:has-shadow">
+      <Style Selector="^ /template/ Panel#PART_UnderlayWrapper">
+        <Setter Property="Margin" Value="{TemplateBinding ShadowThickness}" />
+      </Style>
+      <Style Selector="^ /template/ Panel#PART_OverlayWrapper">
+        <Setter Property="Margin" Value="{TemplateBinding ShadowThickness}" />
+      </Style>
+    </Style>
+
+    <Style Selector="^:has-border /template/ StackPanel#PART_OverlayPanel">
+      <Setter Property="Margin" Value="0,1,1,0" />
+    </Style>
+
+    <Style Selector="^:not(:has-minimize) /template/ Button#PART_MinimizeButton">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+    <Style Selector="^:not(:has-maximize) /template/ Button#PART_MaximizeButton">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+    <Style Selector="^:fullscreen">
+      <Style Selector="^ /template/ StackPanel#PART_OverlayPanel">
+        <Setter Property="IsVisible" Value="False" />
+      </Style>
+      <Style Selector="^ /template/ Panel#PART_TitleBar">
+        <Setter Property="IsVisible" Value="False" />
+      </Style>
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

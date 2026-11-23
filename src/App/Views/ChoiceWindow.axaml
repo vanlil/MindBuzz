@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:services="using:MindBuzz.App.Services"
+        x:Class="MindBuzz.App.Views.ChoiceWindow"
+        x:DataType="services:ChoiceRequest"
+        Title="{Binding Title}"
+        Icon="/Assets/MindBuzz.ico"
+        CanMinimize="False"
+        CanMaximize="False"
+        SizeToContent="WidthAndHeight"
+        MinWidth="400"
+        MaxWidth="560"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+
+  <!-- A question with a few answers: "Save changes?", the recovery offer. Every word comes in the request. -->
+  <Border Padding="24,20" Background="{DynamicResource AppSurfaceBrush}">
+    <StackPanel Spacing="18">
+      <Grid ColumnDefinitions="Auto,16,*">
+        <Border Grid.Column="0"
+                Width="40" Height="40"
+                CornerRadius="{DynamicResource AppRadiusLarge}"
+                Background="{DynamicResource AppAccentSoftBrush}"
+                VerticalAlignment="Top">
+          <Path Classes="icon" Width="22" Height="22" Stroke="{DynamicResource AppAccentBrush}" Data="{StaticResource IconInfo}" />
+        </Border>
+        <StackPanel Grid.Column="2" Spacing="6">
+          <TextBlock Classes="title" TextWrapping="Wrap" Text="{Binding Message}" />
+          <TextBlock Classes="caption"
+                     TextWrapping="Wrap"
+                     Text="{Binding Detail}"
+                     IsVisible="{Binding Detail, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </StackPanel>
+      </Grid>
+
+      <StackPanel x:Name="Buttons" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" />
+    </StackPanel>
+  </Border>
+
+</Window>

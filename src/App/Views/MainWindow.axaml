@@ -1,0 +1,204 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MindBuzz.App.ViewModels"
+        xmlns:cmd="using:MindBuzz.App.Commands"
+        xmlns:loc="using:MindBuzz.App.Localization"
+        xmlns:canvas="using:MindBuzz.App.Canvas"
+        xmlns:views="using:MindBuzz.App.Views"
+        x:Class="MindBuzz.App.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="{Binding WindowTitle}"
+        Icon="/Assets/MindBuzz.ico"
+        Width="1280" Height="800"
+        MinWidth="980" MinHeight="480">
+
+  <DockPanel LastChildFill="True">
+
+    <!--
+      The title strip. On Windows and macOS the client area is extended under the system decorations, so this
+      row is ours to paint while the caption buttons (traffic lights on macOS) stay the OS's own. On Linux the
+      window manager draws the title bar and this is just the menu row. See TitleStripLayout.
+    -->
+    <Border x:Name="TitleStrip"
+            Classes="chromeBar"
+            DockPanel.Dock="Top"
+            BorderThickness="0,0,0,1">
+      <Grid x:Name="TitleContent" ColumnDefinitions="Auto,*">
+
+        <!-- Windows and Linux: the in-window menu, generated from the command registry. -->
+        <Menu x:Name="WindowMenu"
+              Grid.Column="0"
+              Classes="titleMenu"
+              VerticalAlignment="Center"
+              ItemsSource="{Binding MenuEntries}">
+          <Menu.Styles>
+            <Style Selector="MenuItem" x:DataType="cmd:MenuEntry">
+              <Setter Property="Header" Value="{Binding Header}" />
+              <Setter Property="Command" Value="{Binding Command}" />
+              <Setter Property="ItemsSource" Value="{Binding Children}" />
+              <Setter Property="InputGesture" Value="{Binding Gesture}" />
+              <Setter Property="Icon" Value="{Binding Swatch, Converter={x:Static views:MenuSwatchConverter.Instance}}" />
+            </Style>
+          </Menu.Styles>
+        </Menu>
+
+        <!-- The window's name, right of the menu: centred over the whole strip where there is room, else just after the
+             menu, shortened with "…" at the last (MainWindow.PlaceTitle). Menus are longer in German and French. -->
+        <TextBlock x:Name="TitleText"
+                   Grid.Column="1"
+                   TextTrimming="CharacterEllipsis"
+                   FontWeight="SemiBold"
+                   FontSize="{DynamicResource AppFontSizeCaption}"
+                   Foreground="{DynamicResource AppTextBrush}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   IsHitTestVisible="False"
+                   Text="{Binding WindowTitle}" />
+      </Grid>
+    </Border>
+
+    <!-- The compact toolbar of drawn icons, generated from the command registry. -->
+    <Border x:Name="ToolbarRow"
+            Classes="chromeBar"
+            DockPanel.Dock="Top"
+            BorderThickness="0,0,0,1"
+            Padding="8,4">
+      <ItemsControl ItemsSource="{Binding Toolbar}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" Spacing="2" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="cmd:ToolbarItem">
+            <Panel>
+              <Border Classes="toolbarSeparator" IsVisible="{Binding IsSeparator}" />
+              <Button Classes="toolbar"
+                      IsVisible="{Binding !IsSeparator}"
+                      Command="{Binding Command}"
+                      ToolTip.Tip="{Binding Tooltip}"
+                      AutomationProperties.Name="{Binding Tooltip}">
+                <!-- Stretch None: every icon keeps its place on the shared 16 × 16 grid. Uniform scaled each icon to its
+                     own bounds, so a wide, flat icon (the folder) sat lower than its neighbours. -->
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{Binding IconKey, Converter={x:Static views:IconConverter.Instance}}" />
+              </Button>
+            </Panel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Border>
+
+    <!-- Status area: mode hints at the left, zoom at the right like the reference. -->
+    <Border x:Name="StatusBar"
+            Classes="chromeBar"
+            DockPanel.Dock="Bottom"
+            BorderThickness="0,1,0,0"
+            Padding="12,2">
+      <Grid ColumnDefinitions="*,Auto,Auto" MinHeight="{DynamicResource AppRowHeight}">
+        <TextBlock Grid.Column="0"
+                   Classes="caption"
+                   VerticalAlignment="Center"
+                   Text="{Binding StatusText}" />
+
+        <!-- A newer release, found at start: a quiet button until quit, never a dialog. -->
+        <Button x:Name="UpdateNotice"
+                Grid.Column="1"
+                Classes="updateNotice"
+                Margin="0,0,12,0"
+                IsVisible="{Binding AvailableUpdate, Converter={x:Static ObjectConverters.IsNotNull}}"
+                Content="{Binding UpdateText}"
+                Command="{Binding OpenUpdatePageCommand}"
+                ToolTip.Tip="{Binding UpdateTooltip}"
+                AutomationProperties.Name="{Binding UpdateTooltip}" />
+
+        <StackPanel Grid.Column="2"
+                    Orientation="Horizontal"
+                    Spacing="4"
+                    VerticalAlignment="Center"
+                    ToolTip.Tip="{x:Static loc:Strings.Status_ZoomTooltip}">
+          <!-- The open file is encrypted. -->
+          <Border x:Name="EncryptedSign"
+                  Background="Transparent"
+                  Margin="0,0,8,0"
+                  VerticalAlignment="Center"
+                  IsVisible="{Binding IsEncrypted}"
+                  ToolTip.Tip="{x:Static loc:Strings.Status_EncryptedTooltip}"
+                  AutomationProperties.Name="{x:Static loc:Strings.Status_EncryptedTooltip}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconLock}" />
+          </Border>
+
+          <!-- Back to 100 %, the same as View > Actual Size. Text rather than an icon: "100 %" says it best. -->
+          <Button Classes="zoomReset"
+                  Margin="0,0,6,0"
+                  Content="{Binding ZoomResetText}"
+                  Command="{Binding ZoomActualSizeCommand}"
+                  ToolTip.Tip="{Binding ZoomActualSizeTooltip}"
+                  AutomationProperties.Name="{Binding ZoomActualSizeTooltip}" />
+          <Button Classes="zoomStep" Command="{Binding ZoomOutCommand}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconMinus}" />
+          </Button>
+          <Slider x:Name="ZoomSlider"
+                  Classes="zoom"
+                  Width="120"
+                  VerticalAlignment="Center"
+                  Minimum="{x:Static vm:MainViewModel.ZoomSliderMinimum}"
+                  Maximum="{x:Static vm:MainViewModel.ZoomSliderMaximum}"
+                  Value="{Binding ZoomSlider}" />
+          <Button Classes="zoomStep" Command="{Binding ZoomInCommand}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconPlus}" />
+          </Button>
+          <TextBlock Classes="caption num"
+                     MinWidth="40"
+                     TextAlignment="Right"
+                     VerticalAlignment="Center"
+                     Text="{Binding ZoomText}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- The sheet tabs, between the canvas and the status area. -->
+    <views:SheetTabs x:Name="Tabs" DockPanel.Dock="Bottom" />
+
+    <!--
+      The canvas fills the rest of the window, with the topic panel docked on the right. The
+      panel's column is sized in code-behind: it collapses while the panel is closed and keeps its width for the
+      session.
+    -->
+    <Grid x:Name="Workspace" ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+    <canvas:MapCanvas x:Name="Canvas"
+                      Grid.Column="0"
+                      Map="{Binding DisplayMap}"
+                      SearchHits="{Binding SearchHighlights}"
+                      Zoom="{Binding Zoom}"
+                      SelectedTopic="{Binding SelectedTopic}"
+                      SelectedTopics="{Binding SelectedTopics}"
+                      SelectedRelationship="{Binding SelectedRelationship}"
+                      LinkSource="{Binding LinkSource}"
+                      LinkTarget="{Binding LinkTarget}"
+                      RelationshipMenu="{Binding RelationshipMenu}"
+                      TopicMenu="{Binding TopicMenu}"
+                      CanvasMenu="{Binding CanvasMenu}" />
+
+      <!-- Where Export as PNG draws its picture: a clipped, empty spot, so nothing shows. -->
+      <Canvas x:Name="ExportHost" Grid.Column="0" Width="0" Height="0" ClipToBounds="True"
+              HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False" />
+
+      <!-- Search beside the detail view, left of it. -->
+      <views:PaneDivider x:Name="SearchSplitter" Grid.Column="1" IsVisible="False" />
+
+      <views:SearchPanel x:Name="SearchPanelView"
+                         Grid.Column="2"
+                         IsVisible="False"
+                         DataContext="{Binding Search}" />
+
+      <views:PaneDivider x:Name="PanelSplitter" Grid.Column="3" IsVisible="False" />
+
+      <views:TopicPanel x:Name="TopicPanelView"
+                        Grid.Column="4"
+                        IsVisible="False"
+                        DataContext="{Binding Panel}" />
+    </Grid>
+
+  </DockPanel>
+
+</Window>

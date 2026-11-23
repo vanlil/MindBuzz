@@ -1,0 +1,28 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:semi="https://irihi.tech/semi"
+             x:Class="MindBuzz.App.MindBuzzApp"
+             RequestedThemeVariant="Default">
+
+  <!-- Default: the OS variant decides, live. There is no theme override, because nothing is persisted. -->
+
+  <!-- Order matters: the control theme first, then the app's own styles on top of it. -->
+  <Application.Styles>
+    <semi:SemiTheme />
+    <!-- The notes editor's control template. The app's styles below colour it. -->
+    <StyleInclude Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
+    <StyleInclude Source="avares://MindBuzz.App/Themes/Controls.axaml" />
+  </Application.Styles>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://MindBuzz.App/Themes/Semantic.axaml" />
+        <ResourceInclude Source="avares://MindBuzz.App/Themes/Icons.axaml" />
+        <!-- After Semi's: replaces its template for the window decorations Avalonia draws on Windows. -->
+        <ResourceInclude Source="avares://MindBuzz.App/Themes/WindowDecorations.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

@@ -1,0 +1,48 @@
+<Project>
+
+  <!--
+    Every package version lives here and nowhere else. Projects say which packages they use, never which
+    version. Versions and licences are checked from each package's .nuspec on nuget.org.
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <!-- All Avalonia packages share one version so they cannot drift apart. -->
+    <AvaloniaVersion>12.1.6</AvaloniaVersion>
+  </PropertyGroup>
+
+  <ItemGroup Label="UI">
+    <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Skia" Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.HarfBuzz" Version="$(AvaloniaVersion)" />
+    <!-- Semi's 12.1.0.1 is built against Avalonia 12.1.0; the transitive pin above lifts it to ours. -->
+    <PackageVersion Include="Semi.Avalonia" Version="12.1.0.1" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="Markdig" Version="1.6.0" />
+    <PackageVersion Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="Core">
+    <!-- AES-256 ZIP encryption: .NET's ZIP code has none. MIT, from the nuget.org .nuspec. -->
+    <PackageVersion Include="SharpZipLib" Version="1.4.2" />
+  </ItemGroup>
+
+  <ItemGroup Label="Tools">
+    <!-- The App writes the printable sheets' PDFs with SkiaSharp, and the icon generator draws the icon with it.
+         The same version Avalonia.Skia 12.1.6 uses, so the build never carries two Skias. -->
+    <PackageVersion Include="SkiaSharp" Version="3.119.4" />
+  </ItemGroup>
+
+  <ItemGroup Label="Tests">
+    <!--
+      xunit.v3 stays on 3.2.x although 4.0.x exists: Avalonia.Headless.XUnit 12.1.6 is built against
+      xunit.v3.extensibility.core 3.2.2. Both test projects use one xunit so they cannot disagree.
+      Moving to 4.x is a deliberate bump together with the headless package.
+    -->
+    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
+</Project>

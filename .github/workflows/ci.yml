@@ -1,0 +1,64 @@
+# Build and test on every target OS: a suite that only ever runs on one OS rots.
+# Windows and Linux always build and run every test; macOS only when the "macos" box is ticked. Free macOS
+# runners often take 20 minutes or more to start, and the suite already runs on the owner's Mac with every
+# ./build.sh.
+# The commands are exactly what a developer runs locally: ./build.sh, or build.cmd on Windows.
+name: CI
+
+# Automatic runs are switched off: the workflow only runs when started by hand from the
+# repository's Actions tab ("Run workflow"). To switch them back on, add `push:` and `pull_request:` again.
+# The release workflow calls it too (workflow_call), so a release is never built from a failing suite.
+on:
+  workflow_dispatch:
+    inputs:
+      macos:
+        description: Also test on macOS (waits for a free Mac, often 20 minutes or more)
+        type: boolean
+        default: false
+  workflow_call:
+    inputs:
+      macos:
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  # No build-time telemetry, matching the app's no-network rule. Avalonia's opt-out is documented in its
+  # BuildServices package README.
+  AVALONIA_TELEMETRY_OPTOUT: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+
+jobs:
+  build-and-test:
+    name: Build and test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(inputs.macos && '["windows-latest", "ubuntu-latest", "macos-latest"]' || '["windows-latest", "ubuntu-latest"]') }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          global-json-file: global.json
+      - name: Build and test (macOS, Linux)
+        if: runner.os != 'Windows'
+        run: ./build.sh
+      - name: Build and test (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: build.cmd
+      # The rendered PNGs of every screen in both themes, for review after a run on the other OS.
+      - name: Upload rendered frames
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: render-${{ matrix.os }}
+          path: tests/App.Tests/bin/Release/net10.0/render/
+          if-no-files-found: ignore

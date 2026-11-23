@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>MindBuzz.App</RootNamespace>
+    <AssemblyName>MindBuzz.App</AssemblyName>
+    <!-- No net10.0-windows anywhere: it breaks the macOS build. Per-OS behaviour goes through
+         Host.Current and the platform interfaces. -->
+    <IsAotCompatible>true</IsAotCompatible>
+    <AvaloniaXamlIlDebuggerLaunch>false</AvaloniaXamlIlDebuggerLaunch>
+  </PropertyGroup>
+
+  <!-- The pure per-OS logic and drawing seams are internal; the tests reach them directly. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="MindBuzz.App.Tests" />
+  </ItemGroup>
+
+  <!-- Embedded rather than copied next to the executable: the app ships as one file. -->
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="Semi.Avalonia" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Markdig" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" />
+    <!-- The printable keyboard sheet is a PDF written by SkiaSharp (src/App/Printing). -->
+    <PackageReference Include="SkiaSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\MindBuzz.Core.csproj" />
+  </ItemGroup>
+
+  <!-- The bundled components' licences, which those licences require us to ship. Embedded, because a notice
+       file that can be deleted separately from the binary it describes is not shipped with it. Linked from
+       the repository root so there is one copy. -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\THIRD-PARTY-NOTICES.txt" LogicalName="MindBuzz.App.ThirdPartyNotices.txt" />
+  </ItemGroup>
+
+  <!-- Strings.resx generates its class at build time, so adding a language costs exactly one .resx file. -->
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\Strings.resx">
+      <StronglyTypedFileName>$(IntermediateOutputPath)Strings.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>MindBuzz.App.Localization</StronglyTypedNamespace>
+      <StronglyTypedClassName>Strings</StronglyTypedClassName>
+      <PublicClass>true</PublicClass>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

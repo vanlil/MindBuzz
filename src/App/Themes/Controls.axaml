@@ -1,0 +1,673 @@
+<!--
+  App-level styles built only on the semantic layer. Hover, focus and pressed states live here so every
+  interactive surface gets them. Ordered from general to specific: with equal specificity the later style
+  wins.
+-->
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ae="using:AvaloniaEdit"
+        xmlns:views="using:MindBuzz.App.Views">
+
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{DynamicResource AppBackgroundBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeBody}" />
+  </Style>
+
+  <!-- Tabular figures wherever numbers line up or change in place (version, zoom). -->
+  <Style Selector="TextBlock.num">
+    <Setter Property="FontFeatures" Value="+tnum" />
+  </Style>
+
+  <Style Selector="TextBlock.display">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeDisplay}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.title">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeTitle}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.subtitle">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeSubtitle}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.caption">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+
+  <!-- A hint that has become a problem, e.g. a link address that cannot be linked. -->
+  <Style Selector="TextBlock.caption.warning">
+    <Setter Property="Foreground" Value="{DynamicResource AppDangerBrush}" />
+  </Style>
+
+  <Style Selector="SelectableTextBlock.caption">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+
+  <Style Selector="TextBlock.sectionHeader">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeMicro}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="0.6" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+
+  <!--
+    Tooltips open beside their control, never at the pointer. On macOS a tooltip is a window of its
+    own; placed at the pointer, its invisible shadow margin lay under the pointer and caught the next click, so a tab
+    or the "100 %" button sometimes needed a second click. Above the control everywhere; below it in the toolbar,
+    which sits at the top of the window.
+  -->
+  <Style Selector="Window :is(Control)">
+    <Setter Property="ToolTip.Placement" Value="Top" />
+    <Setter Property="ToolTip.VerticalOffset" Value="-4" />
+  </Style>
+  <Style Selector="Border#ToolbarRow :is(Control)">
+    <Setter Property="ToolTip.Placement" Value="Bottom" />
+    <Setter Property="ToolTip.VerticalOffset" Value="4" />
+  </Style>
+
+  <!-- The title strip and the status bar: one surface, hairline edges. -->
+  <Style Selector="Border.chromeBar">
+    <Setter Property="Background" Value="{DynamicResource ChromeBarBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ChromeBarBorderBrush}" />
+    <!-- Above the canvas, so the bar's shadow falls on the map instead of under it. -->
+    <Setter Property="BoxShadow" Value="{DynamicResource AppPanelShadow}" />
+    <Setter Property="ZIndex" Value="1" />
+  </Style>
+
+  <!--
+    A subtle drop shadow on every control. Semi's own button template does not draw a shadow set
+    on its parts (observed with Semi.Avalonia 12.1.0.1 and Avalonia 12.1.6: the BoxShadow value is set, nothing is
+    drawn), so MindBuzz's buttons get a small template: a shadow border around the same named ContentPresenter,
+    which keeps every Semi style for colours, hover and press. "Window Button" matches the buttons in our views
+    only, not the ones inside other controls' templates (a text box's clear button), which are not logical
+    descendants of a window.
+  -->
+  <Style Selector="Window Button">
+    <Setter Property="ClipToBounds" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Shadow"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                BoxShadow="{DynamicResource AppControlShadow}">
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Padding="{TemplateBinding Padding}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Foreground="{TemplateBinding Foreground}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontWeight="{TemplateBinding FontWeight}"
+                            RecognizesAccessKey="True" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <!-- Buttons that are only an icon on a bar have no surface at rest: a shadow around nothing reads as a smudge,
+       so they get theirs with the hover surface. -->
+  <Style Selector="Window Button.toolbar /template/ Border#PART_Shadow, Window Button.zoomStep /template/ Border#PART_Shadow, Window Button.tabScroll /template/ Border#PART_Shadow, Window Button.tabAdd /template/ Border#PART_Shadow, Window Button.link /template/ Border#PART_Shadow">
+    <Setter Property="BoxShadow" Value="0 0 0 0 #00000000" />
+  </Style>
+  <Style Selector="Window Button.toolbar:pointerover /template/ Border#PART_Shadow, Window Button.zoomStep:pointerover /template/ Border#PART_Shadow, Window Button.tabScroll:pointerover /template/ Border#PART_Shadow, Window Button.tabAdd:pointerover /template/ Border#PART_Shadow">
+    <Setter Property="BoxShadow" Value="{DynamicResource AppControlShadow}" />
+  </Style>
+
+  <!-- Text fields: a frame that carries the shadow, for the same reason. -->
+  <Style Selector="Border.fieldShadow">
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+    <Setter Property="BoxShadow" Value="{DynamicResource AppControlShadow}" />
+  </Style>
+
+  <!-- The menu sits on the title strip, so it takes the strip's surface rather than its own. -->
+  <Style Selector="Menu.titleMenu">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- A drawn icon: stroke only, theme brush, round caps. -->
+  <Style Selector="PathIcon.drawn, Path.icon">
+    <Setter Property="Width" Value="16" />
+    <Setter Property="Height" Value="16" />
+  </Style>
+  <Style Selector="Path.icon">
+    <Setter Property="Stretch" Value="Uniform" />
+    <Setter Property="Stroke" Value="{DynamicResource AppTextMutedBrush}" />
+    <Setter Property="StrokeThickness" Value="1.3" />
+    <Setter Property="StrokeLineCap" Value="Round" />
+    <Setter Property="StrokeJoin" Value="Round" />
+  </Style>
+
+  <!-- A link-styled button: accent text, underline on hover, visible focus. -->
+  <Style Selector="Button.link">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource AppAccentBrush}" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+  </Style>
+  <Style Selector="Button.link:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="Button.link:pointerover TextBlock">
+    <Setter Property="TextDecorations" Value="Underline" />
+  </Style>
+
+  <!-- The zoom buttons beside the status bar slider: borderless, square, a hover surface. -->
+  <Style Selector="Button.zoomStep">
+    <Setter Property="Padding" Value="4" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+  </Style>
+  <Style Selector="Button.zoomStep:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+  </Style>
+
+  <!-- The "100 %" button in the status bar: small caption text in a subtle hairline frame. -->
+  <Style Selector="Button.zoomReset">
+    <Setter Property="Padding" Value="6,1" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeMicro}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.zoomReset:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+  </Style>
+
+  <!-- The update notice: the zoom reset's look, its text between the accent and the muted text, so it is seen without
+       calling for attention. -->
+  <Style Selector="Button.updateNotice">
+    <Setter Property="Padding" Value="8,1" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeMicro}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppAccentMutedBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.updateNotice:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppAccentMutedBrush}" />
+  </Style>
+
+  <!-- The zoom slider sits in a 24 px status bar, so it gets less vertical room than Semi's default. -->
+  <Style Selector="Slider.zoom">
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Margin" Value="0" />
+  </Style>
+
+  <!-- Toolbar buttons: square, borderless, a hover and pressed surface, visible keyboard focus. -->
+  <Style Selector="Button.toolbar">
+    <Setter Property="Width" Value="30" />
+    <Setter Property="Height" Value="28" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.toolbar:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+  </Style>
+  <Style Selector="Button.toolbar:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfacePressedBrush}" />
+  </Style>
+  <Style Selector="Button.toolbar:disabled Path">
+    <Setter Property="Opacity" Value="0.35" />
+  </Style>
+  <Style Selector="Border.toolbarSeparator">
+    <Setter Property="Width" Value="1" />
+    <Setter Property="Height" Value="18" />
+    <Setter Property="Margin" Value="6,0" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Background" Value="{DynamicResource AppBorderBrush}" />
+  </Style>
+
+  <!--
+    The in-place topic editor. Its colours and sizes are set by the canvas per topic level; these setters only
+    keep Semi's focus and hover looks from replacing them (/template/ selectors: Semi draws those on the template's
+    border, not on the TextBox).
+  -->
+  <Style Selector="TextBox.topicEditor">
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
+  </Style>
+  <Style Selector="TextBox.topicEditor:focus /template/ Border#PART_ContentPresenterBorder, TextBox.topicEditor:pointerover /template/ Border#PART_ContentPresenterBorder">
+    <Setter Property="Background" Value="{Binding $parent[TextBox].Background}" />
+    <Setter Property="BorderBrush" Value="{Binding $parent[TextBox].BorderBrush}" />
+  </Style>
+
+  <!--
+    The sheet tabs. The bar is the window background; the active tab takes the canvas colour, so
+    it reads as the front sheet joined to the map above, with an accent bar along its bottom edge. Inactive tabs are
+    quiet and separated by hairlines.
+  -->
+  <Style Selector="Border.sheetBar">
+    <Setter Property="Background" Value="{DynamicResource AppBackgroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ChromeBarBorderBrush}" />
+    <Setter Property="BorderThickness" Value="0,1,0,0" />
+    <Setter Property="Height" Value="32" />
+  </Style>
+  <Style Selector="Border.sheetTab">
+    <Setter Property="Padding" Value="16,0" />
+    <Setter Property="MinWidth" Value="64" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderBrush}" />
+    <Setter Property="BorderThickness" Value="0,0,1,0" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="Border.sheetTab:pointerover">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+  </Style>
+  <Style Selector="Border.sheetTab.active">
+    <Setter Property="Background" Value="{DynamicResource SheetTabActiveBrush}" />
+    <Setter Property="BoxShadow" Value="{DynamicResource AppControlShadow}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+    <Setter Property="BorderThickness" Value="0,0,0,2" />
+  </Style>
+  <Style Selector="TextBlock.sheetTabText">
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+  <Style Selector="Border.sheetTab.active TextBlock.sheetTabText">
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="TextBox.sheetTabEditor">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Padding" Value="4,2" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.tabAdd, Button.tabScroll">
+    <Setter Property="Width" Value="28" />
+    <Setter Property="Height" Value="26" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Margin" Value="4,0" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+  </Style>
+  <Style Selector="Button.tabAdd:pointerover /template/ ContentPresenter, Button.tabScroll:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+  </Style>
+  <Style Selector="Border.tabDropMarker">
+    <Setter Property="Width" Value="2" />
+    <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+  </Style>
+
+  <!--
+    The topic panel: a quiet surface beside the canvas, sections separated by hairlines, and the
+    notes editor framed like a text field so focus is visible.
+  -->
+  <Style Selector="Border.topicPanel">
+    <Setter Property="Background" Value="{DynamicResource TopicPanelBackgroundBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ChromeBarBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1,0,0,0" />
+  </Style>
+  <Style Selector="Border.paneDivider">
+    <Setter Property="Width" Value="5" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="Border.paneDivider:pointerover">
+    <Setter Property="Background" Value="{DynamicResource AppAccentSoftBrush}" />
+  </Style>
+  <!-- The editable topic title: reads as a heading, and shows a field frame only on hover and while editing. -->
+  <Style Selector="TextBox.panelTitle">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeSubtitle}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="Padding" Value="6,6" />
+    <Setter Property="MinHeight" Value="0" />
+  </Style>
+  <Style Selector="TextBox.panelTitle /template/ Border#PART_ContentPresenterBorder">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector="TextBox.panelTitle:pointerover /template/ Border#PART_ContentPresenterBorder">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+  </Style>
+  <Style Selector="TextBox.panelTitle:focus /template/ Border#PART_ContentPresenterBorder">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppFocusBrush}" />
+  </Style>
+  <!-- The detail view's links: one-line rows of a fixed height, three of them visible, then the list scrolls
+      . PanelLinksHeight in Semantic.axaml is three of these rows. -->
+  <Style Selector="ListBox.panelLinks ListBoxItem">
+    <Setter Property="Height" Value="30" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Padding" Value="10,0" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+
+  <!-- Search results: the topic in the text colour, the excerpt muted with the match marked like a highlighter. -->
+  <Style Selector="TextBlock.searchTopic">
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="TextBlock.searchExcerpt">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+  <Style Selector="Run.searchField">
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="Run.searchMatch">
+    <Setter Property="Background" Value="{DynamicResource SearchMatchBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource SearchMatchTextBrush}" />
+  </Style>
+  <Style Selector="ListBox.searchResults">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- A link row in the panel: the title bold in the text colour, the address after it, muted and regular. -->
+  <Style Selector="Run.panelLinkTitle">
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="Run.panelLinkUrl">
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+
+  <Style Selector="Border.panelRule">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Margin" Value="16,0" />
+    <Setter Property="Background" Value="{DynamicResource AppBorderBrush}" />
+  </Style>
+
+  <!-- Marker toggles: a pill per value, filled with the accent when the topic has it. -->
+  <Style Selector="Button.markerChoice">
+    <Setter Property="MinWidth" Value="24" />
+    <Setter Property="MinHeight" Value="24" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="Padding" Value="7,0" />
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <!-- Squared with a subtle round corner. -->
+    <Setter Property="CornerRadius" Value="{DynamicResource AppRadiusSmall}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceAltBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.markerChoice.square">
+    <Setter Property="Width" Value="24" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="Button.markerChoice.active">
+    <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextInvertedBrush}" />
+  </Style>
+  <Style Selector="Button.markerChoice.active:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppAccentPressedBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppAccentPressedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextInvertedBrush}" />
+  </Style>
+
+  <!-- The Edit/Preview switch: a segmented control. -->
+  <Style Selector="Border.segmented">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceAltBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="2" />
+  </Style>
+  <Style Selector="Button.segment">
+    <Setter Property="MinHeight" Value="22" />
+    <Setter Property="Padding" Value="10,1" />
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeCaption}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+  <Style Selector="Button.segment:disabled">
+    <Setter Property="Opacity" Value="0.45" />
+  </Style>
+  <Style Selector="Window Button.segment /template/ Border#PART_Shadow">
+    <Setter Property="BoxShadow" Value="0 0 0 0 #00000000" />
+  </Style>
+  <!-- The notes toolbar's buttons: segments, square, for one letter or icon. Focus stays in the editor. -->
+  <Style Selector="Button.segment.tool">
+    <Setter Property="Width" Value="24" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="Button.segment.tool:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+  </Style>
+  <Style Selector="Button.segment.tool Path.icon">
+    <Setter Property="Stroke" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="StrokeThickness" Value="1.2" />
+  </Style>
+  <Style Selector="Button.segment.active">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="Button.segment.active:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="Window Button.segment.active /template/ Border#PART_Shadow">
+    <Setter Property="BoxShadow" Value="{DynamicResource AppControlShadow}" />
+  </Style>
+
+  <!-- The format bar over the in-place editor: bold, italic and underline as toggle buttons. -->
+  <Style Selector="Border.formatBar">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="BoxShadow" Value="{DynamicResource AppControlShadow}" />
+  </Style>
+  <Style Selector="ToggleButton.format">
+    <Setter Property="Width" Value="26" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+  </Style>
+  <Style Selector="ToggleButton.format:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="ToggleButton.format:checked /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AppAccentSoftBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppAccentBrush}" />
+  </Style>
+
+  <Style Selector="Border.noteEditorFrame">
+    <Setter Property="Background" Value="{DynamicResource AppSurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,8,4,8" />
+    <Setter Property="BoxShadow" Value="{DynamicResource AppControlShadow}" />
+  </Style>
+  <Style Selector="Border.noteEditorFrame:focus-within">
+    <Setter Property="BorderBrush" Value="{DynamicResource AppFocusBrush}" />
+  </Style>
+  <Style Selector="Border.notePreviewFrame">
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,8,0,8" />
+  </Style>
+  <Style Selector="Border.notePreviewFrame:focus-within">
+    <Setter Property="BorderBrush" Value="{DynamicResource AppFocusBrush}" />
+  </Style>
+  <!--
+    Menu shortcuts in the app's wording (MenuGestureConverter), in every in-window and context menu. The pseudo-class
+    makes this a triggered style, the only kind that outranks the value Semi's template sets on the text.
+  -->
+  <Style Selector="MenuItem:not(:separator) /template/ TextBlock#PART_InputGestureText">
+    <Setter Property="Text" Value="{Binding $parent[MenuItem].InputGesture, Converter={x:Static views:MenuGestureConverter.Instance}}" />
+  </Style>
+
+  <!-- The caption buttons' icons (Themes/WindowDecorations.axaml): drawn at their own size, a little bolder. -->
+  <Style Selector="Path.icon.caption">
+    <Setter Property="Stretch" Value="None" />
+    <Setter Property="Stroke" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="StrokeThickness" Value="1" />
+  </Style>
+
+  <!-- The crash dialog's technical details: monospace and small, so a stack trace keeps its shape. -->
+  <Style Selector="TextBox.crashDetails">
+    <Setter Property="FontFamily" Value="{DynamicResource NoteMonoFontFamily}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+  </Style>
+  <Style Selector="ae|TextEditor.noteEditor">
+    <Setter Property="FontFamily" Value="{DynamicResource NoteMonoFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource NoteMonoFontSize}" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <!-- The Markdown preview (MarkdownRenderer): the md… classes. -->
+  <Style Selector="StackPanel.mdDocument SelectableTextBlock">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeBody}" />
+    <Setter Property="LineHeight" Value="19" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+  </Style>
+  <Style Selector="SelectableTextBlock.mdHeading">
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Margin" Value="0,4,0,0" />
+  </Style>
+  <Style Selector="SelectableTextBlock.mdH1">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="LineHeight" Value="26" />
+  </Style>
+  <Style Selector="SelectableTextBlock.mdH2">
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="LineHeight" Value="23" />
+  </Style>
+  <Style Selector="SelectableTextBlock.mdH3">
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="LineHeight" Value="21" />
+  </Style>
+  <Style Selector="Run.mdCodeInline">
+    <Setter Property="FontFamily" Value="{DynamicResource NoteMonoFontFamily}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Background" Value="{DynamicResource NoteCodeBackgroundBrush}" />
+  </Style>
+  <Style Selector="Run.mdImage">
+    <Setter Property="FontStyle" Value="Italic" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+  <Style Selector="Border.mdCodeBlock">
+    <Setter Property="Background" Value="{DynamicResource NoteCodeBackgroundBrush}" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Padding" Value="10,8" />
+  </Style>
+  <Style Selector="StackPanel.mdDocument SelectableTextBlock.mdCode">
+    <Setter Property="FontFamily" Value="{DynamicResource NoteMonoFontFamily}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="LineHeight" Value="17" />
+  </Style>
+  <Style Selector="Border.mdQuote">
+    <Setter Property="BorderBrush" Value="{DynamicResource NoteQuoteBarBrush}" />
+    <Setter Property="BorderThickness" Value="3,0,0,0" />
+    <Setter Property="Padding" Value="10,2,0,2" />
+  </Style>
+  <Style Selector="StackPanel.mdDocument Border.mdQuote SelectableTextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+  <Style Selector="Border.mdRule">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Margin" Value="0,4" />
+    <Setter Property="Background" Value="{DynamicResource AppBorderStrongBrush}" />
+  </Style>
+  <Style Selector="TextBlock.mdBullet">
+    <Setter Property="Margin" Value="2,0,8,0" />
+    <Setter Property="LineHeight" Value="19" />
+    <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+  </Style>
+  <Style Selector="CheckBox.mdTask">
+    <Setter Property="Margin" Value="0,0,6,0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+  </Style>
+  <Style Selector="Border.mdTableFrame">
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="0,0,1,1" />
+  </Style>
+  <Style Selector="Border.mdCell">
+    <Setter Property="BorderBrush" Value="{DynamicResource AppBorderStrongBrush}" />
+    <Setter Property="BorderThickness" Value="1,1,0,0" />
+    <Setter Property="Padding" Value="8,4" />
+  </Style>
+  <Style Selector="Border.mdCell.mdHeader">
+    <Setter Property="Background" Value="{DynamicResource NoteCodeBackgroundBrush}" />
+  </Style>
+  <Style Selector="StackPanel.mdDocument Border.mdHeader SelectableTextBlock">
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <!--
+    A link inside a line of text. Avalonia 12.1.6 puts an embedded control's bottom edge on the text baseline,
+    whatever its BaselineAlignment says (seen in the panel renders), so the link would float one descender high. The
+    negative bottom margin lowers it by Inter's descent at 13 px, about 3 px; checked by eye in the panel renders.
+  -->
+  <Style Selector="Button.mdLink">
+    <Setter Property="FontSize" Value="{DynamicResource AppFontSizeBody}" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Height" Value="NaN" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Margin" Value="0,0,0,-3" />
+  </Style>
+  <Style Selector="Button.mdLink TextBlock">
+    <Setter Property="TextDecorations" Value="Underline" />
+  </Style>
+
+</Styles>

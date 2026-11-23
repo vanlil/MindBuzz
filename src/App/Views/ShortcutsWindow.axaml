@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:services="using:MindBuzz.App.Services"
+        xmlns:loc="using:MindBuzz.App.Localization"
+        x:Class="MindBuzz.App.Views.ShortcutsWindow"
+        Title="{x:Static loc:Strings.Shortcuts_Title}"
+        Icon="/Assets/MindBuzz.ico"
+        CanMinimize="False"
+        CanMaximize="False"
+        Width="520"
+        SizeToContent="Height"
+        MaxHeight="720"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+
+  <!--
+    The keyboard shortcuts, generated from the command registry for this platform, so a
+    new command appears here without this view changing.
+  -->
+  <Border Padding="24,20" Background="{DynamicResource AppSurfaceBrush}">
+    <DockPanel>
+      <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10" Margin="0,0,0,12">
+        <Path Classes="icon" VerticalAlignment="Center" Width="18" Height="18" Data="{StaticResource IconKeyboard}" />
+        <TextBlock Classes="title" VerticalAlignment="Center" Text="{x:Static loc:Strings.Shortcuts_Title}" />
+      </StackPanel>
+
+      <Button x:Name="CloseButton"
+              DockPanel.Dock="Bottom"
+              Margin="0,16,0,0"
+              HorizontalAlignment="Right"
+              Classes="Primary"
+              Theme="{DynamicResource SolidButton}"
+              Content="{x:Static loc:Strings.Dialog_Close}"
+              IsDefault="True"
+              IsCancel="True"
+              Click="OnClose" />
+
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <ItemsControl x:Name="Rows" Margin="0,0,14,0">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="services:ShortcutRow">
+              <Grid ColumnDefinitions="*,16,Auto" MinHeight="{DynamicResource AppRowHeight}">
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Command}" />
+                <TextBlock Grid.Column="2"
+                           Classes="num"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource AppTextMutedBrush}"
+                           Text="{Binding Gestures}" />
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </DockPanel>
+  </Border>
+
+</Window>

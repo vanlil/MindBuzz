@@ -1,0 +1,143 @@
+# The release: pushing a tag v<Version> tests on Windows and Linux (macOS only when started by
+# hand with the box ticked, see ci.yml), builds all five release files on
+# one Linux machine (build.sh cross-compiles Windows and macOS; the SDK gives the macOS executable its ad-hoc
+# signature there too), packs them and creates a *draft* release, which the owner reads and publishes by hand.
+# Nothing goes public by accident. Linux rather than a Mac: no wait for a free Mac, and a tenth of the minutes.
+# Apple signing and notarization will need a Mac job for the macOS files.
+# Started by hand ("Run workflow") it does the same without a release: the files are attached to the run.
+# Actions are pinned to commits; to update one, take the commit of its newer release tag (git ls-remote --tags).
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      macos:
+        description: Also test on macOS (waits for a free Mac, often 20 minutes or more)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  # No build-time telemetry, as in ci.yml.
+  AVALONIA_TELEMETRY_OPTOUT: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+
+jobs:
+  test:
+    name: Test
+    uses: ./.github/workflows/ci.yml
+    with:
+      macos: ${{ inputs.macos == true }}
+
+  # Two jobs, so the build never holds a token that can write: "build" compiles and packs with read rights only;
+  # "publish" holds the write rights, runs no code of the repository and only attests and releases the packed files.
+  # Every action is pinned to a commit (its version in the comment): a moved tag cannot change what runs here.
+  build:
+    name: Build
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          global-json-file: global.json
+
+      # The tag must name the version the app shows in its About dialog, or the release and the app disagree.
+      - name: Check version
+        id: version
+        run: |
+          version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Directory.Build.props)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match <Version>$version</Version> in Directory.Build.props"
+            exit 1
+          fi
+
+      - name: Build
+        run: ./build.sh --no-tests --mac --windows --linux
+
+      # zip -y keeps symbolic links, and both zip and tar keep the execute bit, so nobody needs chmod. The .pdb
+      # files are for debugging and stay out.
+      - name: Pack
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          mkdir release
+          cp artifacts/win-x64/MindBuzz.exe "release/MindBuzz-$VERSION-windows-x64.exe"
+          for arch in arm64 x64; do
+            (cd "artifacts/osx-$arch" && zip -r -y -q "$GITHUB_WORKSPACE/release/MindBuzz-$VERSION-macos-$arch.zip" MindBuzz.app)
+            tar -czf "release/MindBuzz-$VERSION-linux-$arch.tar.gz" -C "artifacts/linux-$arch" MindBuzz
+          done
+          cd release
+          sha256sum MindBuzz-* > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Keep the files with the run
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: MindBuzz-${{ steps.version.outputs.version }}
+          path: release/
+
+  publish:
+    name: Release
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write      # create the draft release
+      id-token: write      # sign the build attestation
+      attestations: write
+    steps:
+      - name: Take the packed files
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: MindBuzz-${{ needs.build.outputs.version }}
+          path: release/
+
+      # The checksums the build wrote must still match: the files are the ones it packed.
+      - name: Check the files
+        run: cd release && sha256sum -c SHA256SUMS.txt
+
+      # A verifiable record that these files were built here, from this commit (gh attestation verify). GitHub
+      # offers it for public repositories only.
+      - name: Attest
+        if: ${{ !github.event.repository.private }}
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2.4.0
+        with:
+          subject-path: release/MindBuzz-*
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          cat > notes.md <<EOF
+          ## Downloads
+
+          | System | File |
+          |---|---|
+          | Windows 10 and 11, 64-bit | \`MindBuzz-$VERSION-windows-x64.exe\` |
+          | macOS 14 or later, Apple silicon | \`MindBuzz-$VERSION-macos-arm64.zip\` |
+          | macOS 14 or later, Intel | \`MindBuzz-$VERSION-macos-x64.zip\` |
+          | Linux, x64 | \`MindBuzz-$VERSION-linux-x64.tar.gz\` |
+          | Linux, ARM64 | \`MindBuzz-$VERSION-linux-arm64.tar.gz\` |
+
+          Nothing to install. **Windows:** run the file; SmartScreen may warn, then *More info › Run anyway*.
+          **macOS:** unzip, move \`MindBuzz.app\` to Applications and, as the app is not signed, run once:
+          \`xattr -dr com.apple.quarantine /Applications/MindBuzz.app\`. **Linux:** unpack and run \`./MindBuzz\`.
+
+          \`SHA256SUMS.txt\` holds the checksums (\`shasum -a 256 -c SHA256SUMS.txt\`).
+
+          EOF
+          gh release create "$GITHUB_REF_NAME" release/* --repo "$GITHUB_REPOSITORY" --draft --verify-tag \
+            --title "MindBuzz $VERSION" --notes-file notes.md --generate-notes

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>MindBuzz.App.Tests</RootNamespace>
+    <AssemblyName>MindBuzz.App.Tests</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+    <!-- Avalonia 12's headless integration targets xunit v3, so both test projects use one framework. -->
+    <NoWarn>$(NoWarn);CA1707;CA1849;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="Avalonia.Headless.XUnit" />
+    <!-- Real Skia rendering in the headless tests, so frames are actually drawn and can be saved as PNGs. -->
+    <PackageReference Include="Avalonia.Skia" />
+    <PackageReference Include="Avalonia.HarfBuzz" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\App\MindBuzz.App.csproj" />
+    <!-- Canvas tests render generated maps, never real user files. -->
+    <ProjectReference Include="..\SyntheticMap\MindBuzz.SyntheticMap.csproj" />
+  </ItemGroup>
+
+</Project>

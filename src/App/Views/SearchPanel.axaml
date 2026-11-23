@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MindBuzz.App.ViewModels"
+             xmlns:loc="using:MindBuzz.App.Localization"
+             x:Class="MindBuzz.App.Views.SearchPanel"
+             x:DataType="vm:SearchViewModel">
+
+  <!--
+    The search panel: a box, the scope, the count and the results, grouped by map when searching
+    all maps. Keys are handled in code-behind: Enter and Shift+Enter step through the hits, Down goes to the list,
+    Esc closes.
+  -->
+  <Border Classes="topicPanel">
+    <DockPanel>
+
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="16,10,8,0">
+        <TextBlock Classes="sectionHeader" VerticalAlignment="Center" Text="{x:Static loc:Strings.Search_Title}" />
+        <Button Grid.Column="1"
+                Classes="zoomStep"
+                Command="{Binding CloseCommand}"
+                ToolTip.Tip="{x:Static vm:SearchViewModel.CloseTooltip}"
+                AutomationProperties.Name="{x:Static vm:SearchViewModel.CloseTooltip}">
+          <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconClose}" />
+        </Button>
+      </Grid>
+
+      <Border DockPanel.Dock="Top" Classes="fieldShadow" Margin="16,8,16,8">
+        <TextBox x:Name="QueryBox"
+                 Text="{Binding Query}"
+                 PlaceholderText="{x:Static loc:Strings.Search_Watermark}"
+                 AutomationProperties.Name="{x:Static loc:Strings.Search_Watermark}" />
+      </Border>
+
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="16,0,16,8">
+        <TextBlock Classes="caption" VerticalAlignment="Center" Text="{Binding CountText}" TextTrimming="CharacterEllipsis" />
+        <Border Grid.Column="1" Classes="segmented">
+          <StackPanel Orientation="Horizontal">
+            <Button Classes="segment" Classes.active="{Binding IsCurrentMapOnly}"
+                    Content="{x:Static loc:Strings.Search_CurrentMap}" Command="{Binding CurrentMapCommand}" />
+            <Button Classes="segment" Classes.active="{Binding AllMaps}"
+                    Content="{x:Static loc:Strings.Search_AllMaps}" Command="{Binding EveryMapCommand}" />
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <Border DockPanel.Dock="Top" Classes="panelRule" />
+
+      <TextBlock DockPanel.Dock="Bottom" Classes="caption" Margin="16,8" TextWrapping="Wrap" Text="{x:Static loc:Strings.Search_Keys}" />
+
+      <ListBox x:Name="Results"
+               Classes="searchResults"
+               Margin="8,6,8,0"
+               ItemsSource="{Binding Rows}"
+               SelectedIndex="{Binding SelectedIndex}">
+        <ListBox.DataTemplates>
+          <DataTemplate DataType="vm:SearchMapRow">
+            <Grid ColumnDefinitions="*,Auto" Margin="2,8,2,2">
+              <TextBlock Classes="sectionHeader" Text="{Binding MapName}" TextTrimming="CharacterEllipsis" />
+              <TextBlock Grid.Column="1" Classes="caption" Text="{Binding CountText}" />
+            </Grid>
+          </DataTemplate>
+          <DataTemplate DataType="vm:SearchHitRow">
+            <Grid ColumnDefinitions="*,Auto" Margin="0,3">
+              <StackPanel Spacing="1">
+                <TextBlock Classes="searchTopic" Text="{Binding TopicTitle}" TextTrimming="CharacterEllipsis" />
+                <!-- The runs on one line: whitespace between them in XAML would show as spaces. -->
+                <TextBlock Classes="searchExcerpt" TextTrimming="CharacterEllipsis"><Run Classes="searchField" Text="{Binding FieldLabel}" /><Run Text=" · " /><Run Text="{Binding Before}" /><Run Classes="searchMatch" Text="{Binding Match}" /><Run Text="{Binding After}" /></TextBlock>
+              </StackPanel>
+              <Button Grid.Column="1"
+                      Classes="zoomStep"
+                      VerticalAlignment="Center"
+                      IsVisible="{Binding IsLink}"
+                      Command="{Binding $parent[UserControl].((vm:SearchViewModel)DataContext).OpenLinkCommand}"
+                      CommandParameter="{Binding}"
+                      ToolTip.Tip="{Binding Url}"
+                      AutomationProperties.Name="{x:Static loc:Strings.Search_OpenLink}">
+                <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconLink}" />
+              </Button>
+            </Grid>
+          </DataTemplate>
+        </ListBox.DataTemplates>
+      </ListBox>
+
+    </DockPanel>
+  </Border>
+
+</UserControl>

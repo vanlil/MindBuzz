@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- One head for every OS. Never per-OS heads. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MindBuzz.Desktop</RootNamespace>
+    <AssemblyName>MindBuzz</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Shared with the window icon: one .ico, embedded as an Avalonia resource by the App project and
+         stamped into the Win32 executable here. -->
+    <ApplicationIcon>..\App\Assets\MindBuzz.ico</ApplicationIcon>
+    <!-- Workstation GC: an editor has no heavy parallel work, and server GC costs memory and startup. -->
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+  </PropertyGroup>
+
+  <!-- Trimming and AOT are opted into on the publish command line; the analyzers run on every build so
+       our own code stays trim- and AOT-clean. -->
+  <PropertyGroup>
+    <TrimMode>full</TrimMode>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" />
+  </ItemGroup>
+
+  <!--
+    Where a single-file publish keeps the native libraries (Skia, HarfBuzz, Avalonia). Inside the one .exe on Windows
+    and Linux, unpacked to a cache on first launch. Beside the executable in MindBuzz.app on macOS:
+    the bundle is a folder anyway, and unpacking cost 1.6 s on first launch and left about 19 MB per
+    version in ~/.net (measured on an Apple M3).
+  -->
+  <PropertyGroup>
+    <IncludeNativeLibrariesForSelfExtract Condition="!$(RuntimeIdentifier.StartsWith('osx'))">true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+
+  <!-- The macOS .app bundle, written on publish for osx-*. -->
+  <Import Project="MacBundle.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\App\MindBuzz.App.csproj" />
+  </ItemGroup>
+
+</Project>

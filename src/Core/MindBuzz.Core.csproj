@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Plain net10.0 with no UI references: the model, commands and undo, layout, serialisation and find.
+       Testable without Avalonia and fast to test. -->
+  <PropertyGroup>
+    <RootNamespace>MindBuzz.Core</RootNamespace>
+    <AssemblyName>MindBuzz.Core</AssemblyName>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MindBuzz.Core.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The one dependency of Core: password-protected .mbz files. -->
+    <PackageReference Include="SharpZipLib" />
+  </ItemGroup>
+
+</Project>

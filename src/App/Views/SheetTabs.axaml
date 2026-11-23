@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MindBuzz.App.ViewModels"
+             xmlns:loc="using:MindBuzz.App.Localization"
+             x:Class="MindBuzz.App.Views.SheetTabs"
+             x:DataType="vm:MainViewModel">
+
+  <!--
+    The sheet tabs along the bottom, as in Excel: one tab per map, the active one joined to the
+    canvas above it, a + button at the end, and scroll buttons when the tabs do not fit. Tabs never shrink below
+    their text: the bar scrolls instead.
+  -->
+  <Border Classes="sheetBar">
+    <Grid ColumnDefinitions="Auto,*,Auto">
+      <StackPanel Grid.Column="0" x:Name="ScrollButtons" Orientation="Horizontal" Margin="4,0,0,0" IsVisible="False">
+        <Button Classes="tabScroll" Click="OnScrollLeft" ToolTip.Tip="{x:Static loc:Strings.Tabs_ScrollLeft}">
+          <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconChevronLeft}" />
+        </Button>
+        <Button Classes="tabScroll" Click="OnScrollRight" ToolTip.Tip="{x:Static loc:Strings.Tabs_ScrollRight}">
+          <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconChevronRight}" />
+        </Button>
+      </StackPanel>
+
+      <ScrollViewer Grid.Column="1"
+                    x:Name="Scroller"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VerticalScrollBarVisibility="Disabled">
+        <StackPanel Orientation="Horizontal">
+          <Panel>
+            <ItemsControl x:Name="TabList" ItemsSource="{Binding Tabs}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:MapTab">
+                  <Border Classes="sheetTab"
+                          Classes.active="{Binding IsActive}"
+                          ToolTip.Tip="{Binding FullName}"
+                          PointerPressed="OnTabPressed"
+                          PointerMoved="OnTabMoved"
+                          PointerReleased="OnTabReleased"
+                          ContextRequested="OnTabContextRequested">
+                    <Panel>
+                      <TextBlock Classes="sheetTabText"
+                                 Text="{Binding Name}"
+                                 IsVisible="{Binding !IsRenaming}" />
+                      <TextBox Classes="sheetTabEditor"
+                               Text="{Binding FullName, Mode=OneTime}"
+                               IsVisible="{Binding IsRenaming}"
+                               AttachedToVisualTree="OnEditorAttached"
+                               KeyDown="OnEditorKeyDown"
+                               LostFocus="OnEditorLostFocus" />
+                    </Panel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Where a dragged tab would land. -->
+            <Canvas IsHitTestVisible="False">
+              <Border x:Name="DropMarker" Classes="tabDropMarker" IsVisible="False" />
+            </Canvas>
+          </Panel>
+
+          <Button Classes="tabAdd"
+                  Command="{Binding NewMapCommand}"
+                  ToolTip.Tip="{x:Static loc:Strings.Tabs_AddTooltip}"
+                  AutomationProperties.Name="{x:Static loc:Strings.Tabs_AddTooltip}">
+            <Path Classes="icon" Width="16" Height="16" Stretch="None" Data="{StaticResource IconPlus}" />
+          </Button>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Border>
+
+</UserControl>

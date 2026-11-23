@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- The macOS bundle's description, filled in by MacBundle.targets, which puts in the version from Directory.Build.props. -->
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>
+  <string>MindBuzz</string>
+  <key>CFBundleDisplayName</key>
+  <string>MindBuzz</string>
+  <!-- The languages of Strings.*.resx, so macOS shows its own menu items (Services, Enter Full Screen) in the
+       same language as the app. -->
+  <key>CFBundleDevelopmentRegion</key>
+  <string>en</string>
+  <key>CFBundleLocalizations</key>
+  <array>
+    <string>en</string>
+    <string>de</string>
+    <string>fr</string>
+    <string>es</string>
+  </array>
+  <key>CFBundleIdentifier</key>
+  <string>io.github.vanlil.mindbuzz</string>
+  <key>CFBundleVersion</key>
+  <string>@VERSION@</string>
+  <key>CFBundleShortVersionString</key>
+  <string>@VERSION@</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleExecutable</key>
+  <string>MindBuzz</string>
+  <key>CFBundleIconFile</key>
+  <string>MindBuzz</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>14.0</string>
+  <key>LSApplicationCategoryType</key>
+  <string>public.app-category.productivity</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+  <key>CFBundleDocumentTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleTypeName</key>
+      <string>MindBuzz Mind Map</string>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+      <key>LSHandlerRank</key>
+      <string>Owner</string>
+      <key>CFBundleTypeIconFile</key>
+      <string>MindBuzz</string>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.vanlil.mindbuzz.mbz</string>
+      </array>
+    </dict>
+  </array>
+  <key>UTExportedTypeDeclarations</key>
+  <array>
+    <dict>
+      <key>UTTypeIdentifier</key>
+      <string>io.github.vanlil.mindbuzz.mbz</string>
+      <key>UTTypeDescription</key>
+      <string>MindBuzz Mind Map</string>
+      <key>UTTypeConformsTo</key>
+      <array>
+        <string>public.data</string>
+        <string>public.content</string>
+      </array>
+      <key>UTTypeIconFile</key>
+      <string>MindBuzz</string>
+      <key>UTTypeTagSpecification</key>
+      <dict>
+        <key>public.filename-extension</key>
+        <array>
+          <string>mbz</string>
+        </array>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>

@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Core/">
+    <Project Path="src/Core/MindBuzz.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/App/">
+    <Project Path="src/App/MindBuzz.App.csproj" />
+  </Folder>
+  <Folder Name="/src/Desktop/">
+    <Project Path="src/Desktop/MindBuzz.Desktop.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/Core.Tests/">
+    <Project Path="tests/Core.Tests/MindBuzz.Core.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/App.Tests/">
+    <Project Path="tests/App.Tests/MindBuzz.App.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/SyntheticMap/">
+    <Project Path="tests/SyntheticMap/MindBuzz.SyntheticMap.csproj" />
+  </Folder>
+</Solution>
