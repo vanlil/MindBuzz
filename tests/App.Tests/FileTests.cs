@@ -321,6 +321,19 @@ public sealed class FileTests : IDisposable
         Assert.False(_main.CanCloseWithoutAsking);
     }
 
+    /// <summary>Each kind of load problem has its own line: an unknown relationship colour was reported as unknown
+    /// parts that would not be saved, though it is saved back as the default.</summary>
+    [Fact]
+    public void Every_kind_of_load_problem_is_reported_in_its_own_words()
+    {
+        string[] lines =
+        [
+            .. Enum.GetValues<LoadProblemKind>().Select(kind => MainViewModel.ProblemSummary([new LoadProblem(kind, "Map")])),
+        ];
+
+        Assert.Equal(lines.Length, lines.Distinct().Count());
+    }
+
     /// <summary>File deletes run on the recovery queue; wait for the condition, never a fixed sleep.</summary>
     private static bool SpinUntil(Func<bool> condition) => SpinWait.SpinUntil(condition, TimeSpan.FromSeconds(5));
 }

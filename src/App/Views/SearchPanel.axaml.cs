@@ -1,7 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using MindBuzz.App.ViewModels;
 
 namespace MindBuzz.App.Views;
@@ -17,10 +19,19 @@ public partial class SearchPanel : UserControl
     {
         InitializeComponent();
         AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
-        Results.AddHandler(PointerReleasedEvent, (_, _) => Model?.GoToSelected(), RoutingStrategies.Bubble, handledEventsToo: true);
+        Results.AddHandler(PointerReleasedEvent, OnResultReleased, RoutingStrategies.Bubble, handledEventsToo: true);
     }
 
     private SearchViewModel? Model => DataContext as SearchViewModel;
+
+    /// <summary>A click on a row goes to its hit; a click on a link hit's button only opens the link.</summary>
+    private void OnResultReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if ((e.Source as Visual)?.FindAncestorOfType<Button>(includeSelf: true) is null)
+        {
+            Model?.GoToSelected();
+        }
+    }
 
     /// <summary>The keyboard in the box with its text selected, once the panel is laid out.</summary>
     internal void FocusQuery() => Dispatcher.UIThread.Post(

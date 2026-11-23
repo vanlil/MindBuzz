@@ -255,6 +255,28 @@ public sealed class SearchTests
         Assert.True(s.Window.FindControl<TopicPanel>("TopicPanelView")!.IsKeyboardFocusWithin);
     }
 
+    /// <summary>A click on a link hit's button opens the link and nothing else: the list took the click as a click on
+    /// its row and went to the hit too.</summary>
+    [AvaloniaFact]
+    public void The_link_button_of_a_hit_opens_the_link_without_going_to_the_hit()
+    {
+        Session s = Sample();
+        s.Main.Apply(new AddLink(s.Map.Id, new TopicId("G"), new InternetLink("https://example.com/plan", "Release page")));
+        s.Main.Select(s.Central.Id);
+        Find(s, "release page");
+        s.Main.Search.SelectedIndex = s.Main.Search.Rows.IndexOf(s.Main.Search.Rows.OfType<SearchHitRow>().Single());
+        s.Main.Select(s.Central.Id);
+        Session.Pump();
+
+        Button button = Avalonia.VisualTree.VisualExtensions.GetVisualDescendants(s.Window.FindControl<SearchPanel>("SearchPanelView")!)
+            .OfType<Button>()
+            .Single(candidate => candidate.IsEffectivelyVisible && candidate.DataContext is SearchHitRow { IsLink: true });
+        s.Click(button.TranslatePoint(new Point(button.Bounds.Width / 2, button.Bounds.Height / 2), s.Window)!.Value);
+
+        Assert.Equal(["https://example.com/plan"], s.Shell.OpenedUrls);
+        Assert.Equal(s.Central.Id, s.Main.SelectedTopic);
+    }
+
     [AvaloniaFact]
     public void Renders_search_beside_the_detail_view_in_both_themes()
     {

@@ -73,7 +73,7 @@ internal sealed partial class MapCanvas
 
         // Dragging one of several selected topics moves them all: none may land inside one of them.
         if (_dropPlan is { } plan && _layoutMap is not null && DragsGroup
-            && _selectedSet.Any(id => _layoutMap.Contains(id) && _layoutMap.Index.IsSelfOrAncestor(id, plan.NewParent)))
+            && Moving(_layoutMap).Any(id => _layoutMap.Index.IsSelfOrAncestor(id, plan.NewParent)))
         {
             _dropPlan = null;
         }
@@ -135,7 +135,7 @@ internal sealed partial class MapCanvas
         }
 
         IBrush veil = Brush("CanvasBackgroundBrush");
-        List<TopicId> moving = DragsGroup ? [.. _selectedSet.Where(_layoutMap.Contains)] : [dragged];
+        List<TopicId> moving = DragsGroup ? [.. Moving(_layoutMap)] : [dragged];
         using (context.PushOpacity(0.6))
         {
             foreach (TopicBox box in _layout.Boxes.Where(box => moving.Any(id => _layoutMap.Index.IsSelfOrAncestor(id, box.Id))))
@@ -170,6 +170,10 @@ internal sealed partial class MapCanvas
     }
 
     /// <summary>True while the dragged topic is one of several selected: they all move.</summary>
+    /// <summary>The selected topics a group drag moves: the central topic stays where it is, so every drop target
+    /// lying inside it must not count.</summary>
+    private IEnumerable<TopicId> Moving(Map map) => _selectedSet.Where(id => map.Contains(id) && id != map.Root.Id);
+
     private bool DragsGroup => _dragging is { } dragged && _selectedSet.Count > 1 && _selectedSet.Contains(dragged);
 
     private static Rect ToRect(LayoutRect rect) => new(rect.X, rect.Y, rect.Width, rect.Height);

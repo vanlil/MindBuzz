@@ -312,10 +312,13 @@ public partial class TopicPanel : UserControl
         Editor.TextArea.TextView.Redraw();
 
         // Only while the panel is open: arrowing through topics with the panel closed must not render every note.
+        // Marked as rendered and cleared first: a note that fails to render reports once, not on every later sync,
+        // and never leaves the previous topic's preview standing.
         if (_model is { IsPreview: true, IsOpen: true } && _renderedPreview != text)
         {
-            PreviewHost.Content = text.Length == 0 ? null : MarkdownRenderer.Render(text, _model.OpenLink);
             _renderedPreview = text;
+            PreviewHost.Content = null;
+            PreviewHost.Content = text.Length == 0 ? null : MarkdownRenderer.Render(text, _model.OpenLink);
         }
     }
 

@@ -63,9 +63,8 @@ internal sealed partial class MapCanvas
 
     /// <summary>The "−" handle of an expanded topic: a small circle with a bar, like the collapsed one without a
     /// count.</summary>
-    private static void DrawExpandedHandle(DrawingContext context, TopicBox box, Rect rect, IBrush stroke, Palette palette)
+    private static void DrawExpandedHandle(DrawingContext context, TopicBox box, IBrush stroke, Palette palette)
     {
-        _ = rect;
         Point centre = HandleCentre(box);
         var pen = new Pen(stroke, 1.25);
         context.DrawEllipse(palette.Surface, pen, centre, HandleRadius, HandleRadius);

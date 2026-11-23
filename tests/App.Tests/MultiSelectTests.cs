@@ -124,6 +124,22 @@ public sealed class MultiSelectTests
         Assert.Equal([one], s.Central.Children.Select(child => child.Id));
     }
 
+    /// <summary>The central topic in the selection stays where it is and does not stop the others: every drop
+    /// target lies inside it, so the canvas refused them all.</summary>
+    [AvaloniaFact]
+    public void Dragging_several_topics_with_the_central_topic_among_them_moves_the_others()
+    {
+        (Session s, TopicId one, TopicId two, TopicId three, TopicId oneA) = Map();
+        s.Main.Select(three);
+        ToggleClick(s, s.Central.Id);
+        ToggleClick(s, two);
+
+        s.Drag(s.On(three), s.On(oneA));
+
+        Assert.Equal([two, three], s.Map.Find(oneA)!.Children.Select(child => child.Id));
+        Assert.Equal([one], s.Central.Children.Select(child => child.Id));
+    }
+
     [AvaloniaFact]
     public void Other_commands_act_on_the_last_selected_topic_and_the_detail_view_says_how_many()
     {

@@ -54,6 +54,18 @@ public sealed class ShortcutSheetTests
         Assert.Contains(ShortcutSheet.Legend(mac, HostPlatform.MacOS), key => key.Symbol == "⌘");
     }
 
+    /// <summary>Shift+F10 and the Menu key open the context menu on Windows and Linux only.</summary>
+    [Theory]
+    [InlineData(HostPlatform.Windows, true)]
+    [InlineData(HostPlatform.Linux, true)]
+    [InlineData(HostPlatform.MacOS, false)]
+    public void The_context_menu_key_is_on_the_sheet_only_where_it_works(HostPlatform platform, bool listed)
+    {
+        IReadOnlyList<SheetSection> sheet = ShortcutSheet.Build(CreateMain(platform).Commands, platform);
+
+        Assert.Equal(listed, sheet.SelectMany(section => section.Rows).Any(row => row.Text == MindBuzz.App.Localization.Strings.Sheet_ContextMenu));
+    }
+
     [AvaloniaTheory]
     [InlineData(HostPlatform.Windows)]
     [InlineData(HostPlatform.MacOS)]

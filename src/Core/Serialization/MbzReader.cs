@@ -104,10 +104,6 @@ public static class MbzLimits
 
     public const long MaxTotalBytes = 256L * 1024 * 1024;
 
-    /// <summary>Above 1 MiB uncompressed, an entry may not expand more than this, which stops compression
-    /// bombs.</summary>
-    public const int MaxCompressionRatio = 200;
-
     public const int MaxTopicDepth = 200;
 }
 

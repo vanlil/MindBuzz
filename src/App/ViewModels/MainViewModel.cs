@@ -2510,6 +2510,7 @@ public sealed partial class MainViewModel : ObservableObject, ICommandHost, IDis
                 LoadProblemKind.RelationshipSkipped => Strings.Problem_RelationshipSkipped,
                 LoadProblemKind.TooDeep => Strings.Problem_TooDeep,
                 LoadProblemKind.BendIgnored => Strings.Problem_BendIgnored,
+                LoadProblemKind.StyleIgnored => Strings.Problem_StyleIgnored,
                 _ => Strings.Problem_UnknownEntry,
             },
             group.Count())));

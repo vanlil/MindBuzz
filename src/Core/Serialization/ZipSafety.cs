@@ -12,7 +12,8 @@ internal static class ZipSafety
     /// <summary>
     /// True when the archive's directory is safe to read: few enough entries, plausible sizes and names that
     /// could never point outside a folder. Declared sizes can lie, so <see cref="LimitedStream"/> enforces the
-    /// size limit again while reading.
+    /// size limit again while reading. That limit is what stops a compression bomb; a limit on how well an entry
+    /// compresses would add no protection and refused documents with long repeated notes.
     /// </summary>
     internal static bool Check(ZipArchive zip)
     {
@@ -31,14 +32,6 @@ internal static class ZipSafety
 
             total += entry.Length;
             if (total > MbzLimits.MaxTotalBytes)
-            {
-                return false;
-            }
-
-            const long RatioThreshold = 1024 * 1024;
-            if (entry.Length > RatioThreshold
-                && entry.CompressedLength > 0
-                && entry.Length / entry.CompressedLength > MbzLimits.MaxCompressionRatio)
             {
                 return false;
             }

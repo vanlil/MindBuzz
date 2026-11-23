@@ -545,6 +545,9 @@
   <data name="Problem_BendIgnored" xml:space="preserve">
     <value>Curvas de relación devueltas a su forma automática: {0}</value>
   </data>
+  <data name="Problem_StyleIgnored" xml:space="preserve">
+    <value>Colores o líneas de relación desconocidos restablecidos al predeterminado: {0}</value>
+  </data>
   <data name="Problem_TextMissing" xml:space="preserve">
     <value>Temas sin texto: {0}</value>
   </data>

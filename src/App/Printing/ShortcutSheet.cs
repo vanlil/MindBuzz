@@ -33,8 +33,8 @@ internal static class ShortcutSheet
     /// <summary>A run of numbered commands on one line, such as Priority 1 to 5.</summary>
     private sealed record Range(CommandId First, CommandId Last, string Text) : Entry;
 
-    /// <summary>Keys that are not commands, such as Enter while typing.</summary>
-    private sealed record Fixed(KeyGesture[] Gestures, string Text) : Entry;
+    /// <summary>Keys that are not commands, such as Enter while typing; some work only on Windows and Linux.</summary>
+    private sealed record Fixed(KeyGesture[] Gestures, string Text, bool NotOnMac = false) : Entry;
 
     /// <summary>The sections in reading order: from moving around and typing, the first things a beginner needs.</summary>
     private static (string Title, Entry[] Entries)[] Layout() =>
@@ -44,7 +44,7 @@ internal static class ShortcutSheet
             new One(CommandId.SelectUp), new One(CommandId.SelectDown), new One(CommandId.SelectLeft), new One(CommandId.SelectRight),
             new One(CommandId.SelectFirstSibling), new One(CommandId.SelectLastSibling), new One(CommandId.SelectCentral),
             new One(CommandId.SelectParent), new One(CommandId.SelectNext), new One(CommandId.SelectPrevious),
-            new Fixed([new KeyGesture(Key.F10, KeyModifiers.Shift)], Strings.Sheet_ContextMenu),
+            new Fixed([new KeyGesture(Key.F10, KeyModifiers.Shift)], Strings.Sheet_ContextMenu, NotOnMac: true),
             new One(CommandId.ExtendUp), new One(CommandId.ExtendDown), new One(CommandId.ExtendLeft), new One(CommandId.ExtendRight),
         ]),
         (Strings.Sheet_Typing,
@@ -183,7 +183,7 @@ internal static class ShortcutSheet
                     string.Format(CultureInfo.CurrentCulture, Strings.Sheet_RangeFormat, GestureText.Format(first[0], platform), to),
                     range.Text);
 
-            case Fixed fixedKeys:
+            case Fixed fixedKeys when !(fixedKeys.NotOnMac && platform == HostPlatform.MacOS):
                 return new SheetRow(Keys(fixedKeys.Gestures, platform)!, fixedKeys.Text);
 
             default:

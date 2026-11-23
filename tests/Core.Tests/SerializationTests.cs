@@ -185,7 +185,7 @@ public sealed class SerializationTests
     [Fact]
     public void A_compression_bomb_is_refused()
     {
-        // 50 MiB of zeros deflates to about 50 KiB: a ratio far above the limit.
+        // A little more than the entry limit of zeros deflates to about 130 KiB.
         using var stream = new MemoryStream();
         using (var zip = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true))
         {
@@ -194,11 +194,39 @@ public sealed class SerializationTests
                 format.Write(Encoding.UTF8.GetBytes(Format));
             }
 
-            using Stream bomb = zip.CreateEntry(MbzFormat.DocumentEntry, CompressionLevel.SmallestSize).Open();
-            bomb.Write(new byte[50 * 1024 * 1024]);
+            using Stream bomb = zip.CreateEntry(MbzFormat.DocumentEntry, CompressionLevel.Fastest).Open();
+            byte[] zeros = new byte[1024 * 1024];
+            for (long written = 0; written <= MbzLimits.MaxEntryBytes; written += zeros.Length)
+            {
+                bomb.Write(zeros);
+            }
         }
 
         Assert.Equal(LoadFailure.UnsafeArchive, Load(stream.ToArray()).Failure);
+    }
+
+    /// <summary>
+    /// Notes that repeat themselves compress far better than ordinary text; MindBuzz once refused such a file it had
+    /// saved itself as a compression bomb.
+    /// </summary>
+    [Theory]
+    [InlineData(null)]
+    [InlineData("correct horse")]
+    public void A_document_that_compresses_very_well_opens_again(string? password)
+    {
+        Document document = MapGenerator.Generate(new MapSpec(Topics: 60, NoteRatio: 0, LinkRatio: 0, MarkerRatio: 0, Seed: 1));
+        string note = new('a', 30_000);
+        foreach (Topic topic in document.Maps[0].Root.DescendantsAndSelf().ToList())
+        {
+            document = new Editing.SetNote(document.Maps[0].Id, topic.Id, note).Apply(document).After!;
+        }
+
+        using var stream = new MemoryStream();
+        MbzWriter.Write(stream, document, Generator, password);
+        LoadResult loaded = MbzReader.Read(new MemoryStream(stream.ToArray()), password);
+
+        Assert.Equal(LoadFailure.None, loaded.Failure);
+        Assert.Equal(note, loaded.Document!.Maps[0].Root.Note);
     }
 
     [Fact]

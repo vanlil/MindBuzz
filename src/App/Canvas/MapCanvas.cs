@@ -589,22 +589,20 @@ internal sealed partial class MapCanvas : Control, ViewModels.IMapView
 
         if (box.HiddenChildren > 0)
         {
-            DrawCollapseHandle(context, box, rect, stroke, palette);
+            DrawCollapseHandle(context, box, stroke, palette);
         }
         else if (box.Topic.HasChildren && box.Parent is not null && (selected || hovered))
         {
-            DrawExpandedHandle(context, box, rect, stroke, palette);
+            DrawExpandedHandle(context, box, stroke, palette);
         }
     }
 
     /// <summary>The collapse handle with the number of hidden subtopics, at the topic's outer edge.</summary>
-    private void DrawCollapseHandle(DrawingContext context, TopicBox box, Rect rect, IBrush stroke, Palette palette)
+    private void DrawCollapseHandle(DrawingContext context, TopicBox box, IBrush stroke, Palette palette)
     {
-        const double Radius = 8;
-        double x = box.Side == Side.Left ? rect.X - Radius - 2 : rect.Right + Radius + 2;
-        var centre = new Point(x, rect.Center.Y);
+        Point centre = HandleCentre(box);
 
-        context.DrawEllipse(palette.Surface, new Pen(stroke, 1.25), centre, Radius, Radius);
+        context.DrawEllipse(palette.Surface, new Pen(stroke, 1.25), centre, HandleRadius, HandleRadius);
 
         if (!_countText.TryGetValue(box.HiddenChildren, out TextLayout? count))
         {

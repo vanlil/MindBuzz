@@ -614,6 +614,10 @@
     <value>Relationship curves reset to their automatic shape: {0}</value>
     <comment>{0} a count</comment>
   </data>
+  <data name="Problem_StyleIgnored" xml:space="preserve">
+    <value>Unknown relationship colours or lines set to the default: {0}</value>
+    <comment>{0} a count</comment>
+  </data>
   <data name="Problem_TextMissing" xml:space="preserve">
     <value>Topics without text: {0}</value>
     <comment>{0} a count</comment>
