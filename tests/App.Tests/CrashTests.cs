@@ -140,7 +140,7 @@ public sealed class CrashTests : IDisposable
                 Strings.Crash_Title,
                 Strings.Crash_Message,
                 Strings.Crash_RecoveryWritten,
-                "MindBuzz 0.9.0\nmacOS\n\nSystem.InvalidOperationException: boom"));
+                "MindBuzz 0.9.1\nmacOS\n\nSystem.InvalidOperationException: boom"));
             Render.Save(window, theme, "crash");
         }
     }
@@ -154,7 +154,7 @@ public sealed class CrashTests : IDisposable
                 Strings.Crash_Title,
                 Strings.Crash_Message,
                 Strings.Crash_Untitled,
-                "MindBuzz 0.9.0\nDarwin 25.6.0 (Arm64)\n\nSystem.InvalidOperationException: boom\n   at MindBuzz.App.Canvas.MapCanvas.Render(DrawingContext context)\n   at Avalonia.Rendering.Composition.Server.ServerCompositionTarget.Render()"));
+                "MindBuzz 0.9.1\nDarwin 25.6.0 (Arm64)\n\nSystem.InvalidOperationException: boom\n   at MindBuzz.App.Canvas.MapCanvas.Render(DrawingContext context)\n   at Avalonia.Rendering.Composition.Server.ServerCompositionTarget.Render()"));
             window.FindControl<Expander>("Expander")!.IsExpanded = true;
             Render.Save(window, theme, "crash-details");
         }

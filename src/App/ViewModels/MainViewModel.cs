@@ -328,7 +328,7 @@ public sealed partial class MainViewModel : ObservableObject, ICommandHost, IDis
 
     /// <summary>
     /// The window title. macOS: the document name, with "*" while there are unsaved changes; the menu
-    /// bar names the app. Windows and Linux, which have no menu bar of their own: "MindBuzz 0.9.0 | Plan.mbz", and
+    /// bar names the app. Windows and Linux, which have no menu bar of their own: "MindBuzz 0.9.1 | Plan.mbz", and
     /// "untitled*" for a document never saved.
     /// </summary>
     public string WindowTitle
