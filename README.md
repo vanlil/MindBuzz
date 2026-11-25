@@ -41,6 +41,23 @@ On macOS the app is not signed. After copying it from another machine, run once:
 
 On Linux the release is one file. If copying lost its execute bit: `chmod +x MindBuzz`
 
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by
+[SignPath Foundation](https://signpath.org).
+
+- Committers and reviewers: [Axel van Lil](https://github.com/vanlil)
+- Approvers: [Axel van Lil](https://github.com/vanlil)
+
+Every release is built from this repository by GitHub Actions
+([release.yml](.github/workflows/release.yml)), and each file is checked on VirusTotal. The Windows release is
+signed only after the maintainer approves it.
+
+**Privacy.** MindBuzz sends no information to other networked systems, with one exception: at every start, and
+when you choose Help › Check for Updates, it asks GitHub (`api.github.com`) whether a newer release exists. That
+request names only the app and its version (for example `MindBuzz/1.2.3`). Nothing about you or your documents is
+sent, and nothing is downloaded or installed. A link in a map opens in your browser only when you click it.
+
 ## Licence
 
 [AGPL-3.0](LICENSE). Bundled components: [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).

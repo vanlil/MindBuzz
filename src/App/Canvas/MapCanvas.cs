@@ -429,10 +429,44 @@ internal sealed partial class MapCanvas : Control, ViewModels.IMapView
             _fitPending = false;
             Apply(Viewport.Fit(_layout.Bounds, e.NewSize));
         }
-        else if (e.NewSize.Width < e.PreviousSize.Width && SelectedTopic is { } selected)
+        else if (e.PreviousSize.Width > 0 && e.PreviousSize.Height > 0)
         {
-            // A panel opening beside the map narrows it: the selection stays in view.
-            EnsureVisible(selected);
+            KeepMiddle(e.NewSize.Width - e.PreviousSize.Width, e.NewSize.Height - e.PreviousSize.Height);
+        }
+    }
+
+    /// <summary>A change in size at least this large in one step (a panel opening or closing, a maximised window)
+    /// glides; smaller steps (dragging a divider or the window's edge) follow at once.</summary>
+    private const double GlideAbove = 64;
+
+    /// <summary>
+    /// The middle of the view stays where it was when the map gets narrower or wider: a panel opening beside it
+    /// moves the map by half its width, and closing moves it back, so the topic being worked on is not hidden
+    /// behind the panel and nothing drifts. The selection stays in view as well.
+    /// </summary>
+    private void KeepMiddle(double wider, double taller)
+    {
+        var delta = new Vector(wider / 2, taller / 2);
+        Viewport target = (_animating ? _animationTo : _viewport).PanBy(delta);
+        if (SelectedTopic is { } selected)
+        {
+            target = Revealing(target, selected);
+        }
+
+        if (Math.Abs(wider) >= GlideAbove || Math.Abs(taller) >= GlideAbove)
+        {
+            SetViewport(target, animate: true);
+        }
+        else if (_animating)
+        {
+            // A glide under way carries on from where it now has to be.
+            _animationFrom = _animationFrom.PanBy(delta);
+            _animationTo = KeepInReach(target);
+            Apply(_viewport.PanBy(delta));
+        }
+        else
+        {
+            Apply(target);
         }
     }
 
@@ -1222,13 +1256,24 @@ internal sealed partial class MapCanvas : Control, ViewModels.IMapView
     /// </summary>
     private void EnsureVisible(TopicId topic)
     {
+        Viewport revealing = Revealing(_viewport, topic);
+        if (revealing != _viewport)
+        {
+            SetViewport(revealing, animate: true);
+        }
+    }
+
+    /// <summary><paramref name="viewport"/>, moved as little as needed to show <paramref name="topic"/> fully, with
+    /// a margin.</summary>
+    private Viewport Revealing(Viewport viewport, TopicId topic)
+    {
         if (_layout?.Find(topic) is not { } box || Bounds.Width <= 0)
         {
-            return;
+            return viewport;
         }
 
-        Point topLeft = _viewport.ToScreen(new LayoutPoint(box.Bounds.X, box.Bounds.Y));
-        Point bottomRight = _viewport.ToScreen(new LayoutPoint(box.Bounds.Right, box.Bounds.Bottom));
+        Point topLeft = viewport.ToScreen(new LayoutPoint(box.Bounds.X, box.Bounds.Y));
+        Point bottomRight = viewport.ToScreen(new LayoutPoint(box.Bounds.Right, box.Bounds.Bottom));
 
         double dx = topLeft.X < VisibleMargin ? VisibleMargin - topLeft.X
             : bottomRight.X > Bounds.Width - VisibleMargin ? Bounds.Width - VisibleMargin - bottomRight.X
@@ -1237,10 +1282,7 @@ internal sealed partial class MapCanvas : Control, ViewModels.IMapView
             : bottomRight.Y > Bounds.Height - VisibleMargin ? Bounds.Height - VisibleMargin - bottomRight.Y
             : 0;
 
-        if (dx != 0 || dy != 0)
-        {
-            SetViewport(_viewport.PanBy(new Vector(dx, dy)), animate: true);
-        }
+        return dx == 0 && dy == 0 ? viewport : viewport.PanBy(new Vector(dx, dy));
     }
 
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)

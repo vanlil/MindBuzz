@@ -185,6 +185,7 @@ jobs:
           \`xattr -dr com.apple.quarantine /Applications/MindBuzz.app\`. **Linux:** unpack and run \`./MindBuzz\`.
 
           \`SHA256SUMS.txt\` holds the checksums (\`shasum -a 256 -c SHA256SUMS.txt\`).
+          [Code signing policy](https://github.com/vanlil/MindBuzz#code-signing-policy).
 
           EOF
           # The links are the files' checksums, so they are known before the scans end; the pages fill in within

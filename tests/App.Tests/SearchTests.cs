@@ -345,3 +345,63 @@ public sealed class PaneDividerTests
         Assert.Equal(220, grid.ColumnDefinitions[2].ActualWidth, 1);
     }
 }
+
+/// <summary>The map beside the panels: opening one must not hide the topic being worked on.</summary>
+public sealed class PanelBesideMapTests
+{
+    /// <summary>Runs the canvas's glides to their end: headless frames come only when asked for.</summary>
+    private static void Settle()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            Avalonia.Headless.AvaloniaHeadlessPlatform.ForceRenderTimerTick();
+            Session.Pump();
+            Thread.Sleep(2);
+        }
+    }
+
+    private static double CentralX(Session s) => s.Canvas.Viewport.ToScreen(new Core.Layout.LayoutPoint(0, 0)).X;
+
+    private static (double Left, double Right) SelectedX(Session s)
+    {
+        Core.Layout.TopicBox box = s.Canvas.Layout!.Find(s.Main.SelectedTopic!.Value)!;
+        return (s.Canvas.Viewport.ToScreen(new Core.Layout.LayoutPoint(box.Bounds.X, 0)).X,
+            s.Canvas.Viewport.ToScreen(new Core.Layout.LayoutPoint(box.Bounds.Right, 0)).X);
+    }
+
+    /// <summary>The panels took their width from the right of the map and left the selection at the panel's edge,
+    /// its branch behind it; closing left the map shifted.</summary>
+    [AvaloniaFact]
+    public void Opening_the_panels_keeps_the_middle_of_the_map_and_closing_them_brings_it_back()
+    {
+        var s = new Session();
+        foreach (string text in (string[])["One", "Two", "Three", "Four"])
+        {
+            s.Main.Select(s.Central.Id);
+            s.Main.Execute(CommandId.NewSubtopic);
+            Session.Pump();
+            s.Type(text);
+            s.Press(Key.Enter);
+        }
+
+        s.Main.Select(s.Central.Children.First(topic => s.Canvas.Layout!.Find(topic.Id)!.Bounds.X > 0).Id);
+        Settle();
+        double middle = s.Canvas.Bounds.Width / 2;
+        Assert.Equal(middle, CentralX(s), 1);
+
+        s.Main.Execute(CommandId.ToggleTopicPanel);
+        Settle();
+        Assert.Equal(s.Canvas.Bounds.Width / 2, CentralX(s), 1);
+
+        s.Main.Execute(CommandId.ToggleTopicPanel);
+        Settle();
+        Assert.Equal(middle, CentralX(s), 1);
+
+        // Both panels leave so little room that the selection needs a little more than the middle kept.
+        s.Main.Execute(CommandId.ToggleTopicPanel);
+        s.Main.Execute(CommandId.Find);
+        Settle();
+        (double left, double right) = SelectedX(s);
+        Assert.True(left >= 0 && right <= s.Canvas.Bounds.Width, $"The selected topic at {left:0}–{right:0} is outside the map, {s.Canvas.Bounds.Width:0} wide.");
+    }
+}
